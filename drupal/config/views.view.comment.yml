@@ -1,4 +1,4 @@
-uuid: 5a14f491-c703-4f94-a3e3-241e1f09b1e4
+uuid: a960fc40-e629-47af-b4cf-618722def2ff
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - comment
     - user
 _core:
-  default_config_hash: CgXkKY33fd-yaHz89du2hSw6MJOoIeNUJ-VHE5BiSdQ
+  default_config_hash: CHAjzSss2YXSSIH7snaB7Zc9GEubxXtV0XE--SpzCB8
 id: comment
 label: Comments
 module: comment
@@ -395,7 +395,7 @@ display:
             custom_date_format: ''
             timezone: ''
             tooltip:
-              date_format: ''
+              date_format: long
               custom_date_format: ''
             time_diff:
               enabled: false
@@ -533,6 +533,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -550,7 +551,6 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
-          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -1278,7 +1278,7 @@ display:
             custom_date_format: ''
             timezone: ''
             tooltip:
-              date_format: ''
+              date_format: long
               custom_date_format: ''
             time_diff:
               enabled: false

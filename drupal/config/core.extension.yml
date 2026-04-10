@@ -1,20 +1,26 @@
 _core:
-  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
+  default_config_hash: 4GIX5Esnc_umpXUBj4IIocRX7Mt5fPhm4AgXfE3E56E
 module:
+  address: 0
+  announcements_feed: 0
   automated_cron: 0
   big_pipe: 0
   block: 0
   block_content: 0
   breakpoint: 0
+  ckeditor5: 0
   comment: 0
+  commerce: 0
+  commerce_price: 0
+  commerce_product: 0
+  commerce_store: 0
   config: 0
-  contact: 0
   contextual: 0
   datetime: 0
   dblog: 0
   dynamic_page_cache: 0
   editor: 0
-  email_registration: 0
+  entity: 0
   field: 0
   field_ui: 0
   file: 0
@@ -22,9 +28,8 @@ module:
   help: 0
   history: 0
   image: 0
-  letsencrypt_challenge: 0
+  inline_entity_form: 0
   link: 0
-  masquerade: 0
   menu_link_content: 0
   menu_ui: 0
   mysql: 0
@@ -33,13 +38,12 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
-  phpass: 0
   search: 0
   shortcut: 0
-  smtp: 0
   system: 0
   taxonomy: 0
   text: 0
+  token: 0
   toolbar: 0
   update: 0
   user: 0
@@ -48,7 +52,6 @@ module:
   standard: 1000
 theme:
   olivero: 0
-  bootstrap: 0
-  my_custom_theme: 0
   claro: 0
+  gin: 0
 profile: standard

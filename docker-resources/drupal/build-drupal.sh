@@ -11,8 +11,12 @@
 #
 set -e
 
-# See https://github.com/composer/composer/issues/11093
-composer self-update 2.4.1
+# Required by drupal commerce
+apk add --no-cache --virtual .build-deps \
+  php84-bcmath
+echo extension=/usr/lib/php84/modules/bcmath.so >> /usr/local/etc/php/php.ini
+
+composer self-update 2.9.5
 
 # See https://getcomposer.org/allow-plugins
 composer config --no-plugins allow-plugins.composer/installers true
@@ -29,18 +33,25 @@ composer config --no-plugins allow-plugins.tbachert/spi true
 
 composer config repositories.drupal composer https://packages.drupal.org/8
 
-composer require \
+composer update
+
+composer require composer/composer
+
+rm -rf modules/contrib
+
+/var/www/html/vendor/composer/composer/bin/composer require \
   drupal/devel \
   drupal/field_group \
   drupal/email_registration \
   drupal/token \
+  drupal/gin \
+  drupal/commerce:3 \
   drupal/metatag \
   drupal/pathauto \
   drupal/webform:^6 \
   drupal/paragraphs \
   drupal/masquerade \
   drupal/bootstrap \
-  drupal/stage_file_proxy:^1 \
   drupal/letsencrypt_challenge \
   drupal/smtp
 
@@ -79,3 +90,5 @@ echo 'memory_limit = 512M' >> /usr/local/etc/php/php.ini
 # Avoid memory limits with large database imports.
 echo 'upload_max_filesize = 25M' >> /usr/local/etc/php/php.ini
 echo 'post_max_size = 25M' >> /usr/local/etc/php/php.ini
+
+/var/www/html/vendor/composer/composer/bin/composer update

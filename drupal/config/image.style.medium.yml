@@ -1,9 +1,9 @@
-uuid: c4c5fc41-9714-4a71-8aab-5b85c347271d
+uuid: bada9d4c-432e-4569-af00-dd104c376e07
 langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: Y9NmnZHQq20ASSyTNA6JnwtWrJJiSajOehGDtmUFdM0
+  default_config_hash: aUG-EM9kKTKhcsdttoYmG5tug7pU2mNOQzcpp91jfFQ
 name: medium
 label: 'Medium (220×220)'
 effects:
@@ -15,3 +15,9 @@ effects:
       width: 220
       height: 220
       upscale: false
+  c410ed2f-aa30-4d9c-a224-d2865d9188cd:
+    uuid: c410ed2f-aa30-4d9c-a224-d2865d9188cd
+    id: image_convert_avif
+    weight: 2
+    data:
+      extension: webp

@@ -1,9 +1,9 @@
-uuid: 3cdb85d2-3ae8-49ee-b2b1-31f42875c501
+uuid: e24e7d40-262d-466e-ba99-45a71e4fc385
 langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: J2n0RpFzS0-bgSyxjs6rSdgxB1rb-bTAgqywNx_964M
+  default_config_hash: yrvYt4IlFH9AKX1vx-_N6OfeG_6HgylGP7hhB9AMH3k
 name: large
 label: 'Large (480×480)'
 effects:
@@ -15,3 +15,9 @@ effects:
       width: 480
       height: 480
       upscale: false
+  6e8fe467-84c1-4ef0-a73b-7eccf1cc20e8:
+    uuid: 6e8fe467-84c1-4ef0-a73b-7eccf1cc20e8
+    id: image_convert_avif
+    weight: 2
+    data:
+      extension: webp

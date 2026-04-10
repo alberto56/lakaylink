@@ -12,7 +12,7 @@ docker compose exec -T drupal /bin/bash -c 'drush upwd $(drush uinf --uid=1 --fi
 
 echo 'Running our tests'
 docker run -e DRUPALUSER=admin -e DRUPALMAIL="user+1@localhost.localdomain" -e DRUPALPASS="$PASS" --rm -v "$(pwd)"/tests/browser-tests:/app/test \
-  --network starterkit_drupalsite_default \
+  --network lakaylink_default \
   -v "$(pwd)"/do-not-commit/screenshots:/artifacts/screenshots \
   -v "$(pwd)"/do-not-commit/dom-captures:/artifacts/dom-captures \
   dcycle/browsertesting:4

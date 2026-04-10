@@ -139,11 +139,11 @@ Figure out the network name
 
     docker network ls
 
-It is something like "starterkit_drupalsite_default".
+It is something like "lakaylink_default".
 
 Connect your network and restart the Let's Encrypt container:
 
-    docker network connect starterkit_drupalsite_default nginx-proxy
+    docker network connect lakaylink_default nginx-proxy
     docker restart nginx-letsencrypt
 
 After 120 seconds the security certificate should work, but you will get "The provided host name is not valid for this server". This means you need to add your host to the allowed hosts. See the "Troubleshooting" section for details.
@@ -632,9 +632,9 @@ Rerun `./scripts/deploy.sh`, and reimport the stage database if you need it (see
 
 ### ./scripts/docker-compose.sh down -v results in a network error
 
-If you run `docker network rm starterkit_drupalsite_default` and you get "ERROR: network starterkit_drupalsite_default id ... has active endpoints", you might need to disconnect the Drupal 7 site from the Drupal 8 network first. This should be done in the migration process, but it might not have worked. If such is the case, type:
+If you run `docker network rm lakaylink_default` and you get "ERROR: network lakaylink_default id ... has active endpoints", you might need to disconnect the Drupal 7 site from the Drupal 8 network first. This should be done in the migration process, but it might not have worked. If such is the case, type:
 
-    docker network disconnect starterkit_drupalsite_default $(./scripts/docker-compose.sh ps -q database)
+    docker network disconnect lakaylink_default $(./scripts/docker-compose.sh ps -q database)
 
 ### Beware case-sensitivity
 
