@@ -11,9 +11,13 @@ module:
   ckeditor5: 0
   comment: 0
   commerce: 0
+  commerce_number_pattern: 0
+  commerce_order: 0
+  commerce_payment: 0
   commerce_price: 0
   commerce_product: 0
   commerce_store: 0
+  commerce_stripe: 0
   config: 0
   contextual: 0
   datetime: 0
@@ -21,6 +25,7 @@ module:
   dynamic_page_cache: 0
   editor: 0
   entity: 0
+  entity_reference_revisions: 0
   field: 0
   field_ui: 0
   file: 0
@@ -32,14 +37,20 @@ module:
   link: 0
   menu_link_content: 0
   menu_ui: 0
+  my_custom_module: 0
   mysql: 0
   node: 0
   options: 0
   page_cache: 0
   path: 0
   path_alias: 0
+  profile: 0
   search: 0
   shortcut: 0
+  social_api: 0
+  social_auth: 0
+  social_auth_google: 0
+  state_machine: 0
   system: 0
   taxonomy: 0
   text: 0
@@ -48,6 +59,7 @@ module:
   update: 0
   user: 0
   views_ui: 0
+  pathauto: 1
   views: 10
   standard: 1000
 theme:

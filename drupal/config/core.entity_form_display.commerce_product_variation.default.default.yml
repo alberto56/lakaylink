@@ -15,31 +15,31 @@ mode: default
 content:
   list_price:
     type: commerce_list_price
-    weight: -1
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   price:
     type: commerce_price_default
-    weight: 0
+    weight: 2
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   sku:
     type: string_textfield
-    weight: -4
+    weight: 0
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    weight: 10
+    weight: 3
+    region: content
     settings:
       display_label: true
     third_party_settings: {  }
-    region: content
 hidden:
   created: true
   uid: true
