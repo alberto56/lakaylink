@@ -1,6 +1,12 @@
 <?php
 
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\file\Entity\File;
 use Drupal\my_custom_module\App;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\File\FileSystemInterface;
+
 
 /**
  * Handy wrapper around App::instance().
@@ -16,6 +22,7 @@ function app() : App {
  * Implements hook_cron().
  */
 function my_custom_module_cron() {
+  my_custom_module2_cron();
   App::instance()->hookCron();
 }
 
@@ -24,4 +31,279 @@ function my_custom_module_preprocess_page(&$variables) {
     'type' => '#markup',
     'markup' => 'Hello, world!',
   ];
+}
+
+/**
+ * Implements hook_cron().
+ */
+function my_custom_module2_cron() {
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_store');
+
+  $store_ids = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (empty($store_ids)) {
+    return;
+  }
+
+  $queue = \Drupal::queue('my_custom_module_import_queue');
+
+  foreach ($store_ids as $store_id) {
+    $queue->createItem($store_id);
+  }
+
+  \Drupal::logger('my_custom_module')->notice('Queued store imports: @count', [
+    '@count' => count($store_ids),
+  ]);
+}
+
+
+
+
+
+
+/**
+ * Grocery marketplace importer from Google Sheets CSV.
+ */
+function my_custom_module_import($store_id) {
+  \Drupal::logger('grocery_import')->notice("----------- Import started for store: $store_id -----------");
+
+  // Load the store
+  $store = \Drupal\commerce_store\Entity\Store::load($store_id);
+
+  if (!$store) {
+    throw new \Exception("Invalid store ID: $store_id");
+  }
+
+  // Get the Google Sheet URL and Sheet ID
+  $url = $store->get('field_google_sheet_url')->uri;
+  $sheet = $store->field_google_sheet_tab_gid->value;
+
+  if (empty($url)) {
+    throw new \Exception("Google Sheet URL missing for store.");
+  }
+
+  // Prepare the full CSV URL
+//  $url = preg_replace('/edit.*$/', '', $url); // Clean the URL if it's not in the right format
+//  $url .= "export?format=csv&gid=" . $sheet;
+  
+
+  $url = $url . "&gid=" . $sheet;
+  print_r($url);
+
+  \Drupal::logger('grocery_import')->notice("Google Sheet URL: $url");
+
+  // Fetch the CSV data from the Google Sheet
+  $csv_data = file_get_contents($url);
+
+  if (!$csv_data) {
+    throw new \Exception("Cannot fetch CSV from Google Sheets.");
+  }
+
+  // Normalize line endings and split rows
+  $csv_data = str_replace(["\r\n", "\r"], "\n", $csv_data);
+  $lines = explode("\n", $csv_data);
+  $lines = array_filter($lines); // Remove empty lines
+  
+  // Parse CSV data
+  $rows = array_map('str_getcsv', $lines);
+
+  // Extract the header (first row)
+  $header = array_map('trim', array_shift($rows));
+
+  // Initialize to track processed variations and products
+  $seen_variations = [];
+
+  // Loop through each row in the CSV
+  foreach ($rows as $row) {
+    // Skip broken rows (incorrect number of fields)
+    if (count($row) !== count($header)) {
+      continue;
+    }
+
+    // Combine header with row data
+    $data = array_combine($header, array_map('trim', $row));
+
+    // Skip rows with missing variation SKU
+    if (empty($data['variation_sku'])) {
+      continue;
+    }
+
+    // Log each variation SKU being processed
+    \Drupal::logger('grocery_import')->notice("Processing variation SKU: " . $data['variation_sku']);
+
+    // Check for existing variations and products
+    $seen_variations[] = $data['variation_sku'];
+
+    // =========================
+    // 1. LOAD OR CREATE PRODUCT
+    // =========================
+    $product_storage = \Drupal::entityTypeManager()->getStorage('commerce_product');
+    $existing = $product_storage->loadByProperties([
+      'field_product_id' => $data['product_id'],
+      'type' => 'grocery_product',
+      'stores' => [$store_id],
+    ]);
+
+    // Create product if not found
+    $product = reset($existing);
+
+    if (!$product) {
+      $product = \Drupal\commerce_product\Entity\Product::create([
+        'type' => 'grocery_product',
+        'title' => $data['product_name'],
+        'stores' => [$store_id],
+        'field_product_id' => $data['product_id'],
+      ]);
+    }
+
+    if ($data['product_description']) {
+      $product->set('body', [
+        'value' => $data['product_description'],
+        'format' => 'basic_html',
+      ]);
+    }
+
+    // Update product details
+    $product->setTitle($data['product_name']);
+    $product->set('status', (bool) $data['status']);
+    
+    // Set product category and brand
+    $brand = get_or_create_term('brand', $data['brand']);
+    $category = get_or_create_term('category', $data['category']);
+    $subcategory = get_or_create_term('sub_category', $data['sub_category']);
+    $product->set('field_brand', $brand->id());
+    $product->set('field_category', $category->id());
+    $product->set('field_sub_category', $subcategory->id());
+    $product->set('field_product_id', $data['product_id']); // keep in sync
+
+
+    // =========================
+    // IMAGE DOWNLOAD
+    // =========================
+    if (!empty($data['image_url'])) {
+      $file = my_grocery_download_image($data['image_url']);
+
+      if ($file) {
+        $product->set('field_image', [
+          'target_id' => $file->id(),
+          'alt' => $data['product_name'],
+        ]);
+      }
+    }
+
+    // Save the product
+    $product->save();
+
+    // =========================
+    // 2. LOAD OR CREATE VARIATION
+    // =========================
+    $variation_storage = \Drupal::entityTypeManager()->getStorage('commerce_product_variation');
+    $variations = $variation_storage->loadByProperties(['sku' => $data['variation_sku']]);
+    $variation = reset($variations);
+
+    if (!$variation) {
+      $variation = \Drupal\commerce_product\Entity\ProductVariation::create([
+        'type' => 'grocery_variation',
+        'sku' => $data['variation_sku'],
+      ]);
+    }
+
+    // Set variation details
+    $variation->setTitle($data['variant_name']);
+    $variation->set('price', [
+      'number' => $data['price'],
+      'currency_code' => $data['currency'],
+    ]);
+
+    // Set grocery-specific fields
+    $variation->set('field_quantity', $data['quantity']);
+    $variation->set('field_unit', $data['unit']);
+    $variation->set('field_pack_type', $data['pack_type']);
+    $variation->set('field_stock', $data['stock']);
+    $variation->set('field_storage_type', $data['storage_type']);
+    $variation->set('field_expiry_days', $data['expiry_days']);
+    $variation->set('field_origin', $data['origin']);
+    $variation->set('status', (bool) $data['status']); // Set the status
+
+    // Save the variation
+    $variation->save();
+
+    // =========================
+    // 3. ATTACH VARIATION TO PRODUCT
+    // =========================
+    $exists = FALSE;
+
+    foreach ($product->getVariations() as $existing_variation) {
+      if ($existing_variation->id() == $variation->id()) {
+        $exists = TRUE;
+        break;
+      }
+    }
+
+    if (!$exists) {
+      $product->addVariation($variation);
+      $product->save();
+    }
+
+  }
+
+  \Drupal::logger('grocery_import')->notice("Import completed for store ID: $store_id");
+}
+
+
+
+
+
+
+/**
+ * =========================
+ * IMAGE DOWNLOADER
+ * =========================
+ */
+function my_grocery_download_image($url) {
+  try {
+    $client = \Drupal::httpClient();
+    $response = $client->get($url);
+
+    if ($response->getStatusCode() !== 200) {
+      return NULL;
+    }
+
+    $data = $response->getBody()->getContents();
+    $file_name = basename(parse_url($url, PHP_URL_PATH));
+
+    return \Drupal::service('file.repository')->writeData(
+      $data,
+      'public://' . $file_name,
+      FileSystemInterface::EXISTS_REPLACE
+    );
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('my_custom_module')->error($e->getMessage());
+    return NULL;
+  }
+}
+
+
+function get_or_create_term($vocab, $name) {
+  $terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties([
+      'vid' => $vocab,
+      'name' => $name,
+    ]);
+
+  if ($term = reset($terms)) {
+    return $term;
+  }
+
+  $term = Term::create([
+    'vid' => $vocab,
+    'name' => $name,
+  ]);
+  $term->save();
+
+  return $term;
 }
