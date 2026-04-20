@@ -1,0 +1,21 @@
+uuid: 9cc93978-7d95-48c9-ab06-63a0a447793c
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.grocery_variation
+    - field.storage.commerce_product_variation.field_pack_type
+  module:
+    - options
+id: commerce_product_variation.grocery_variation.field_pack_type
+field_name: field_pack_type
+entity_type: commerce_product_variation
+bundle: grocery_variation
+label: 'Pack Type'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

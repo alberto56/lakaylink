@@ -1,0 +1,9 @@
+uuid: c6b0196a-6eb7-4adf-bc8a-d566ea32ced4
+langcode: en
+status: true
+dependencies: {  }
+currencyCode: SZL
+name: 'Swazi Lilangeni'
+numericCode: '748'
+symbol: SZL
+fractionDigits: 2

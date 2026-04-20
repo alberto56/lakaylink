@@ -1,0 +1,9 @@
+uuid: 039e5b79-3bbf-4cdb-a299-c6be7449e498
+langcode: en
+status: true
+dependencies: {  }
+currencyCode: SGD
+name: 'Singapore Dollar'
+numericCode: '702'
+symbol: SGD
+fractionDigits: 2

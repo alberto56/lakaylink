@@ -1,0 +1,9 @@
+uuid: 2e4e6e17-0231-4575-85b9-dca8653d2efd
+langcode: en
+status: true
+dependencies: {  }
+currencyCode: NGN
+name: 'Nigerian Naira'
+numericCode: '566'
+symbol: NGN
+fractionDigits: 2

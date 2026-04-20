@@ -1,0 +1,124 @@
+uuid: e7fa745c-8a7d-4f72-9ab3-5a324ab86225
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.grocery_product
+    - field.field.commerce_product.grocery_product.body
+    - field.field.commerce_product.grocery_product.field_brand
+    - field.field.commerce_product.grocery_product.field_category
+    - field.field.commerce_product.grocery_product.field_image
+    - field.field.commerce_product.grocery_product.field_product_id
+    - field.field.commerce_product.grocery_product.field_sub_category
+  module:
+    - commerce_product
+    - image
+    - text
+id: commerce_product.grocery_product.default
+targetEntityType: commerce_product
+bundle: grocery_product
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  created:
+    type: timestamp
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_brand:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_category:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_product_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_sub_category:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  stores:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  uid:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  variations:
+    type: commerce_product_attributes_overview
+    label: above
+    settings:
+      attributes: {  }
+      view_mode: default
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

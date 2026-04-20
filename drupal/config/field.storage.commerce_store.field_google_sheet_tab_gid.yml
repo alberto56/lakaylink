@@ -1,0 +1,21 @@
+uuid: b1089f90-2ca5-4a2f-aa15-9f1bd424082f
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_store
+id: commerce_store.field_google_sheet_tab_gid
+field_name: field_google_sheet_tab_gid
+entity_type: commerce_store
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

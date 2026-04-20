@@ -1,0 +1,21 @@
+uuid: f69e1382-75af-4568-92c3-d0123baca9f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.grocery_variation
+    - field.storage.commerce_product_variation.field_storage_type
+  module:
+    - options
+id: commerce_product_variation.grocery_variation.field_storage_type
+field_name: field_storage_type
+entity_type: commerce_product_variation
+bundle: grocery_variation
+label: 'Storage Type'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

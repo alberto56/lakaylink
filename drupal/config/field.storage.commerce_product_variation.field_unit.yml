@@ -1,0 +1,42 @@
+uuid: 4dc42aeb-9860-4416-bc1d-145d12233109
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+    - options
+id: commerce_product_variation.field_unit
+field_name: field_unit
+entity_type: commerce_product_variation
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: kg
+      label: kg
+    -
+      value: g
+      label: g
+    -
+      value: ml
+      label: ml
+    -
+      value: l
+      label: l
+    -
+      value: pcs
+      label: pcs
+    -
+      value: pack
+      label: pack
+    -
+      value: dozen
+      label: dozen
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
