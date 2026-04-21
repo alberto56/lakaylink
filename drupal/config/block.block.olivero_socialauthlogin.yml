@@ -1,0 +1,20 @@
+uuid: fa38504e-f864-496c-8508-0005d092e500
+langcode: en
+status: true
+dependencies:
+  module:
+    - social_auth
+  theme:
+    - olivero
+id: olivero_socialauthlogin
+theme: olivero
+region: social
+weight: 0
+provider: null
+plugin: social_auth_login
+settings:
+  id: social_auth_login
+  label: login
+  label_display: visible
+  provider: social_auth
+visibility: {  }

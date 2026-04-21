@@ -1,9 +1,10 @@
-uuid: e7fa745c-8a7d-4f72-9ab3-5a324ab86225
+uuid: 8728a84d-afe2-4398-ab32-ec7d6943780c
 langcode: en
 status: true
 dependencies:
   config:
     - commerce_product.commerce_product_type.grocery_product
+    - core.entity_view_mode.commerce_product.add_cart_and_summary
     - field.field.commerce_product.grocery_product.body
     - field.field.commerce_product.grocery_product.field_brand
     - field.field.commerce_product.grocery_product.field_category
@@ -14,10 +15,10 @@ dependencies:
     - commerce_product
     - image
     - text
-id: commerce_product.grocery_product.default
+id: commerce_product.grocery_product.add_cart_and_summary
 targetEntityType: commerce_product
 bundle: grocery_product
-mode: default
+mode: add_cart_and_summary
 content:
   body:
     type: text_default

@@ -1,0 +1,30 @@
+uuid: c6a5a381-7e93-4765-9bc0-6d97659d39c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_cart
+    - user
+  theme:
+    - olivero
+id: olivero_cart
+theme: olivero
+region: secondary_menu
+weight: 0
+provider: null
+plugin: commerce_cart
+settings:
+  id: commerce_cart
+  label: Cart
+  label_display: visible
+  provider: commerce_cart
+  dropdown: true
+  show_if_empty: true
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      buyer: buyer

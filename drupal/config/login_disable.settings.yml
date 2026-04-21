@@ -1,0 +1,6 @@
+_core:
+  default_config_hash: a0j4i9nMF7s0GIH6cDXvP7TYx2fQLkdWUIsCuZ0L6Rw
+login_disable_is_active: false
+login_disable_key: admin
+login_disable_message: 'Member access has been temporarily disabled. Please try again later.'
+login_disable_force_logout: false

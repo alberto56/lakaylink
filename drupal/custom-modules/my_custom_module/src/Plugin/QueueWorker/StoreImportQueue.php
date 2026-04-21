@@ -3,7 +3,6 @@
 namespace Drupal\my_custom_module\Plugin\QueueWorker;
 
 use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\commerce_store\Entity\Store;
 
 /**
  * Processes store import queue.
@@ -36,4 +35,5 @@ class StoreImportQueue extends QueueWorkerBase {
       throw $e;
     }
   }
+
 }

@@ -118,4 +118,6 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-hidden: {  }
+hidden:
+  prices_include_tax: true
+  tax_registrations: true

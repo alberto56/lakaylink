@@ -172,3 +172,4 @@ parameters:
     maxAge: false
     # Sets the Access-Control-Allow-Credentials header.
     supportsCredentials: false
+  security.authentication_provider.username.password: false
