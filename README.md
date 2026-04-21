@@ -76,6 +76,8 @@ This project sets up a Drupal Commerce system with:
   configure module follow these steps  https://git.drupalcode.org/project/commerce_stripe#configuration
   http://localhost:50281/admin/commerce/config/payment-gateways/manage/stripe_card_element?destination=/admin/commerce/config/payment-gateways
 
+  configure at /admin/commerce/config/payment-gateways/add
+
 ---
 
 ### 5. Product Import (Google Sheets)
