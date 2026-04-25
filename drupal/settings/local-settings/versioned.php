@@ -50,4 +50,5 @@ $settings['trusted_host_patterns'] = [
   // host "webserver" at ./tests/browser-tests/testLogInAndEdit.js, for
   // example at http://webserver/user).
   '^webserver$',
+  '^lakaybeta\.dcycleproject\.org$',
 ];
