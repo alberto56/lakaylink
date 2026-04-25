@@ -751,5 +751,6 @@ $settings['trusted_host_patterns'] = [
   '^webserver$',
   '^example\.com$',
   '^starterkit-drupal\.dcycleproject\.org$',
+  '^lakaybeta\.dcycleproject\.org$',
 ];
 $settings['require_login'] = TRUE;
