@@ -1,0 +1,11 @@
+uuid: 035cf2ad-6e76-4064-bf5f-c72dce801fc0
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+id: commerce_product.add_cart_and_summary
+label: 'Add cart and summary'
+description: null
+targetEntityType: commerce_product
+cache: true

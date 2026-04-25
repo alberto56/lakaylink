@@ -1,0 +1,33 @@
+uuid: da614825-8a56-4587-a8ee-858ada2f7784
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+    - options
+id: commerce_product_variation.field_storage_type
+field_name: field_storage_type
+entity_type: commerce_product_variation
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: dry
+      label: Dry
+    -
+      value: cold
+      label: Cold
+    -
+      value: frozen
+      label: Frozen
+    -
+      value: room
+      label: Room
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

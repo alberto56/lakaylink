@@ -6,7 +6,9 @@ dependencies:
     - filter.format.restricted_html
   module:
     - comment
+    - commerce_checkout
     - commerce_product
+    - commerce_store
     - filter
     - search
     - system
@@ -17,8 +19,14 @@ label: 'Anonymous user'
 weight: 0
 is_admin: false
 permissions:
+  - 'access checkout'
   - 'access comments'
   - 'access content'
   - 'search content'
   - 'use text format restricted_html'
   - 'view commerce_product'
+  - 'view commerce_product_attribute'
+  - 'view commerce_store'
+  - 'view default commerce_product'
+  - 'view grocery_product commerce_product'
+  - 'view online commerce_store'

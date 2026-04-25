@@ -53,7 +53,11 @@ rm -rf modules/contrib
   drupal/masquerade \
   drupal/bootstrap \
   drupal/letsencrypt_challenge \
-  drupal/smtp
+  drupal/smtp \
+  drupal/commerce_stripe \
+  drupal/social_auth_google \
+  drupal/login_disable \
+  drupal/redirect
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.

@@ -1,6 +1,14 @@
 <?php
 
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\file\Entity\File;
 use Drupal\my_custom_module\App;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
 
 /**
  * Handy wrapper around App::instance().
@@ -24,4 +32,434 @@ function my_custom_module_preprocess_page(&$variables) {
     'type' => '#markup',
     'markup' => 'Hello, world!',
   ];
+}
+
+/**
+ * Entry point: Import grocery data for a store.
+ *
+ * @param int $store_id
+ *   The Commerce store ID.
+ *
+ * @throws \Exception
+ */
+function my_custom_module_import($store_id) {
+  try {
+    \Drupal::logger('grocery_import')->notice("Import started for store: $store_id");
+
+    $store = loadStore($store_id);
+
+    $csv_url = buildGoogleSheetCsvUrl($store);
+
+    $csv_raw = fetchCsvFromUrl($csv_url);
+
+    $rows = parseCsv($csv_raw);
+
+    processRows($rows, $store_id);
+
+    \Drupal::logger('grocery_import')->notice("Import completed successfully for store: $store_id");
+
+  } catch (\Exception $e) {
+    \Drupal::logger('grocery_import')->error("Import FAILED for store $store_id: " . $e->getMessage());
+
+    // Optional: rethrow if you want cron/job to fail
+    throw $e;
+  }
+}
+
+/**
+ * Load a Commerce store.
+ *
+ * @param int $store_id
+ * @return \Drupal\commerce_store\Entity\Store
+ * @throws \Exception
+ */
+function loadStore($store_id) {
+  $store = \Drupal\commerce_store\Entity\Store::load($store_id);
+
+  if (!$store) {
+    throw new \Exception("Invalid store ID: $store_id");
+  }
+
+  return $store;
+}
+
+/**
+ * Build Google Sheet CSV URL.
+ *
+ * @param \Drupal\commerce_store\Entity\Store $store
+ * @return string
+ * @throws \Exception
+ */
+function buildGoogleSheetCsvUrl($store) {
+  $url = $store->get('field_google_sheet_url')->uri ?? '';
+  $sheet = $store->field_google_sheet_tab_gid->value ?? '';
+
+  if (empty($url)) {
+    throw new \Exception("Google Sheet URL is missing for store ID: " . $store->id());
+  }
+
+  if (!filter_var($url, FILTER_VALIDATE_URL)) {
+    throw new \Exception("Invalid Google Sheet URL format: $url");
+  }
+
+  if ($sheet === '') {
+    throw new \Exception("Sheet GID is missing for store ID: " . $store->id());
+  }
+
+  $full_url = $url . "&gid=" . $sheet;
+
+  \Drupal::logger('grocery_import')->notice("CSV URL built: $full_url");
+
+  return $full_url;
+}
+
+/**
+ * Fetch and parse CSV data.
+ *
+ * @param string $url
+ * @return array
+ * @throws \Exception
+ */
+function fetchAndParseCsv($url) {
+  $csv_data = file_get_contents($url);
+
+  if (!$csv_data) {
+    throw new \Exception("Cannot fetch CSV from Google Sheets.");
+  }
+
+  $csv_data = str_replace(["\r\n", "\r"], "\n", $csv_data);
+  $lines = array_filter(explode("\n", $csv_data));
+
+  $rows = array_map('str_getcsv', $lines);
+
+  $header = array_map('trim', array_shift($rows));
+
+  $parsed = [];
+
+  foreach ($rows as $row) {
+    if (count($row) !== count($header)) {
+      continue;
+    }
+
+    $parsed[] = array_combine($header, array_map('trim', $row));
+  }
+
+  return $parsed;
+}
+
+/**
+ * Parse CSV data safely.
+ *
+ * @throws \Exception
+ */
+function parseCsv($csv_data) {
+  $csv_data = str_replace(["\r\n", "\r"], "\n", $csv_data);
+  $lines = array_filter(explode("\n", $csv_data));
+
+  if (count($lines) < 2) {
+    throw new \Exception("CSV must contain header and at least one data row.");
+  }
+
+  $rows = array_map('str_getcsv', $lines);
+
+  $header = array_map('trim', array_shift($rows));
+
+  if (empty($header)) {
+    throw new \Exception("CSV header row is empty or malformed.");
+  }
+
+  // Required columns check
+  $required = ['product_id', 'product_name', 'variation_sku'];
+  foreach ($required as $col) {
+    if (!in_array($col, $header)) {
+      throw new \Exception("Missing required column: $col");
+    }
+  }
+
+  $parsed = [];
+
+  foreach ($rows as $index => $row) {
+    if (count($row) !== count($header)) {
+      \Drupal::logger('grocery_import')->warning("Skipping malformed row at line " . ($index + 2));
+      continue;
+    }
+
+    $parsed[] = array_combine($header, array_map('trim', $row));
+  }
+
+  if (empty($parsed)) {
+    throw new \Exception("No valid data rows found in CSV.");
+  }
+
+  return $parsed;
+}
+
+/**
+ * Fetch CSV data with detailed error handling.
+ *
+ * @throws \Exception
+ */
+function fetchCsvFromUrl($url) {
+  try {
+    $context = stream_context_create([
+      'http' => [
+        'timeout' => 30,
+        'ignore_errors' => TRUE, // capture even 4xx/5xx
+      ],
+    ]);
+
+    $csv_data = @file_get_contents($url, FALSE, $context);
+
+    // Extract HTTP status code
+    $status_code = null;
+    if (isset($http_response_header[0])) {
+      preg_match('{HTTP/\S*\s(\d{3})}', $http_response_header[0], $match);
+      $status_code = $match[1] ?? null;
+    }
+
+    if ($csv_data === FALSE) {
+      throw new \Exception("Network error while accessing CSV URL: $url");
+    }
+
+    if (empty(trim($csv_data))) {
+      throw new \Exception("CSV file is empty. URL: $url");
+    }
+
+    return $csv_data;
+
+  } catch (\Exception $e) {
+    \Drupal::logger('grocery_import')->error($e->getMessage());
+    throw $e;
+  }
+}
+
+
+/**
+ * Process all CSV rows.
+ *
+ * @param array $rows
+ * @param int $store_id
+ */
+function processRows(array $rows, $store_id) {
+  foreach ($rows as $data) {
+    if (empty($data['variation_sku'])) {
+      continue;
+    }
+
+    \Drupal::logger('grocery_import')->notice("Processing SKU: " . $data['variation_sku']);
+
+    $product = loadOrCreateProduct($data, $store_id);
+    updateProduct($product, $data);
+
+    $variation = loadOrCreateVariation($data);
+    updateVariation($variation, $data);
+
+    attachVariationToProduct($product, $variation);
+  }
+}
+
+/**
+ * Load or create a product.
+ *
+ * @param array $data
+ * @param int $store_id
+ * @return \Drupal\commerce_product\Entity\Product
+ */
+function loadOrCreateProduct(array $data, $store_id) {
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_product');
+
+  $existing = $storage->loadByProperties([
+    'field_product_id' => $data['product_id'],
+    'type' => 'grocery_product',
+    'stores' => [$store_id],
+  ]);
+
+  $product = reset($existing);
+
+  if (!$product) {
+    $product = \Drupal\commerce_product\Entity\Product::create([
+      'type' => 'grocery_product',
+      'title' => $data['product_name'],
+      'stores' => [$store_id],
+      'field_product_id' => $data['product_id'],
+    ]);
+  }
+
+  return $product;
+}
+
+/**
+ * Update product fields.
+ *
+ * @param \Drupal\commerce_product\Entity\Product $product
+ * @param array $data
+ */
+function updateProduct($product, array $data) {
+  $product->setTitle($data['product_name']);
+  $product->set('status', (bool) $data['status']);
+
+  if (!empty($data['product_description'])) {
+    $product->set('body', [
+      'value' => $data['product_description'],
+      'format' => 'basic_html',
+    ]);
+  }
+
+  // Taxonomy
+  $product->set('field_brand', get_or_create_term('brand', $data['brand']));
+  $product->set('field_category', get_or_create_term('category', $data['category']));
+  $product->set('field_sub_category', get_or_create_term('sub_category', $data['sub_category']));
+
+  // Image
+  if (!empty($data['image_url'])) {
+    $file = my_grocery_download_image($data['image_url']);
+    if ($file) {
+      $product->set('field_image', [
+        'target_id' => $file->id(),
+        'alt' => $data['product_name'],
+      ]);
+    }
+  }
+
+  $product->save();
+}
+
+/**
+ * Load or create a product variation.
+ *
+ * @param array $data
+ * @return \Drupal\commerce_product\Entity\ProductVariation
+ */
+function loadOrCreateVariation(array $data) {
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_product_variation');
+
+  $existing = $storage->loadByProperties([
+    'sku' => $data['variation_sku'],
+  ]);
+
+  $variation = reset($existing);
+
+  if (!$variation) {
+    $variation = \Drupal\commerce_product\Entity\ProductVariation::create([
+      'type' => 'grocery_variation',
+      'sku' => $data['variation_sku'],
+    ]);
+  }
+
+  return $variation;
+}
+
+/**
+ * Update variation fields.
+ *
+ * @param \Drupal\commerce_product\Entity\ProductVariation $variation
+ * @param array $data
+ */
+function updateVariation($variation, array $data) {
+  $variation->setTitle($data['variant_name']);
+  $variation->set('price', [
+    'number' => $data['price'],
+    'currency_code' => $data['currency'],
+  ]);
+
+  $variation->set('field_quantity', $data['quantity']);
+  $variation->set('field_unit', $data['unit']);
+  $variation->set('field_pack_type', $data['pack_type']);
+  $variation->set('field_stock', $data['stock']);
+  $variation->set('field_storage_type', $data['storage_type']);
+  $variation->set('field_expiry_days', $data['expiry_days']);
+  $variation->set('field_origin', $data['origin']);
+  $variation->set('status', (bool) $data['status']);
+
+  $variation->save();
+}
+
+/**
+ * Attach variation to product if not already attached.
+ *
+ * @param \Drupal\commerce_product\Entity\Product $product
+ * @param \Drupal\commerce_product\Entity\ProductVariation $variation
+ */
+function attachVariationToProduct($product, $variation) {
+  foreach ($product->getVariations() as $existing) {
+    if ($existing->id() == $variation->id()) {
+      return;
+    }
+  }
+
+  $product->addVariation($variation);
+  $product->save();
+}
+
+
+/**
+ * =========================
+ * IMAGE DOWNLOADER
+ * =========================
+ */
+function my_grocery_download_image($url) {
+  try {
+    $client = \Drupal::httpClient();
+    $response = $client->get($url);
+
+    if ($response->getStatusCode() !== 200) {
+      return NULL;
+    }
+
+    $data = $response->getBody()->getContents();
+    $file_name = basename(parse_url($url, PHP_URL_PATH));
+
+    return \Drupal::service('file.repository')->writeData(
+      $data,
+      'public://' . $file_name,
+      FileSystemInterface::EXISTS_REPLACE
+    );
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('my_custom_module')->error($e->getMessage());
+    return NULL;
+  }
+}
+
+function get_or_create_term($vocab, $name) {
+  $terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties([
+      'vid' => $vocab,
+      'name' => $name,
+    ]);
+
+  if ($term = reset($terms)) {
+    return $term;
+  }
+
+  $term = Term::create([
+    'vid' => $vocab,
+    'name' => $name,
+  ]);
+  $term->save();
+
+  return $term;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function my_custom_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  App::instance()->hookFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function my_custom_module_theme($existing, $type, $theme, $path) {
+/**
+  return [
+    'commerce_product_add_to_cart_form' => [
+      'render element' => 'form',
+      'path' => $path . '/templates',
+      'template' => 'commerce-product-add-to-cart-form',
+    ],
+  ];
+  */
 }

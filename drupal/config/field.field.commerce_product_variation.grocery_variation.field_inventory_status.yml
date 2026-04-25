@@ -1,0 +1,23 @@
+uuid: 1c7c6c6c-4962-4517-96ac-e7b4320bf434
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.grocery_variation
+    - field.storage.commerce_product_variation.field_inventory_status
+id: commerce_product_variation.grocery_variation.field_inventory_status
+field_name: field_inventory_status
+entity_type: commerce_product_variation
+bundle: grocery_variation
+label: 'In Stock'
+description: ''
+required: true
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

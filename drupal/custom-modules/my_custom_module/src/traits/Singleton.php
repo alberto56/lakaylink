@@ -16,7 +16,7 @@ trait Singleton {
    *
    * @var object|null
    */
-  static private $instance;
+  private static $instance;
 
   /**
    * Implements the Singleton design pattern.

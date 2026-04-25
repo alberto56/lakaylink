@@ -4,8 +4,11 @@ status: true
 dependencies:
   config:
     - commerce_store.commerce_store_type.online
+    - field.field.commerce_store.online.field_google_sheet_tab_gid
+    - field.field.commerce_store.online.field_google_sheet_url
   module:
     - address
+    - link
     - path
 _core:
   default_config_hash: VDGg8hSWKm_pGY53jsKuNoHY_Xf6nm_diqAC066ktA4
@@ -16,9 +19,10 @@ mode: default
 content:
   address:
     type: address_default
-    settings: {  }
     weight: 4
     region: content
+    settings:
+      wrapper_type: fieldset
     third_party_settings: {  }
   billing_countries:
     type: options_select
@@ -32,20 +36,36 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  is_default:
-    type: boolean_checkbox
-    settings:
-      display_label: true
+  field_google_sheet_tab_gid:
+    type: string_textfield
     weight: 9
     region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_google_sheet_url:
+    type: link_default
+    weight: 8
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  is_default:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   mail:
     type: email_default
     weight: 1
     region: content
     settings:
-      size: 60
       placeholder: ''
+      size: 60
     third_party_settings: {  }
   name:
     type: string_textfield
@@ -57,16 +77,16 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 8
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   prices_include_tax:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 6
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   tax_registrations:
     type: options_select

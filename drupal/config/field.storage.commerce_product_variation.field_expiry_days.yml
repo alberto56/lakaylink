@@ -1,0 +1,20 @@
+uuid: 719f9904-b4e8-4f1b-b16f-e1d163367d45
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+id: commerce_product_variation.field_expiry_days
+field_name: field_expiry_days
+entity_type: commerce_product_variation
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

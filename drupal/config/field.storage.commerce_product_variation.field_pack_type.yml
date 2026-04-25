@@ -1,0 +1,39 @@
+uuid: 26c9ad43-956a-485a-81bd-8e567d430b89
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+    - options
+id: commerce_product_variation.field_pack_type
+field_name: field_pack_type
+entity_type: commerce_product_variation
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: packed
+      label: Packed
+    -
+      value: unpacked
+      label: Unpacked
+    -
+      value: loose
+      label: Loose
+    -
+      value: bottle
+      label: Bottle
+    -
+      value: box
+      label: Box
+    -
+      value: packet
+      label: Packet
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

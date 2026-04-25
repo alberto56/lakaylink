@@ -1,0 +1,35 @@
+uuid: fd93a470-8e7a-4a9e-a5fb-cff2b60e791e
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.products
+  module:
+    - system
+    - views
+  theme:
+    - olivero
+id: olivero_views_block__products_block_1
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:products-block_1'
+settings:
+  id: 'views_block:products-block_1'
+  label: ''
+  label_display: '0'
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: null
+visibility:
+  response_status:
+    id: response_status
+    negate: false
+    status_codes:
+      - 200
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/stores/*'

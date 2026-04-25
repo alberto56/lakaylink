@@ -1,0 +1,29 @@
+uuid: ac95cbf2-7064-4c7e-9196-b2ed1918717f
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.grocery_product
+    - field.storage.commerce_product.field_sub_category
+    - taxonomy.vocabulary.sub_category
+id: commerce_product.grocery_product.field_sub_category
+field_name: field_sub_category
+entity_type: commerce_product
+bundle: grocery_product
+label: 'Sub Category'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      sub_category: sub_category
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference
