@@ -53,7 +53,11 @@ $settings['trusted_host_patterns'] = [
   '^lakaybeta\.dcycleproject\.org$',
 ];
 
-$config['social_auth_google.settings']['client_id'] = getenv('GOOGLE_CLIENT_ID');
-$config['social_auth_google.settings']['client_secret'] = getenv('GOOGLE_CLIENT_SECRET');
+$config['social_auth_google.settings'] = [
+  'client_id' => getenv('GOOGLE_CLIENT_ID'),
+  'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
+  'scope' => 'openid email profile',
+];
+
 $config['commerce_payment.commerce_payment_gateway.stripe']['configuration']['publishable_key'] = getenv('STRIPE_PUBLISHABLE_KEY');
 $config['commerce_payment.commerce_payment_gateway.stripe']['configuration']['secret_key'] = getenv('STRIPE_SECRET_KEY');
