@@ -94,4 +94,7 @@ trait Environment {
     \Drupal::logger('my_custom_module')->log($severity, $message, $variables);
   }
 
+  public function getEntityTypeManager($storage) {
+    return \Drupal::entityTypeManager()->getStorage($storage);
+  }
 }
