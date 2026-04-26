@@ -8,3 +8,4 @@ disable_admin_login: true
 disabled_roles:
   content_editor: content_editor
   administrator: administrator
+  buyer: '0'
