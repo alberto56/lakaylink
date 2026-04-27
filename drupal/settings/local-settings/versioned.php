@@ -42,6 +42,7 @@ $config['system.performance']['js']['preprocess'] = FALSE;
 $settings['trusted_host_patterns'] = [
   // Add your own domain(s) here!
   // These are used for local development.
+  '^.*$',
   '^localhost$',
   '^127\.0\.0\.1$',
   '^0\.0\.0\.0$',
@@ -56,7 +57,7 @@ $settings['trusted_host_patterns'] = [
 $config['social_auth_google.settings'] = [
   'client_id' => getenv('GOOGLE_CLIENT_ID'),
   'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
-  'scope' => 'openid email profile',
+  'scopes' => 'openid,email,profile',
 ];
 
 $config['commerce_payment.commerce_payment_gateway.stripe']['configuration']['publishable_key'] = getenv('STRIPE_PUBLISHABLE_KEY');
