@@ -58,6 +58,8 @@ $config['social_auth_google.settings'] = [
   'client_id' => getenv('GOOGLE_CLIENT_ID'),
   'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
   'scopes' => 'openid,email,profile',
+  'endpoints' => '',
+  'restricted_domain' => ''
 ];
 
 $config['commerce_payment.commerce_payment_gateway.stripe']['configuration']['publishable_key'] = getenv('STRIPE_PUBLISHABLE_KEY');
