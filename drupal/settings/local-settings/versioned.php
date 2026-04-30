@@ -67,3 +67,11 @@ $config['commerce_payment.commerce_payment_gateway.stripe']['configuration'] = [
   'secret_key' => getenv('STRIPE_SECRET_KEY'),
   'webhook_signing_secret' =>  getenv('WEBHOOK_SIGNING_SECRET'),
 ];
+
+$settings['reverse_proxy'] = TRUE;
+
+$settings['reverse_proxy_trusted_headers'] =
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_FOR |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_HOST |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PROTO |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PORT;
