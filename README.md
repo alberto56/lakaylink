@@ -6,15 +6,40 @@ Marketplace Allows expat family members to purchase food items (for example rice
 
 ## contents
 
+* Quickstart
 This project sets up a Drupal Commerce system with:
 
 * Anonymous product browsing
-* Role-based purchasing
-* Google Sheet product import
+* Role-based purchasing ("buyer" can only purchase)
+* Import products and variations from Google Sheet 
 * Google social login
 * Stripe integration
 
 ---
+
+Quickstart
+-----
+
+Step 1:
+  
+    git clone https://github.com/alberto56/lakaylink.git
+    cd lakaylink && ./scripts/deploy.sh
+
+Step 2: update .env files
+
+    VIRTUAL_HOST=
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
+    STRIPE_PUBLISHABLE_KEY=
+    STRIPE_SECRET_KEY=
+    WEBHOOK_SIGNING_SECRET=
+
+    refer 
+    - [refer step0, step1 and step2 to get client id and client secret](readme/social-auth-google-configuration.md)
+    - [refer stripe setup to get publishable key, secret key, webhook signing secret](readme/drupal-coomerce-stripe-connect.md)
+
+    ./scripts/deploy.sh
+
 
 ### 1. Anonymous Access
 
@@ -22,10 +47,10 @@ This project sets up a Drupal Commerce system with:
 
   * View `/stores` (temporary view)
   * View `/products` (temporary view)
-  * Filter products by store
+  * Filter products by store id
 
 * Anonymous users **cannot purchase products**
-* Cannot see Add to Cart
+* Cannot see Add to Cart button
 
 ---
 
@@ -42,41 +67,33 @@ This project sets up a Drupal Commerce system with:
 
 ### 3. Google Login
 
-* Enabled using Drupal Social Auth Google
-* Users can log in via Google
-* `/user/login` redirects to `/user/login/google`
-* Requires Google API configuration
-
-  Installed & enabled:
-  Social Auth Google
-
-  Configure Google credentials:
-  Created project in Google Cloud
-  Added Client ID & Secret in Drupal
-
-  Enabled redirect module
+* Enabled redirect module
   Added redirects:
   /user/login → /user/login/google
   /user/password → /user/login/google
 
 
-  ==> I have enabled social auth google module. For login with google to work we have to make we have to make a configuration setup mentioned in the https://www.drupal.org/project/social_auth_google/ .
+* Enabled Drupal Social Auth Google module
+* Users can log in via Google
 
-  ⚠️ Needs verification in dev environment
+* Requires Google API configuration
+  we have to pass GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to drupal server.
 
-
+- [Follow Google social login configuration setup](readme/social-auth-google-configuration.md)
 
 ---
 
 ### 4. Stripe Integration
 
-  * Managed using Drupal Commerce Stripe
-  * Admins can configure Stripe payments
-    
+  * Managed using Drupal Commerce Stripe module
+  * Admins can configure Stripe payments.
+
   configure module follow these steps  https://git.drupalcode.org/project/commerce_stripe#configuration
   http://localhost:50281/admin/commerce/config/payment-gateways/manage/stripe_card_element?destination=/admin/commerce/config/payment-gateways
 
   configure at /admin/commerce/config/payment-gateways/add
+
+  - [Stripe setup (Drupal Commerce)](readme/drupal-coomerce-stripe-connect.md)
 
 ---
 
@@ -95,6 +112,15 @@ Or via cron.
 ---
 
 ## Grocery Import System
+
+### Google Sheet Setup
+
+* Create a google sheetedit?usp=sharing)
+* copy headers from ( https://docs.google.com/spreadsheets/d/12x-ANhpnkr_QO8QmXhWKdoCUA-qMRaxDh0wT-yLSqAI/ )
+
+* Publish to web:
+  * File → Share → Publish to web -> select csv format . copy the url and add it to the store.
+  * Tab GID :- each tab has its gid. you can check in url google sheet query paramter.
 
 ### Store Setup
 
@@ -116,81 +142,4 @@ Required fields:
 
 ---
 
-### Google Sheet Setup
-
-* Create a sheet (example: https://docs.google.com/spreadsheets/d/12x-ANhpnkr_QO8QmXhWKdoCUA-qMRaxDh0wT-yLSqAI/edit?usp=sharing)
-* Add required headers
-
-* Publish to web:
-  * File → Share → Publish to web -> select csv format . copy the url and add it to the store.
-  * Tab GID :- each tab has its gid. you can check in url google sheet query paramter.
-
----
-
-### Required CSV Columns
-
-* `product_id`
-* `product_name`
-* `variation_sku`
-* price, currency, quantity
-* brand, category, sub_category
-* image_url, description, stock,
-
----
-
-### How Import Works
-
-#### 1. Cron Job
-
-* Loads all stores
-* Adds each store to queue
-
-#### 2. Queue Worker
-
-* Processes one store at a time
-* Calls import function
-
-#### 3. Import Process
-
-* Fetch CSV from Google Sheets
-* Parse data
-* Create/update:
-
-  * Products
-  * Variations
-  * Taxonomy (brand, category)
-  * Images
-
----
-
-### Run Import
-
-Using cron:
-
-```
-drush cron
-```
-
-Example cron job:
-
-```
-*/5 * * * * /usr/local/bin/drush -r /var/www/html/drupal cron -q
-```
-
----
-
-### Logging
-
-Logs available for:
-
-* Import status
-* Errors
-* Skipped rows
-* SKU processing
-
----
-
-## Notes
-
-* Each store uses its own Google Sheet
-* Ensure sheet is **published to web with CSV format**
+- [Refer Importing products and variants](readme/importing-products-variants.md)

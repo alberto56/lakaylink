@@ -17,3 +17,4 @@ ltcupdate
 drupal/settings/local-settings/unversioned.php
 unversioned.source.sh
 drupal/config/social_auth_google.settings.yml
+drupal/config/commerce_payment.commerce_payment_gateway.stripe_prod.yml

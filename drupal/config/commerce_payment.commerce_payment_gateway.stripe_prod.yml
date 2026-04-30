@@ -1,34 +1,34 @@
-uuid: 21948193-8020-4225-a0dd-c896e9ac42b1
+uuid: 8eed0694-1066-4c2a-bb45-e55510cf76a1
 langcode: en
 status: true
 dependencies:
   module:
     - commerce_stripe
 id: stripe_prod
-label: 'stripe prod'
+label: stripe_prod
 weight: null
 plugin: stripe_payment_element
 configuration:
-  display_label: 'Stripe Payment Element'
+  display_label: 'quick payment'
   mode: test
   payment_method_types:
     - stripe_card
   collect_billing_information: true
   api_version: null
-  authentication_method: stripe_connect
+  authentication_method: api_keys
   access_token: ''
   stripe_user_id: ''
-  publishable_key: ""
+  publishable_key: ''
   secret_key: ''
   express_checkout:
-    enable_on_cart: true
+    enable_on_cart: false
     allowed_payment_method_types:
-      amazonPay: amazonPay
-      applePay: applePay
-      googlePay: googlePay
-      klarna: klarna
-      link: link
       paypal: '0'
+      amazonPay: '0'
+      applePay: '0'
+      googlePay: '0'
+      klarna: '0'
+      link: '0'
     button_styles:
       applePay:
         theme: black
@@ -36,9 +36,9 @@ configuration:
       googlePay:
         theme: black
         type: buy
-    collect_phone_number: true
+    collect_phone_number: false
     collect_billing_address: true
-  webhook_signing_secret: ""
+  webhook_signing_secret: ''
   payment_method_usage: on_session
   capture_method: automatic_async
   style:
