@@ -7,7 +7,8 @@ Marketplace Allows expat family members to purchase food items (for example rice
 ## contents
 
 * Quickstart
-This project sets up a Drupal Commerce system with:
+
+- This project sets up a Drupal Commerce system with:
 
 * Anonymous product browsing
 * Role-based purchasing ("buyer" can only purchase)
