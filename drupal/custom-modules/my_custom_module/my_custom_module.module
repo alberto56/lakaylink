@@ -264,10 +264,11 @@ function processRows(array $rows, $store_id) {
     updateProduct($product, $data, $context);
 
     $variation = reloadVariationBySku($data['variation_sku']);
+    if ($variation) {
+      updateVariation($variation, $data);
 
-    updateVariation($variation, $data);
-
-    attachVariationToProduct($product, $variation);
+      attachVariationToProduct($product, $variation);
+    }
   }
 }
 
