@@ -94,4 +94,24 @@ trait Environment {
     \Drupal::logger('my_custom_module')->log($severity, $message, $variables);
   }
 
+  public function getEntityTypeManager($storage) {
+    return \Drupal::entityTypeManager()->getStorage($storage);
+  }
+
+  public function getQueue($queueName) {
+    return \Drupal::queue($queueName);
+  }
+
+  public function getLogger($loggerName) {
+    return \Drupal::logger($loggerName);
+  }
+
+  public function getCurrentUser() {
+    return \Drupal::currentUser();
+  }
+
+  public function getService($serviceName) {
+    return \Drupal::service($serviceName);
+  }
+
 }

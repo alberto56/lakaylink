@@ -52,6 +52,7 @@ module:
   path_alias: 0
   profile: 0
   redirect: 0
+  registration_role: 0
   search: 0
   shortcut: 0
   social_api: 0

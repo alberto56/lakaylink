@@ -241,7 +241,19 @@ function fetchCsvFromUrl($url) {
  * @param int $store_id
  */
 function processRows(array $rows, $store_id) {
-  foreach ($rows as $data) {
+  foreach ($rows as $index => $data) {
+    // account for header row
+    $line = $index + 2;
+
+    if (!validateRow($data, $line, $store_id)) {
+      continue;
+    }
+
+    $context = [
+      'line' => $line,
+      'store_id' => $store_id,
+    ];
+
     if (empty($data['variation_sku'])) {
       continue;
     }
@@ -249,13 +261,23 @@ function processRows(array $rows, $store_id) {
     \Drupal::logger('grocery_import')->notice("Processing SKU: " . $data['variation_sku']);
 
     $product = loadOrCreateProduct($data, $store_id);
-    updateProduct($product, $data);
+    updateProduct($product, $data, $context);
 
     $variation = loadOrCreateVariation($data);
-    updateVariation($variation, $data);
+    if ($variation) {
+      updateVariation($variation, $data);
+    }
 
     attachVariationToProduct($product, $variation);
   }
+}
+
+function reloadVariationBySku($sku) {
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_product_variation');
+
+  $variations = $storage->loadByProperties(['sku' => $sku]);
+
+  return $variations ? reset($variations) : NULL;
 }
 
 /**
@@ -294,7 +316,7 @@ function loadOrCreateProduct(array $data, $store_id) {
  * @param \Drupal\commerce_product\Entity\Product $product
  * @param array $data
  */
-function updateProduct($product, array $data) {
+function updateProduct($product, array $data, $context) {
   $product->setTitle($data['product_name']);
   $product->set('status', (bool) $data['status']);
 
@@ -312,10 +334,22 @@ function updateProduct($product, array $data) {
 
   // Image
   if (!empty($data['image_url'])) {
-    $file = my_grocery_download_image($data['image_url']);
+    $file = my_grocery_download_image($data['image_url'], $context);
+
     if ($file) {
       $product->set('field_image', [
         'target_id' => $file->id(),
+        'alt' => $data['product_name'],
+      ]);
+    }
+    else {
+      \Drupal::logger('grocery_import')->error(
+        "Line {$context['line']} store {$context['store_id']} invalid image URL: {$data['image_url']}"
+      );
+
+      // Placeholder fallback
+      $product->set('field_image', [
+        'uri' => 'https://via.placeholder.com/300',
         'alt' => $data['product_name'],
       ]);
     }
@@ -340,7 +374,7 @@ function loadOrCreateVariation(array $data) {
   $variation = reset($existing);
 
   if (!$variation) {
-    $variation = \Drupal\commerce_product\Entity\ProductVariation::create([
+    $variation = ProductVariation::create([
       'type' => 'grocery_variation',
       'sku' => $data['variation_sku'],
     ]);
@@ -369,7 +403,10 @@ function updateVariation($variation, array $data) {
   $variation->set('field_storage_type', $data['storage_type']);
   $variation->set('field_expiry_days', $data['expiry_days']);
   $variation->set('field_origin', $data['origin']);
-  $variation->set('status', (bool) $data['status']);
+
+  $status = trim($data['status'] ?? '');
+
+  $variation->set('status', $status);
 
   $variation->save();
 }
@@ -397,7 +434,7 @@ function attachVariationToProduct($product, $variation) {
  * IMAGE DOWNLOADER
  * =========================
  */
-function my_grocery_download_image($url) {
+function my_grocery_download_image($url, $context) {
   try {
     $client = \Drupal::httpClient();
     $response = $client->get($url);
@@ -416,7 +453,9 @@ function my_grocery_download_image($url) {
     );
   }
   catch (\Exception $e) {
-    \Drupal::logger('my_custom_module')->error($e->getMessage());
+    \Drupal::logger('grocery_import')->error(
+      "Image download failed at line {$context['line']} store {$context['store_id']}: {$url} - {$e->getMessage()}"
+    );
     return NULL;
   }
 }
@@ -442,24 +481,24 @@ function get_or_create_term($vocab, $name) {
   return $term;
 }
 
+function validateRow(array $row, $line, $store_id) {
+  $required = ['product_id', 'product_name', 'variation_sku'];
+
+  foreach ($required as $field) {
+    if (empty($row[$field])) {
+      \Drupal::logger('grocery_import')->warning(
+        "Line $line of CSV for store $store_id has an empty entry for $field. Skipping row."
+      );
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+
 /**
  * Implements hook_form_alter().
  */
 function my_custom_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   App::instance()->hookFormAlter($form, $form_state, $form_id);
-}
-
-/**
- * Implements hook_theme().
- */
-function my_custom_module_theme($existing, $type, $theme, $path) {
-/**
-  return [
-    'commerce_product_add_to_cart_form' => [
-      'render element' => 'form',
-      'path' => $path . '/templates',
-      'template' => 'commerce-product-add-to-cart-form',
-    ],
-  ];
-  */
 }

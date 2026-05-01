@@ -3,6 +3,8 @@
 namespace Drupal\my_custom_module;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\my_custom_module\traits\Environment;
 use Drupal\my_custom_module\traits\Singleton;
 
@@ -19,7 +21,7 @@ class App {
    */
   public function hookCron() {
     // Just an example of where you'd implement testable hooks.
-    $storage = \Drupal::entityTypeManager()->getStorage('commerce_store');
+    $storage = $this->getEntityTypeManager('commerce_store');
 
     $store_ids = $storage->getQuery()
       ->accessCheck(FALSE)
@@ -29,13 +31,13 @@ class App {
       return;
     }
 
-    $queue = \Drupal::queue('my_custom_module_import_queue');
+    $queue = $this->getQueue('my_custom_module_import_queue');
 
     foreach ($store_ids as $store_id) {
       $queue->createItem($store_id);
     }
 
-    \Drupal::logger('my_custom_module')->notice('Queued store imports: @count', [
+    $this->getLogger('my_custom_module')->notice('Queued store imports: @count', [
       '@count' => count($store_ids),
     ]);
   }
@@ -46,13 +48,13 @@ class App {
   public function hookFormAlter($form, FormStateInterface $form_state, $form_id) {
     // Match ALL add-to-cart forms (including dynamic ones like product_19)
     if (str_starts_with($form_id, 'commerce_order_item_add_to_cart_form')) {
-      $account = \Drupal::currentUser();
+      $account = $this->getCurrentUser();
 
       if ($account->isAnonymous()) {
         // Hide entire form.
         $form["actions"] = [];
         // Build destination (redirect back after login).
-        $current_path = \Drupal::service('path.current')->getPath();
+        $current_path = $this->getService('path.current')->getPath();
         $destination = ['query' => ['destination' => $current_path]];
 
         // Google login URL (from Social Auth).

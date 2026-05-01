@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - social_auth
+    - user
   theme:
     - olivero
 id: olivero_socialauthlogin
@@ -17,4 +18,11 @@ settings:
   label: login
   label_display: visible
   provider: social_auth
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous

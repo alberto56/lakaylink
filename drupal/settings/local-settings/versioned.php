@@ -42,6 +42,7 @@ $config['system.performance']['js']['preprocess'] = FALSE;
 $settings['trusted_host_patterns'] = [
   // Add your own domain(s) here!
   // These are used for local development.
+  '^.*$',
   '^localhost$',
   '^127\.0\.0\.1$',
   '^0\.0\.0\.0$',
@@ -52,3 +53,25 @@ $settings['trusted_host_patterns'] = [
   '^webserver$',
   '^lakaybeta\.dcycleproject\.org$',
 ];
+
+$config['social_auth_google.settings'] = [
+  'client_id' => getenv('GOOGLE_CLIENT_ID'),
+  'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
+  'scopes' => 'openid,email,profile',
+  'endpoints' => '',
+  'restricted_domain' => ''
+];
+
+$config['commerce_payment.commerce_payment_gateway.stripe']['configuration'] = [
+  'publishable_key' => getenv('STRIPE_PUBLISHABLE_KEY'),
+  'secret_key' => getenv('STRIPE_SECRET_KEY'),
+  'webhook_signing_secret' =>  getenv('WEBHOOK_SIGNING_SECRET'),
+];
+
+$settings['reverse_proxy'] = TRUE;
+
+$settings['reverse_proxy_trusted_headers'] =
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_FOR |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_HOST |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PROTO |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PORT;
