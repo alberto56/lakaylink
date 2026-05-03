@@ -40,7 +40,7 @@ Step 2: update .env files
     - [refer step0, step1 and step2 to get client id and client secret](readme/social-auth-google-configuration.md)
     - [refer stripe setup to get publishable key, secret key, webhook signing secret](readme/drupal-coomerce-stripe-connect.md)
 
-    - create oauth public and private keys.
+    - create public and private keys to setup simple oauth.
 
       * openssl genrsa -out drupal/starter-data/private-files/social-auth-oauth-keys/private.key  2048
 
