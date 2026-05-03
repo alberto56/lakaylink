@@ -56,20 +56,32 @@ C. Example public endpoints
 
 GET stores:
 → /api/store/online
-→ /api/store/grocery_store
 
-GET products:
-→ /api/product
+GET grocery products:
+→ /api/product/grocery
 
-GET single product:
-→ /api/product/default/{uuid}
+GET single grocery product:
+→ /api/product/grocery/{uuid}
 
-GET products + variations:
-→ ?include=variations
+ex:- 
+anonymous users  can see stores and products.
 
-GET products by store:
-→ ?filter[stores.id]=STORE_UUID
+1. list of stores 
 
+GET  https://lakaybeta.dcycleproject.org/api/store/online
+
+2. grocery products 
+
+GET https://lakaybeta.dcycleproject.org/api/product/grocery 
+
+3. GET single grocery products
+GET /api/product/grocery/{uuid}
+
+ex:-  search by type commerce_product--grocery_product, you will get id of a product.
+
+```
+"data":{"type":"commerce_product--grocery_product","id":"22ceba2e-97c3-4039-bf41-54b640e6dd27"....
+```
 
 
 ### 1.3 Allow anonymous read-only access
