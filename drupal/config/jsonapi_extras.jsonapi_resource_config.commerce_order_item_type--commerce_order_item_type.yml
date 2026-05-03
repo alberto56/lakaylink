@@ -1,0 +1,83 @@
+uuid: 18a9cb37-58b6-42d7-aabc-93b28903b1b3
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_order
+id: commerce_order_item_type--commerce_order_item_type
+disabled: true
+path: commerce_order_item_type/commerce_order_item_type
+resourceType: commerce_order_item_type--commerce_order_item_type
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  purchasableEntityType:
+    disabled: false
+    fieldName: purchasableEntityType
+    publicName: purchasableEntityType
+    enhancer:
+      id: ''
+  orderType:
+    disabled: false
+    fieldName: orderType
+    publicName: orderType
+    enhancer:
+      id: ''
+  traits:
+    disabled: false
+    fieldName: traits
+    publicName: traits
+    enhancer:
+      id: ''
+  locked:
+    disabled: false
+    fieldName: locked
+    publicName: locked
+    enhancer:
+      id: ''

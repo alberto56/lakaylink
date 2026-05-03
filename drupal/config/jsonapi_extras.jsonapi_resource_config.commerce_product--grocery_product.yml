@@ -1,0 +1,131 @@
+uuid: 8aab705c-6ac2-44b7-b23e-84b30f0a7bb9
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.grocery_product
+id: commerce_product--grocery_product
+disabled: false
+path: product/grocery
+resourceType: commerce_product--grocery_product
+resourceFields:
+  product_id:
+    disabled: false
+    fieldName: product_id
+    publicName: product_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  stores:
+    disabled: false
+    fieldName: stores
+    publicName: stores
+    enhancer:
+      id: ''
+  title:
+    disabled: false
+    fieldName: title
+    publicName: title
+    enhancer:
+      id: ''
+  variations:
+    disabled: false
+    fieldName: variations
+    publicName: variations
+    enhancer:
+      id: ''
+  default_variation:
+    disabled: false
+    fieldName: default_variation
+    publicName: default_variation
+    enhancer:
+      id: ''
+  path:
+    disabled: false
+    fieldName: path
+    publicName: path
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: false
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  body:
+    disabled: false
+    fieldName: body
+    publicName: body
+    enhancer:
+      id: ''
+  field_brand:
+    disabled: false
+    fieldName: field_brand
+    publicName: field_brand
+    enhancer:
+      id: ''
+  field_category:
+    disabled: false
+    fieldName: field_category
+    publicName: field_category
+    enhancer:
+      id: ''
+  field_image:
+    disabled: false
+    fieldName: field_image
+    publicName: field_image
+    enhancer:
+      id: ''
+  field_product_id:
+    disabled: false
+    fieldName: field_product_id
+    publicName: field_product_id
+    enhancer:
+      id: ''
+  field_sub_category:
+    disabled: false
+    fieldName: field_sub_category
+    publicName: field_sub_category
+    enhancer:
+      id: ''

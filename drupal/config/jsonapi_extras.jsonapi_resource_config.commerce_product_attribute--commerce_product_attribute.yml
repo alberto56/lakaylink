@@ -1,0 +1,65 @@
+uuid: 05731dd2-7be6-455b-8612-2bbfdcbdb7e8
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+id: commerce_product_attribute--commerce_product_attribute
+disabled: true
+path: commerce_product_attribute/commerce_product_attribute
+resourceType: commerce_product_attribute--commerce_product_attribute
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  elementType:
+    disabled: false
+    fieldName: elementType
+    publicName: elementType
+    enhancer:
+      id: ''
