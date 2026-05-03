@@ -1,0 +1,18 @@
+uuid: 4c29c88c-b94a-4d52-87df-420ef9cb0cd5
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.grocery_product
+id: commerce_product.grocery_product.title
+field_name: title
+entity_type: commerce_product
+bundle: grocery_product
+label: Title
+description: 'The product title.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

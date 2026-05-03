@@ -1,0 +1,22 @@
+uuid: 509a7c6d-fc95-48c5-8090-351e6e8be34d
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.sub_category
+id: taxonomy_term.sub_category.status
+field_name: status
+entity_type: taxonomy_term
+bundle: sub_category
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

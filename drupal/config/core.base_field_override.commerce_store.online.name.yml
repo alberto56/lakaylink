@@ -1,0 +1,18 @@
+uuid: c3e156d3-93ee-4acf-be68-dab3b98f31c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_store.commerce_store_type.online
+id: commerce_store.online.name
+field_name: name
+entity_type: commerce_store
+bundle: online
+label: Name
+description: 'The store name.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,22 @@
+uuid: 768c7f08-b406-491b-aaa6-45243efdad3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.grocery_product
+id: commerce_product.grocery_product.status
+field_name: status
+entity_type: commerce_product
+bundle: grocery_product
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
