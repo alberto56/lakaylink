@@ -153,6 +153,5 @@ Required fields:
 - [Refer Importing products and variants](readme/importing-products-variants.md)
 
 # API Setup
-----
 
 - [api setup](readme/api-setup.md)
