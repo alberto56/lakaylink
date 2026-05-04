@@ -11,7 +11,7 @@ bundle: online
 label: Owner
 description: 'The store owner.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: 'Drupal\commerce_store\Entity\Store::getDefaultEntityOwner'
 settings:

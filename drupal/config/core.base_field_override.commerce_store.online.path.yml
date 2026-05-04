@@ -13,7 +13,7 @@ bundle: online
 label: 'URL alias'
 description: 'The store URL alias.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

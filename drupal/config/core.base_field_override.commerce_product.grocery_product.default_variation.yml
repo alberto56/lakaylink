@@ -1,0 +1,23 @@
+uuid: cc0c5503-d4f6-4a37-8bd0-a40a5894adda
+langcode: fr
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.grocery_product
+    - commerce_product.commerce_product_variation_type.grocery_variation
+id: commerce_product.grocery_product.default_variation
+field_name: default_variation
+entity_type: commerce_product
+bundle: grocery_product
+label: 'Default variation'
+description: 'The default variation.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings:
+    target_bundles:
+      grocery_variation: grocery_variation
+field_type: entity_reference

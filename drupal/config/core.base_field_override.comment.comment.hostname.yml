@@ -11,7 +11,7 @@ bundle: comment
 label: Hostname
 description: "The comment author's hostname."
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: 'Drupal\comment\Entity\Comment::getDefaultHostname'
 settings: {  }

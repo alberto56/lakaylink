@@ -11,7 +11,7 @@ bundle: online
 label: 'Default currency'
 description: 'The default currency of the store.'
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
