@@ -1,0 +1,143 @@
+uuid: 2a64b663-d29b-4599-8f7b-63aa821cae9f
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.grocery_variation
+id: commerce_product_variation--grocery_variation
+disabled: false
+path: product_variation/grocery_variation
+resourceType: commerce_product_variation--grocery_variation
+resourceFields:
+  variation_id:
+    disabled: false
+    fieldName: variation_id
+    publicName: variation_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  product_id:
+    disabled: false
+    fieldName: product_id
+    publicName: product_id
+    enhancer:
+      id: ''
+  sku:
+    disabled: false
+    fieldName: sku
+    publicName: sku
+    enhancer:
+      id: ''
+  title:
+    disabled: false
+    fieldName: title
+    publicName: title
+    enhancer:
+      id: ''
+  list_price:
+    disabled: false
+    fieldName: list_price
+    publicName: list_price
+    enhancer:
+      id: ''
+  price:
+    disabled: false
+    fieldName: price
+    publicName: price
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: false
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  field_expiry_days:
+    disabled: false
+    fieldName: field_expiry_days
+    publicName: field_expiry_days
+    enhancer:
+      id: ''
+  field_inventory_status:
+    disabled: false
+    fieldName: field_inventory_status
+    publicName: field_inventory_status
+    enhancer:
+      id: ''
+  field_origin:
+    disabled: false
+    fieldName: field_origin
+    publicName: field_origin
+    enhancer:
+      id: ''
+  field_pack_type:
+    disabled: false
+    fieldName: field_pack_type
+    publicName: field_pack_type
+    enhancer:
+      id: ''
+  field_quantity:
+    disabled: false
+    fieldName: field_quantity
+    publicName: field_quantity
+    enhancer:
+      id: ''
+  field_stock:
+    disabled: false
+    fieldName: field_stock
+    publicName: field_stock
+    enhancer:
+      id: ''
+  field_storage_type:
+    disabled: false
+    fieldName: field_storage_type
+    publicName: field_storage_type
+    enhancer:
+      id: ''
+  field_unit:
+    disabled: false
+    fieldName: field_unit
+    publicName: field_unit
+    enhancer:
+      id: ''

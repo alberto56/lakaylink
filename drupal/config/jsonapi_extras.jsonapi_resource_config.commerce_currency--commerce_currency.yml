@@ -1,0 +1,77 @@
+uuid: 7010fc81-1c0d-4838-aa6f-60e70f6ae732
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_price
+id: commerce_currency--commerce_currency
+disabled: true
+path: commerce_currency/commerce_currency
+resourceType: commerce_currency--commerce_currency
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  currencyCode:
+    disabled: false
+    fieldName: currencyCode
+    publicName: currencyCode
+    enhancer:
+      id: ''
+  name:
+    disabled: false
+    fieldName: name
+    publicName: name
+    enhancer:
+      id: ''
+  numericCode:
+    disabled: false
+    fieldName: numericCode
+    publicName: numericCode
+    enhancer:
+      id: ''
+  symbol:
+    disabled: false
+    fieldName: symbol
+    publicName: symbol
+    enhancer:
+      id: ''
+  fractionDigits:
+    disabled: false
+    fieldName: fractionDigits
+    publicName: fractionDigits
+    enhancer:
+      id: ''

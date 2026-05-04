@@ -1,0 +1,125 @@
+uuid: a2e2668a-4c8d-49b4-8eb3-87be9e94f168
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_payment
+id: commerce_payment--payment_default
+disabled: true
+path: commerce_payment/payment_default
+resourceType: commerce_payment--payment_default
+resourceFields:
+  payment_id:
+    disabled: false
+    fieldName: payment_id
+    publicName: payment_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  payment_gateway:
+    disabled: false
+    fieldName: payment_gateway
+    publicName: payment_gateway
+    enhancer:
+      id: ''
+  payment_gateway_mode:
+    disabled: false
+    fieldName: payment_gateway_mode
+    publicName: payment_gateway_mode
+    enhancer:
+      id: ''
+  payment_method:
+    disabled: false
+    fieldName: payment_method
+    publicName: payment_method
+    enhancer:
+      id: ''
+  order_id:
+    disabled: false
+    fieldName: order_id
+    publicName: order_id
+    enhancer:
+      id: ''
+  remote_id:
+    disabled: false
+    fieldName: remote_id
+    publicName: remote_id
+    enhancer:
+      id: ''
+  remote_state:
+    disabled: false
+    fieldName: remote_state
+    publicName: remote_state
+    enhancer:
+      id: ''
+  amount:
+    disabled: false
+    fieldName: amount
+    publicName: amount
+    enhancer:
+      id: ''
+  refunded_amount:
+    disabled: false
+    fieldName: refunded_amount
+    publicName: refunded_amount
+    enhancer:
+      id: ''
+  state:
+    disabled: false
+    fieldName: state
+    publicName: state
+    enhancer:
+      id: ''
+  authorized:
+    disabled: false
+    fieldName: authorized
+    publicName: authorized
+    enhancer:
+      id: ''
+  expires:
+    disabled: false
+    fieldName: expires
+    publicName: expires
+    enhancer:
+      id: ''
+  completed:
+    disabled: false
+    fieldName: completed
+    publicName: completed
+    enhancer:
+      id: ''
+  avs_response_code:
+    disabled: false
+    fieldName: avs_response_code
+    publicName: avs_response_code
+    enhancer:
+      id: ''
+  avs_response_code_label:
+    disabled: false
+    fieldName: avs_response_code_label
+    publicName: avs_response_code_label
+    enhancer:
+      id: ''
+  test:
+    disabled: false
+    fieldName: test
+    publicName: test
+    enhancer:
+      id: ''
+  captured:
+    disabled: false
+    fieldName: captured
+    publicName: captured
+    enhancer:
+      id: ''

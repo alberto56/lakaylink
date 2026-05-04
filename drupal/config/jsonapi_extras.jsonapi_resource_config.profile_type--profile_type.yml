@@ -1,0 +1,95 @@
+uuid: 8cabb157-5b54-4bb2-8df4-5ba22bff4ced
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile_type--profile_type
+disabled: true
+path: profile_type/profile_type
+resourceType: profile_type--profile_type
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  display_label:
+    disabled: false
+    fieldName: display_label
+    publicName: display_label
+    enhancer:
+      id: ''
+  multiple:
+    disabled: false
+    fieldName: multiple
+    publicName: multiple
+    enhancer:
+      id: ''
+  registration:
+    disabled: false
+    fieldName: registration
+    publicName: registration
+    enhancer:
+      id: ''
+  roles:
+    disabled: false
+    fieldName: roles
+    publicName: roles
+    enhancer:
+      id: ''
+  allow_revisions:
+    disabled: false
+    fieldName: allow_revisions
+    publicName: allow_revisions
+    enhancer:
+      id: ''
+  new_revision:
+    disabled: false
+    fieldName: new_revision
+    publicName: new_revision
+    enhancer:
+      id: ''

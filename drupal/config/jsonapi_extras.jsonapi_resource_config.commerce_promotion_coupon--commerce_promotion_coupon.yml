@@ -1,0 +1,77 @@
+uuid: e5db724f-97af-412c-8cd0-109722cda36f
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_promotion
+id: commerce_promotion_coupon--commerce_promotion_coupon
+disabled: true
+path: commerce_promotion_coupon/commerce_promotion_coupon
+resourceType: commerce_promotion_coupon--commerce_promotion_coupon
+resourceFields:
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  promotion_id:
+    disabled: false
+    fieldName: promotion_id
+    publicName: promotion_id
+    enhancer:
+      id: ''
+  code:
+    disabled: false
+    fieldName: code
+    publicName: code
+    enhancer:
+      id: ''
+  start_date:
+    disabled: false
+    fieldName: start_date
+    publicName: start_date
+    enhancer:
+      id: ''
+  end_date:
+    disabled: false
+    fieldName: end_date
+    publicName: end_date
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  usage_limit:
+    disabled: false
+    fieldName: usage_limit
+    publicName: usage_limit
+    enhancer:
+      id: ''
+  usage_limit_customer:
+    disabled: false
+    fieldName: usage_limit_customer
+    publicName: usage_limit_customer
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''

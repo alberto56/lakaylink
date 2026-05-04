@@ -1,0 +1,20 @@
+uuid: 52524606-dbb3-4b68-85a4-24c54b679c9a
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.grocery_variation
+id: commerce_product_variation.grocery_variation.uid
+field_name: uid
+entity_type: commerce_product_variation
+bundle: grocery_variation
+label: Author
+description: 'The variation author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\commerce_product\Entity\ProductVariation::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

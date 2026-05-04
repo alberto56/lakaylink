@@ -1,0 +1,131 @@
+uuid: 9600e0ff-be7c-458c-a017-b1298a6e405e
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_store.commerce_store_type.online
+id: commerce_store--online
+disabled: false
+path: store/online
+resourceType: commerce_store--online
+resourceFields:
+  store_id:
+    disabled: false
+    fieldName: store_id
+    publicName: store_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  name:
+    disabled: false
+    fieldName: name
+    publicName: name
+    enhancer:
+      id: ''
+  mail:
+    disabled: false
+    fieldName: mail
+    publicName: mail
+    enhancer:
+      id: ''
+  default_currency:
+    disabled: false
+    fieldName: default_currency
+    publicName: default_currency
+    enhancer:
+      id: ''
+  timezone:
+    disabled: false
+    fieldName: timezone
+    publicName: timezone
+    enhancer:
+      id: ''
+  address:
+    disabled: false
+    fieldName: address
+    publicName: address
+    enhancer:
+      id: ''
+  billing_countries:
+    disabled: false
+    fieldName: billing_countries
+    publicName: billing_countries
+    enhancer:
+      id: ''
+  path:
+    disabled: false
+    fieldName: path
+    publicName: path
+    enhancer:
+      id: ''
+  is_default:
+    disabled: false
+    fieldName: is_default
+    publicName: is_default
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: false
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  prices_include_tax:
+    disabled: false
+    fieldName: prices_include_tax
+    publicName: prices_include_tax
+    enhancer:
+      id: ''
+  tax_registrations:
+    disabled: false
+    fieldName: tax_registrations
+    publicName: tax_registrations
+    enhancer:
+      id: ''
+  field_google_sheet_tab_gid:
+    disabled: false
+    fieldName: field_google_sheet_tab_gid
+    publicName: field_google_sheet_tab_gid
+    enhancer:
+      id: ''
+  field_google_sheet_url:
+    disabled: false
+    fieldName: field_google_sheet_url
+    publicName: field_google_sheet_url
+    enhancer:
+      id: ''

@@ -1,0 +1,119 @@
+uuid: b2d4dc9c-c8aa-46c4-8f39-b0e6283d6c19
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_payment
+id: commerce_payment_method--stripe_card
+disabled: true
+path: commerce_payment_method/stripe_card
+resourceType: commerce_payment_method--stripe_card
+resourceFields:
+  method_id:
+    disabled: false
+    fieldName: method_id
+    publicName: method_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  payment_gateway:
+    disabled: false
+    fieldName: payment_gateway
+    publicName: payment_gateway
+    enhancer:
+      id: ''
+  payment_gateway_mode:
+    disabled: false
+    fieldName: payment_gateway_mode
+    publicName: payment_gateway_mode
+    enhancer:
+      id: ''
+  remote_id:
+    disabled: false
+    fieldName: remote_id
+    publicName: remote_id
+    enhancer:
+      id: ''
+  billing_profile:
+    disabled: false
+    fieldName: billing_profile
+    publicName: billing_profile
+    enhancer:
+      id: ''
+  reusable:
+    disabled: false
+    fieldName: reusable
+    publicName: reusable
+    enhancer:
+      id: ''
+  is_default:
+    disabled: false
+    fieldName: is_default
+    publicName: is_default
+    enhancer:
+      id: ''
+  expires:
+    disabled: false
+    fieldName: expires
+    publicName: expires
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  stripe_card_type:
+    disabled: false
+    fieldName: stripe_card_type
+    publicName: stripe_card_type
+    enhancer:
+      id: ''
+  stripe_card_number:
+    disabled: false
+    fieldName: stripe_card_number
+    publicName: stripe_card_number
+    enhancer:
+      id: ''
+  stripe_card_exp_month:
+    disabled: false
+    fieldName: stripe_card_exp_month
+    publicName: stripe_card_exp_month
+    enhancer:
+      id: ''
+  stripe_card_exp_year:
+    disabled: false
+    fieldName: stripe_card_exp_year
+    publicName: stripe_card_exp_year
+    enhancer:
+      id: ''
+  stripe_card_wallet_type:
+    disabled: false
+    fieldName: stripe_card_wallet_type
+    publicName: stripe_card_wallet_type
+    enhancer:
+      id: ''

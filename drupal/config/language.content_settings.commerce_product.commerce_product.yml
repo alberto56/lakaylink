@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: commerce_product.commerce_product
+target_entity_type_id: commerce_product
+target_bundle: commerce_product
+default_langcode: site_default
+language_alterable: true
+translatable: true

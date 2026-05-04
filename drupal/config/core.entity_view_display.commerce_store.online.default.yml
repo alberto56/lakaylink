@@ -119,5 +119,6 @@ content:
     weight: 2
     region: content
 hidden:
+  langcode: true
   prices_include_tax: true
   tax_registrations: true
