@@ -1,0 +1,9 @@
+display:
+  default:
+    display_options:
+      fields:
+        nothing:
+          admin_label: Icône
+      exposed_form:
+        options:
+          submit_button: Filtrer

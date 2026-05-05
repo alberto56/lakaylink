@@ -1,0 +1,8 @@
+display:
+  default:
+    display_options:
+      fields:
+        name:
+          label: Nom
+        operations:
+          label: Actions

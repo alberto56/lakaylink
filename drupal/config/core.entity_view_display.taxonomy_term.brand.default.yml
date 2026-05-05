@@ -1,0 +1,31 @@
+uuid: a0faf13a-dfe0-419b-8b72-ef2ca559c5bb
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.brand.field_brand_code
+    - taxonomy.vocabulary.brand
+  module:
+    - text
+id: taxonomy_term.brand.default
+targetEntityType: taxonomy_term
+bundle: brand
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_brand_code:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  langcode: true

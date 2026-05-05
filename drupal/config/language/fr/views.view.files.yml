@@ -1,0 +1,11 @@
+display:
+  default:
+    display_options:
+      fields:
+        filename:
+          label: Nom
+        operations:
+          label: Actions
+      exposed_form:
+        options:
+          submit_button: Filtrer

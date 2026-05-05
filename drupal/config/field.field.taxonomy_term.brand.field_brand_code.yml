@@ -1,0 +1,19 @@
+uuid: a029380c-b7de-404a-bd00-014b45d804f1
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_brand_code
+    - taxonomy.vocabulary.brand
+id: taxonomy_term.brand.field_brand_code
+field_name: field_brand_code
+entity_type: taxonomy_term
+bundle: brand
+label: 'brand code'
+description: 'untranslatable field, this will be common in all languages. ex:- english brand name ‘spices’ and french brand name as ’spices fr’ . should have common brand code ’spices’. this helpfull for importing translated taxonomy term. '
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

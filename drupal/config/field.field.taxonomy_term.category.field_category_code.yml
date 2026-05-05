@@ -1,0 +1,19 @@
+uuid: 0996cf21-850d-444a-b3ff-4395fb32a8a6
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_category_code
+    - taxonomy.vocabulary.category
+id: taxonomy_term.category.field_category_code
+field_name: field_category_code
+entity_type: taxonomy_term
+bundle: category
+label: 'category code'
+description: 'untranslatable field, this will be common in all languages. ex:- english category name ‘spices’ and french category name as ’spices fr’ . should have common category code ’spices’. this helpfull for importing translated taxonomy term. '
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
