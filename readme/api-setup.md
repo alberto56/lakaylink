@@ -83,6 +83,14 @@ ex:-  search by type commerce_product--grocery_product, you will get id of a pro
 "data":{"type":"commerce_product--grocery_product","id":"22ceba2e-97c3-4039-bf41-54b640e6dd27"....
 ```
 
+- If you want to access multilingual content then add /<language code>/ to api host.
+
+for example:- Get french default stores.
+
+1. list of stores 
+
+GET  https://lakaybeta.dcycleproject.org/fr/api/store/online
+
 
 ### 1.3 Allow anonymous read-only access
 
