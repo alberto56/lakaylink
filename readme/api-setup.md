@@ -83,6 +83,56 @@ ex:-  search by type commerce_product--grocery_product, you will get id of a pro
 "data":{"type":"commerce_product--grocery_product","id":"22ceba2e-97c3-4039-bf41-54b640e6dd27"....
 ```
 
+- If you want to access specific field.
+
+/< api path >?fields[target entity type]=field1,field2
+
+ex:-
+
+https://lakaybeta.dcycleproject.org/api/store/online?fields[commerce_store--online]=name,address
+
+Access name and address of a fields.
+
+
+- unpublished grocery product
+/api/product/grocery?filter[status]=0
+
+
+- Include relationships:
+GET /en/jsonapi/commerce_product/default?include=variations,stores
+
+### Product Variations API
+
+List variations
+GET /api/product_variation/grocery_variation
+
+Single variation
+GET /api/product_variation/grocery_variation/{uuid}
+
+### Get customers 
+/api/profile/customer	
+
+
+### Taxonomy
+
+GET /api/taxonomy_term/brand
+GET /api/taxonomy_term/category	
+GET /api/taxonomy_term/sub_category	
+
+### Grocery Variations
+GET /api/commerce_product_variation/grocery_variation
+GET /api/commerce_product_variation/grocery_variation/{uuid}
+
+### Users
+http://localhost:61448/api/user/user
+
+### roles:
+
+/admin/people/roles
+
+
+
+
 - If you want to access multilingual content then add /<language code>/ to api host.
 
 for example:- Get french default stores.

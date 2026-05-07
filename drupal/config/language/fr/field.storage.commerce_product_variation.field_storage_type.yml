@@ -1,0 +1,14 @@
+settings:
+  allowed_values:
+    -
+      value: dry
+      label: Sec
+    -
+      value: cold
+      label: Réfrigéré
+    -
+      value: frozen
+      label: Surgelé
+    -
+      value: room
+      label: Température ambiante

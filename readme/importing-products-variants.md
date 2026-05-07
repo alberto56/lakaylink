@@ -553,3 +553,19 @@ Logs available for:
 3. 2 products with variant one is published and one is unblished then single product created and created 2 variants created
   with one variant unpublished and one unpublished respectively.
 4. Empty lines are skipped not throwing errors.
+
+
+
+# translated content
+----
+
+google sheet must have lang can  be , empty
+
+if lang column is empty then default en language is considered.
+
+taxonomy transalation" we have to add one field in ui in all volubulary which is unique
+in all language. for example brand vocabulary brand should have brand code field.
+
+i.e.. :- untranslatable field, this will be common in all languages. ex:- english brand name
+‘spices’ and french brand name as ’spices fr’ . should have common brand code ’spices’. this helpfull
+for importing translatedtaxonomy term.

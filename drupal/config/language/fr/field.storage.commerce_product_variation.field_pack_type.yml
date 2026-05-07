@@ -1,0 +1,20 @@
+settings:
+  allowed_values:
+    -
+      value: packed
+      label: Emballé
+    -
+      value: unpacked
+      label: Non emballé
+    -
+      value: loose
+      label: En vrac
+    -
+      value: bottle
+      label: Bouteille
+    -
+      value: box
+      label: Boîte
+    -
+      value: packet
+      label: Paquet
