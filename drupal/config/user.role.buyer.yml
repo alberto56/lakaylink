@@ -4,10 +4,16 @@ status: true
 dependencies:
   module:
     - commerce_order
+    - profile
 id: buyer
 label: Buyer
 weight: 4
 is_admin: false
 permissions:
+  - 'create customer profile'
   - 'create default commerce_order'
+  - 'update default commerce_order'
+  - 'view any customer profile'
   - 'view default commerce_order'
+  - 'view own customer profile'
+  - 'view own profile'
