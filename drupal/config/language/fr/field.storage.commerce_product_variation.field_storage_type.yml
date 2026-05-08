@@ -11,4 +11,4 @@ settings:
       label: Surgelé
     -
       value: room
-      label: Température ambiante
+      label: 'Température ambiante'

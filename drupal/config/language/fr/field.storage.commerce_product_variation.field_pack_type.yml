@@ -5,10 +5,10 @@ settings:
       label: Emballé
     -
       value: unpacked
-      label: Non emballé
+      label: 'Non emballé'
     -
       value: loose
-      label: En vrac
+      label: 'En vrac'
     -
       value: bottle
       label: Bouteille
