@@ -242,7 +242,6 @@ function fetchCsvFromUrl($url) {
  */
 function processRows(array $rows, $store_id) {
   foreach ($rows as $index => $data) {
-
     // account for header row
     $line = $index + 2;
 
@@ -261,7 +260,7 @@ function processRows(array $rows, $store_id) {
 
     \Drupal::logger('grocery_import')->notice("Processing SKU: " . $data['variation_sku']);
 
-    $langcode = $data['lang'] ?? 'en';
+    $langcode = $data['lang'] && $data['lang'] != "" ? $data['lang']: 'en';
     if (in_array($langcode, ['en', 'fr'])) {
        $product = loadOrCreateProduct($data, $store_id, $langcode);
       updateProduct($product, $data, $context, $langcode);
@@ -505,39 +504,6 @@ function my_grocery_download_image($url, $context) {
   }
 }
 
-
-/**
-
-function get_or_create_term($vocab, $name, $langcode = 'en') {
-  $storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
-
-  $terms = $storage->loadByProperties([
-    'vid' => $vocab,
-    'name' => $name,
-  ]);
-
-  $term = reset($terms);
-
-  if (!$term) {
-    $term = Term::create([
-      'vid' => $vocab,
-        'name' => $name,
-        'langcode' => $langcode,
-    ]);
-    $term->save();
-  }
-
-  // Add translation if needed
-  if (!$term->hasTranslation($langcode)) {
-    $term->addTranslation($langcode, ['name' => $name])->save();
-  }
-
-  return $term;
-}
-
-*/
-
-
 function get_or_create_term($vocab, $name, $code, $langcode = 'en') {
   $storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
 
@@ -600,17 +566,4 @@ function validateRow(array $row, $line, $store_id) {
  */
 function my_custom_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   App::instance()->hookFormAlter($form, $form_state, $form_id);
-}
-
-/**
- * Implements hook_theme().
- */
-function my_custom_module_theme($existing, $type, $theme, $path) {
-  return [
-    'commerce_product_add_to_cart_form' => [
-      'render element' => 'form',
-      'path' => $path . '/templates',
-      'template' => 'commerce-product-add-to-cart-form',
-    ],
-  ];
 }
