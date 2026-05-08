@@ -559,13 +559,93 @@ Logs available for:
 # translated content
 ----
 
-google sheet must have lang can  be , empty
-
-if lang column is empty then default en language is considered.
+Google sheet must have `lang` column. If row values are empty then default language `en` is considered.
 
 taxonomy transalation" we have to add one field in ui in all volubulary which is unique
-in all language. for example brand vocabulary brand should have brand code field.
+in all language. for example brand vocabulary brand should have field_brand_code field. which will
+have common value in all the language.
 
-i.e.. :- untranslatable field, this will be common in all languages. ex:- english brand name
+i.e.. :- field_brand_code is a untranslatable field, this will be common in all languages. ex:- english brand name
 ‘spices’ and french brand name as ’spices fr’ . should have common brand code ’spices’. this helpfull
 for importing translatedtaxonomy term.
+
+while importing content from product id ex- p1 get the product. If not found then create a product in a
+specified language (language specified in csv), If product found for p1 then add a translation content for it.
+
+For product variation fields like storage type, unit, package type option for french content.
+
+1.  package type option.
+
+ ```
+settings:
+  allowed_values:
+    -
+      value: packed
+      label: Emballé
+    -
+      value: unpacked
+      label: 'Non emballé'
+    -
+      value: loose
+      label: 'En vrac'
+    -
+      value: bottle
+      label: Bouteille
+    -
+      value: box
+      label: Boîte
+    -
+      value: packet
+      label: Paquet
+
+```
+
+2. Storage type 
+
+```
+settings:
+  allowed_values:
+    -
+      value: dry
+      label: Sec
+    -
+      value: cold
+      label: Réfrigéré
+    -
+      value: frozen
+      label: Surgelé
+    -
+      value: room
+      label: 'Température ambiante'
+
+```
+
+3.  unit type
+
+```
+settings:
+  allowed_values:
+    -
+      value: kg
+      label: kg
+    -
+      value: g
+      label: g
+    -
+      value: ml
+      label: ml
+    -
+      value: l
+      label: l
+    -
+      value: pcs
+      label: pièces
+    -
+      value: pack
+      label: paquet
+    -
+      value: dozen
+      label: douzaine
+
+```
+

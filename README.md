@@ -27,6 +27,14 @@ Step 1:
     git clone https://github.com/alberto56/lakaylink.git
     cd lakaylink
 
+    If you are setting up in local then goto docker-resources/nginx/default.conf file
+    and comment the code below lines.
+
+    ```
+      # fastcgi_param HTTPS on;
+      # fastcgi_param HTTP_X_FORWARDED_PROTO https;
+    ```
+
 Step 2: update .env files
 
     VIRTUAL_HOST=
@@ -47,7 +55,6 @@ Step 2: update .env files
       * openssl rsa -in drupal/starter-data/private-files/social-auth-oauth-keys/private.key -pubout -out drupal/starter-data/private-files/social-auth-oauth-keys/public.key
 
     ./scripts/deploy.sh
-
 
 ### 1. Anonymous Access
 

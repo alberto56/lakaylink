@@ -99,7 +99,7 @@ Access name and address of a fields.
 
 
 - Include relationships:
-GET /en/jsonapi/commerce_product/default?include=variations,stores
+GET /en/api/commerce_product/default?include=variations,stores
 
 ### Product Variations API
 
@@ -129,8 +129,6 @@ http://localhost:61448/api/user/user
 ### roles:
 
 /admin/people/roles
-
-
 
 
 - If you want to access multilingual content then add /<language code>/ to api host.
@@ -243,3 +241,614 @@ Authorization: Bearer ACCESS_TOKEN
 Use:
 OAuth scopes
 Drupal permissions
+
+
+
+# Authentication Flow
+
+## Step 1: Create OAuth Consumer
+
+Create a consumer from Drupal Admin:
+
+```text
+/admin/config/services/consumer
+```
+
+Create Consumer:
+
+| Field           | Value                   |
+| --------------- | ------------------------|
+| Label           | Mobile App / Frontend   |
+| Client ID       | auto-generated          |
+| Client Secret   | auto-generated          |
+| Grant types     | Authorization Code,     |
+|                 | Refresh Token           |
+| Is Confidential | TRUE                    |
+| Scopes          | Automatic authorization,|
+                  |  Use PKCE?              | 
+
+
+Access token expiry : 3600
+refresh token : 2592000
+
+Redirect URIs : https://frontend.example.com/auth/callback
+
+
+Save the consumer and copy:
+
+* client_id
+* client_secret
+
+---
+
+# Anonymous APIs
+
+Anonymous users can:
+
+* View stores
+* View products
+* View product variations
+
+No authentication required.
+
+---
+
+# Get Stores
+
+## Endpoint
+
+```
+GET /api/store/online
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/store/online'
+```
+
+## Response
+
+```
+{
+  "data": [
+    {
+      "type": "commerce_store--online",
+      "id": "store-uuid",
+      "attributes": {
+        "name": "Main Grocery Store"
+      }
+    }
+  ]
+}
+```
+
+---
+
+# Get Grocery Products
+
+## Endpoint
+
+```
+GET /api/product/grocery
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/product/grocery'
+```
+
+---
+
+# Get Products With Variations
+
+## Endpoint
+
+```
+GET /api/product/grocery?include=variations
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/product/grocery?include=variations'
+```
+
+---
+
+# Get Single Product
+
+## Endpoint
+
+```
+GET /api/product/grocery/{product_uuid}?include=variations
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/product/grocery/PRODUCT_UUID?include=variations'
+```
+
+---
+
+# Get Product Variations
+
+## Endpoint
+
+```
+GET /api/product_variation/grocery_variation
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/product_variation/grocery_variation'
+```
+
+## Sample Response
+
+```
+{
+  "data": [
+    {
+      "type": "commerce_product_variation--grocery_product_variation",
+      "id": "variation-uuid",
+      "attributes": {
+        "title": "Apple 1kg",
+        "sku": "APL-1KG",
+        "price": {
+          "number": "120.00",
+          "currency_code": "INR"
+        }
+      }
+    }
+  ]
+}
+```
+
+---
+
+# Buyer Authentication (Google / Gmail Login)
+
+Frontend or mobile app flow:
+
+```text
+Google Login
+    ↓
+Get Gmail Email
+    ↓
+Create/Login Drupal User
+    ↓
+Generate OAuth Access Token
+```
+
+---
+
+# Generate Access Token
+
+## Endpoint
+
+```
+POST /oauth/token
+```
+
+## Headers
+
+```
+Content-Type: application/json
+```
+
+## Payload
+
+```
+{
+  "grant_type": "password",
+  "client_id": "CLIENT_ID",
+  "client_secret": "CLIENT_SECRET",
+  "username": "buyer@gmail.com",
+  "password": "USER_PASSWORD"
+}
+```
+
+## Example
+
+```
+curl --location --request POST '${BASE_URL}/oauth/token' \
+--header 'Content-Type: application/json' \
+--data '{
+  "grant_type": "password",
+  "client_id": "CLIENT_ID",
+  "client_secret": "CLIENT_SECRET",
+  "username": "buyer@gmail.com",
+  "password": "USER_PASSWORD"
+}'
+```
+
+## Response
+
+```
+{
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "access_token": "ACCESS_TOKEN",
+  "refresh_token": "REFRESH_TOKEN"
+}
+```
+
+---
+
+# Authenticated Request Headers
+
+Use access token for all authenticated APIs.
+
+```
+Authorization: Bearer ACCESS_TOKEN
+Accept: application/vnd.api+json
+Content-Type: application/vnd.api+json
+```
+
+---
+
+# Add Product To Cart
+
+Drupal Commerce automatically creates cart when adding first item.
+
+## Endpoint
+
+```
+POST /api/cart/add
+```
+
+## Headers
+
+```
+Authorization: Bearer ACCESS_TOKEN
+Content-Type: application/json
+```
+
+## Payload
+
+```
+{
+  "data": {
+    "type": "cart-item",
+    "attributes": {
+      "quantity": 2
+    },
+    "relationships": {
+      "purchased_entity": {
+        "data": {
+          "type": "commerce_product_variation--grocery_product_variation",
+          "id": "VARIATION_UUID"
+        }
+      }
+    }
+  }
+}
+```
+
+## Example
+
+```
+curl --location --request POST '${BASE_URL}/api/cart/add' \
+--header 'Authorization: Bearer ACCESS_TOKEN' \
+--header 'Content-Type: application/json' \
+--data '{
+  "data": {
+    "type": "cart-item",
+    "attributes": {
+      "quantity": 2
+    },
+    "relationships": {
+      "purchased_entity": {
+        "data": {
+          "type": "commerce_product_variation--grocery_product_variation",
+          "id": "VARIATION_UUID"
+        }
+      }
+    }
+  }
+}'
+```
+
+---
+
+# View Cart
+
+## Endpoint
+
+```
+GET /api/commerce_order/default?filter[state][value]=draft
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/commerce_order/default?filter[state][value]=draft' \
+--header 'Authorization: Bearer ACCESS_TOKEN'
+```
+
+---
+
+# Get Cart Items
+
+## Endpoint
+
+```
+GET /api/commerce_order_item/default
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/commerce_order_item/default' \
+--header 'Authorization: Bearer ACCESS_TOKEN'
+```
+
+---
+
+# Update Cart Item Quantity
+
+## Endpoint
+
+```
+PATCH /api/commerce_order_item/default/{order_item_uuid}
+```
+
+## Payload
+
+```
+{
+  "data": {
+    "type": "commerce_order_item--default",
+    "id": "ORDER_ITEM_UUID",
+    "attributes": {
+      "quantity": "5"
+    }
+  }
+}
+```
+
+## Example
+
+```
+curl --location --request PATCH '${BASE_URL}/api/commerce_order_item/default/ORDER_ITEM_UUID' \
+--header 'Authorization: Bearer ACCESS_TOKEN' \
+--header 'Content-Type: application/vnd.api+json' \
+--data '{
+  "data": {
+    "type": "commerce_order_item--default",
+    "id": "ORDER_ITEM_UUID",
+    "attributes": {
+      "quantity": "5"
+    }
+  }
+}'
+```
+
+---
+
+# Remove Cart Item
+
+## Endpoint
+
+```
+DELETE /api/commerce_order_item/default/{order_item_uuid}
+```
+
+## Example
+
+```
+curl --location --request DELETE '${BASE_URL}/api/commerce_order_item/default/ORDER_ITEM_UUID' \
+--header 'Authorization: Bearer ACCESS_TOKEN'
+```
+
+---
+
+# Attach Billing Information
+
+## Endpoint
+
+```
+PATCH /api/commerce_order/default/{order_uuid}
+```
+
+## Payload
+
+```
+{
+  "data": {
+    "type": "commerce_order--default",
+    "id": "ORDER_UUID",
+    "attributes": {
+      "mail": "buyer@gmail.com"
+    }
+  }
+}
+```
+
+---
+
+# Checkout Flow
+
+Typical checkout steps:
+
+```text
+Add Products To Cart
+    ↓
+View Cart
+    ↓
+Update Quantities
+    ↓
+Attach Billing Details
+    ↓
+Create Stripe Payment
+    ↓
+Complete Order
+    ↓
+View Orders
+```
+
+---
+
+# Stripe Payment
+
+Depending on Stripe integration configuration.
+
+## Endpoint
+
+```
+POST /api/commerce_payment/default
+```
+
+## Payload
+
+```
+{
+  "data": {
+    "type": "commerce_payment--default",
+    "attributes": {
+      "payment_gateway": "stripe",
+      "amount": {
+        "number": "240.00",
+        "currency_code": "INR"
+      }
+    },
+    "relationships": {
+      "order_id": {
+        "data": {
+          "type": "commerce_order--default",
+          "id": "ORDER_UUID"
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+# Complete Order
+
+## Endpoint
+
+```
+PATCH /api/commerce_order/default/{order_uuid}
+```
+
+## Payload
+
+```
+{
+  "data": {
+    "type": "commerce_order--default",
+    "id": "ORDER_UUID",
+    "attributes": {
+      "state": "completed"
+    }
+  }
+}
+```
+
+## Example
+
+```
+curl --location --request PATCH '${BASE_URL}/api/commerce_order/default/ORDER_UUID' \
+--header 'Authorization: Bearer ACCESS_TOKEN' \
+--header 'Content-Type: application/vnd.api+json' \
+--data '{
+  "data": {
+    "type": "commerce_order--default",
+    "id": "ORDER_UUID",
+    "attributes": {
+      "state": "completed"
+    }
+  }
+}'
+```
+
+---
+
+# View My Orders
+
+## Endpoint
+
+```
+GET /api/commerce_order/default
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/commerce_order/default' \
+--header 'Authorization: Bearer ACCESS_TOKEN'
+```
+
+---
+
+# Get Single Order
+
+## Endpoint
+
+```
+GET /api/commerce_order/default/{order_uuid}
+```
+
+## Example
+
+```
+curl --location --request GET '${BASE_URL}/api/commerce_order/default/ORDER_UUID' \
+--header 'Authorization: Bearer ACCESS_TOKEN'
+```
+
+---
+
+# API Flow Summary
+
+## Anonymous User Flow
+
+```text
+Get Stores
+    ↓
+Get Products
+    ↓
+Get Product Variations
+```
+
+---
+
+## Authenticated Buyer Flow
+
+```text
+Google Login
+    ↓
+Generate OAuth Token
+    ↓
+Add Product To Cart
+    ↓
+View Cart
+    ↓
+Update Cart
+    ↓
+Stripe Payment
+    ↓
+Complete Order
+    ↓
+View Orders
+```
+
+
+# We can add cors to drupal/settings/services.yml
+
+```
+ cors.config:
+   enabled: true
+   allowedHeaders: ['*']
+   allowedMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']
+   allowedOrigins: ['https://frontend.example.com']
+   exposedHeaders: false
+   maxAge: 1000
+   supportsCredentials: true
+```
