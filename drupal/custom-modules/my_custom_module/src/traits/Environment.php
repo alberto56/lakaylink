@@ -94,22 +94,64 @@ trait Environment {
     \Drupal::logger('my_custom_module')->log($severity, $message, $variables);
   }
 
+  /**
+   * Returns the storage handler for a given entity type.
+   *
+   * @param string $storage
+   *   The machine name of the entity type storage to retrieve.
+   *
+   * @return \Drupal\Core\Entity\EntityStorageInterface
+   *   The storage handler for the specified entity type.
+   */
   public function getEntityTypeManager($storage) {
     return \Drupal::entityTypeManager()->getStorage($storage);
   }
 
+  /**
+   * Returns a queue object for the given queue name.
+   *
+   * @param string $queueName
+   *   The name of the queue to retrieve.
+   *
+   * @return \Drupal\Core\Queue\QueueInterface
+   *   The queue object corresponding to the given name.
+   */
   public function getQueue($queueName) {
     return \Drupal::queue($queueName);
   }
 
+  /**
+   * Returns a logger instance for the given channel.
+   *
+   * @param string $loggerName
+   *   The name of the logger channel.
+   *
+   * @return \Psr\Log\LoggerInterface
+   *   A logger instance for the specified channel.
+   */
   public function getLogger($loggerName) {
     return \Drupal::logger($loggerName);
   }
 
+  /**
+   * Returns the currently logged-in user.
+   *
+   * @return \Drupal\Core\Session\AccountProxyInterface
+   *   The current user account proxy object.
+   */
   public function getCurrentUser() {
     return \Drupal::currentUser();
   }
 
+  /**
+   * Returns a service from the Drupal service container.
+   *
+   * @param string $serviceName
+   *   The machine name of the service to retrieve.
+   *
+   * @return object
+   *   The requested service object.
+   */
   public function getService($serviceName) {
     return \Drupal::service($serviceName);
   }
