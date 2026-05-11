@@ -1,0 +1,8 @@
+display:
+  default:
+    display_options:
+      fields:
+        id:
+          label: 'Identifiant (ID)'
+        operations:
+          label: Actions

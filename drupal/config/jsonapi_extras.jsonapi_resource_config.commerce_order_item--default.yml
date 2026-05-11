@@ -1,0 +1,113 @@
+uuid: ac9200fe-71f6-4fe7-b497-057852cefa84
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.default
+id: commerce_order_item--default
+disabled: true
+path: commerce_order_item/default
+resourceType: commerce_order_item--default
+resourceFields:
+  order_item_id:
+    disabled: false
+    fieldName: order_item_id
+    publicName: order_item_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  order_id:
+    disabled: false
+    fieldName: order_id
+    publicName: order_id
+    enhancer:
+      id: ''
+  purchased_entity:
+    disabled: false
+    fieldName: purchased_entity
+    publicName: purchased_entity
+    enhancer:
+      id: ''
+  title:
+    disabled: false
+    fieldName: title
+    publicName: title
+    enhancer:
+      id: ''
+  overridden_title:
+    disabled: false
+    fieldName: overridden_title
+    publicName: overridden_title
+    enhancer:
+      id: ''
+  quantity:
+    disabled: false
+    fieldName: quantity
+    publicName: quantity
+    enhancer:
+      id: ''
+  unit_price:
+    disabled: false
+    fieldName: unit_price
+    publicName: unit_price
+    enhancer:
+      id: ''
+  overridden_unit_price:
+    disabled: false
+    fieldName: overridden_unit_price
+    publicName: overridden_unit_price
+    enhancer:
+      id: ''
+  total_price:
+    disabled: false
+    fieldName: total_price
+    publicName: total_price
+    enhancer:
+      id: ''
+  adjustments:
+    disabled: false
+    fieldName: adjustments
+    publicName: adjustments
+    enhancer:
+      id: ''
+  uses_legacy_adjustments:
+    disabled: false
+    fieldName: uses_legacy_adjustments
+    publicName: uses_legacy_adjustments
+    enhancer:
+      id: ''
+  data:
+    disabled: false
+    fieldName: data
+    publicName: data
+    enhancer:
+      id: ''
+  locked:
+    disabled: false
+    fieldName: locked
+    publicName: locked
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''

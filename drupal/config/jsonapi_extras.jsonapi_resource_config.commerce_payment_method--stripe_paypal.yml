@@ -1,0 +1,107 @@
+uuid: 79b28ab3-fa42-4d7d-9967-65ceb5824986
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_payment
+id: commerce_payment_method--stripe_paypal
+disabled: true
+path: commerce_payment_method/stripe_paypal
+resourceType: commerce_payment_method--stripe_paypal
+resourceFields:
+  method_id:
+    disabled: false
+    fieldName: method_id
+    publicName: method_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  payment_gateway:
+    disabled: false
+    fieldName: payment_gateway
+    publicName: payment_gateway
+    enhancer:
+      id: ''
+  payment_gateway_mode:
+    disabled: false
+    fieldName: payment_gateway_mode
+    publicName: payment_gateway_mode
+    enhancer:
+      id: ''
+  remote_id:
+    disabled: false
+    fieldName: remote_id
+    publicName: remote_id
+    enhancer:
+      id: ''
+  billing_profile:
+    disabled: false
+    fieldName: billing_profile
+    publicName: billing_profile
+    enhancer:
+      id: ''
+  reusable:
+    disabled: false
+    fieldName: reusable
+    publicName: reusable
+    enhancer:
+      id: ''
+  is_default:
+    disabled: false
+    fieldName: is_default
+    publicName: is_default
+    enhancer:
+      id: ''
+  expires:
+    disabled: false
+    fieldName: expires
+    publicName: expires
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  stripe_paypal_payer_email:
+    disabled: false
+    fieldName: stripe_paypal_payer_email
+    publicName: stripe_paypal_payer_email
+    enhancer:
+      id: ''
+  stripe_paypal_payer_id:
+    disabled: false
+    fieldName: stripe_paypal_payer_id
+    publicName: stripe_paypal_payer_id
+    enhancer:
+      id: ''
+  stripe_paypal_country:
+    disabled: false
+    fieldName: stripe_paypal_country
+    publicName: stripe_paypal_country
+    enhancer:
+      id: ''

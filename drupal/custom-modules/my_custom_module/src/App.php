@@ -45,11 +45,11 @@ class App {
   /**
    * Testable implementation of hook_form_alter().
    */
-  public function hookFormAlter($form, FormStateInterface $form_state, $form_id) {
-    // Match ALL add-to-cart forms (including dynamic ones like product_19)
-    if (str_starts_with($form_id, 'commerce_order_item_add_to_cart_form')) {
-      $account = $this->getCurrentUser();
+  public function hookFormAlter(&$form, FormStateInterface $form_state, $form_id) {
 
+    // Match ALL add-to-cart forms (including dynamic ones like product_19)
+    if (str_starts_with($form_id, 'commerce_order_item_add_to_cart_form_commerce_product')) {
+      $account = $this->getCurrentUser();
       if ($account->isAnonymous()) {
         // Hide entire form.
         $form["actions"] = [];

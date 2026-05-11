@@ -73,7 +73,7 @@ function my_custom_module_import($store_id) {
  * @return \Drupal\commerce_store\Entity\Store
  * @throws \Exception
  */
-function loadStore($store_id) {
+function loadStore($store_id, $langcode = NULL) {
   $store = \Drupal\commerce_store\Entity\Store::load($store_id);
 
   if (!$store) {
@@ -260,15 +260,18 @@ function processRows(array $rows, $store_id) {
 
     \Drupal::logger('grocery_import')->notice("Processing SKU: " . $data['variation_sku']);
 
-    $product = loadOrCreateProduct($data, $store_id);
-    updateProduct($product, $data, $context);
+    $langcode = $data['lang'] && $data['lang'] != "" ? $data['lang']: 'en';
+    if (in_array($langcode, ['en', 'fr'])) {
+       $product = loadOrCreateProduct($data, $store_id, $langcode);
+      updateProduct($product, $data, $context, $langcode);
 
-    $variation = loadOrCreateVariation($data);
-    if ($variation) {
-      updateVariation($variation, $data);
+      $variation = loadOrCreateVariation($data, $langcode);
+      if ($variation) {
+        updateVariation($variation, $data, $langcode);
+      }
+
+      attachVariationToProduct($product, $variation);
     }
-
-    attachVariationToProduct($product, $variation);
   }
 }
 
@@ -287,7 +290,7 @@ function reloadVariationBySku($sku) {
  * @param int $store_id
  * @return \Drupal\commerce_product\Entity\Product
  */
-function loadOrCreateProduct(array $data, $store_id) {
+function loadOrCreateProduct(array $data, $store_id, $langcode = 'en') {
   $storage = \Drupal::entityTypeManager()->getStorage('commerce_product');
 
   $existing = $storage->loadByProperties([
@@ -304,7 +307,18 @@ function loadOrCreateProduct(array $data, $store_id) {
       'title' => $data['product_name'],
       'stores' => [$store_id],
       'field_product_id' => $data['product_id'],
+      'langcode' => $langcode,
     ]);
+  }
+  else {
+    if ($product->language()->getId() !== $langcode) {
+      if ($product->hasTranslation($langcode)) {
+        $translated = $product->getTranslation($langcode);
+      } else {
+        $translated = $product->addTranslation($langcode);
+      }
+      return $translated;
+    }
   }
 
   return $product;
@@ -316,21 +330,30 @@ function loadOrCreateProduct(array $data, $store_id) {
  * @param \Drupal\commerce_product\Entity\Product $product
  * @param array $data
  */
-function updateProduct($product, array $data, $context) {
-  $product->setTitle($data['product_name']);
-  $product->set('status', (bool) $data['status']);
+function updateProduct($product, array $data, $context, $langcode = 'en') {
+
+  // Get translation or create one
+  if ($product->hasTranslation($langcode)) {
+    $translated = $product->getTranslation($langcode);
+  } else {
+    $translated = $product->addTranslation($langcode);
+  }
+
+  $translated->setTitle($data['product_name']);
+  $translated->set('status', (bool) $data['status']);
 
   if (!empty($data['product_description'])) {
-    $product->set('body', [
+    $translated->set('body', [
       'value' => $data['product_description'],
       'format' => 'basic_html',
     ]);
   }
 
-  // Taxonomy
-  $product->set('field_brand', get_or_create_term('brand', $data['brand']));
-  $product->set('field_category', get_or_create_term('category', $data['category']));
-  $product->set('field_sub_category', get_or_create_term('sub_category', $data['sub_category']));
+  $translated->set('field_brand', get_or_create_term('brand', $data['brand'], $data['brand_code'], $langcode));
+  $translated->set('field_category', get_or_create_term('category', $data['category'], $data['category_code'], $langcode));
+  $translated->set('field_sub_category', get_or_create_term('sub_category', $data['sub_category'], $data['sub_category_code'], $langcode));
+
+  $translated->save();
 
   // Image
   if (!empty($data['image_url'])) {
@@ -364,7 +387,7 @@ function updateProduct($product, array $data, $context) {
  * @param array $data
  * @return \Drupal\commerce_product\Entity\ProductVariation
  */
-function loadOrCreateVariation(array $data) {
+function loadOrCreateVariation(array $data, $langcode = 'en') {
   $storage = \Drupal::entityTypeManager()->getStorage('commerce_product_variation');
 
   $existing = $storage->loadByProperties([
@@ -377,7 +400,18 @@ function loadOrCreateVariation(array $data) {
     $variation = ProductVariation::create([
       'type' => 'grocery_variation',
       'sku' => $data['variation_sku'],
+      'langcode' => $langcode,
     ]);
+  }
+  else {
+    if ($variation->language()->getId() !== $langcode) {
+      if ($variation->hasTranslation($langcode)) {
+        $translated = $variation->getTranslation($langcode);
+      } else {
+        $translated = $variation->addTranslation($langcode);
+      }
+      return $translated;
+    }
   }
 
   return $variation;
@@ -389,8 +423,18 @@ function loadOrCreateVariation(array $data) {
  * @param \Drupal\commerce_product\Entity\ProductVariation $variation
  * @param array $data
  */
-function updateVariation($variation, array $data) {
-  $variation->setTitle($data['variant_name']);
+function updateVariation($variation, array $data, $langcode = 'en') {
+
+  if ($variation->hasTranslation($langcode)) {
+    $translated = $variation->getTranslation($langcode);
+  } else {
+    $translated = $variation->addTranslation($langcode);
+  }
+
+  $translated->setTitle($data['variant_name']);
+
+  $translated->save();
+
   $variation->set('price', [
     'number' => $data['price'],
     'currency_code' => $data['currency'],
@@ -460,23 +504,44 @@ function my_grocery_download_image($url, $context) {
   }
 }
 
-function get_or_create_term($vocab, $name) {
-  $terms = \Drupal::entityTypeManager()
-    ->getStorage('taxonomy_term')
-    ->loadByProperties([
+function get_or_create_term($vocab, $name, $code, $langcode = 'en') {
+  $storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+
+  // ✅ 1. Load by stable code (NOT name)
+  $terms = $storage->loadByProperties([
+    'vid' => $vocab,
+    'field_' . $vocab . '_code' => $code,
+  ]);
+
+  $term = reset($terms);
+  $default_langcode = \Drupal::languageManager()
+    ->getDefaultLanguage()
+    ->getId();
+
+  // ✅ 2. Create base term if not exists
+  if (!$term) {
+    $term = Term::create([
       'vid' => $vocab,
       'name' => $name,
+      'langcode' => $default_langcode, // base language
+      'field_' . $vocab . '_code' => $code,
     ]);
 
-  if ($term = reset($terms)) {
-    return $term;
+    $term->save();
   }
 
-  $term = Term::create([
-    'vid' => $vocab,
-    'name' => $name,
-  ]);
-  $term->save();
+  // ✅ 3. Handle translations
+  if ($langcode !== $default_langcode) {
+
+    if ($term->hasTranslation($langcode)) {
+      $translated = $term->getTranslation($langcode);
+    } else {
+      $translated = $term->addTranslation($langcode);
+    }
+
+    $translated->setName($name);
+    $translated->save();
+  }
 
   return $term;
 }

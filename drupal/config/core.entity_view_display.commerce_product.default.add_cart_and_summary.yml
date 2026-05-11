@@ -51,5 +51,6 @@ hidden:
   field_image: true
   field_product_id: true
   field_tags: true
+  langcode: true
   stores: true
   uid: true

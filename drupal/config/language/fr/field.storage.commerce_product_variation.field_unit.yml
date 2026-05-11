@@ -1,0 +1,23 @@
+settings:
+  allowed_values:
+    -
+      value: kg
+      label: kg
+    -
+      value: g
+      label: g
+    -
+      value: ml
+      label: ml
+    -
+      value: l
+      label: l
+    -
+      value: pcs
+      label: pièces
+    -
+      value: pack
+      label: paquet
+    -
+      value: dozen
+      label: douzaine

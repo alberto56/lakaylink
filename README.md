@@ -15,6 +15,7 @@ Marketplace Allows expat family members to purchase food items (for example rice
 * Import products and variations from Google Sheet 
 * Google social login
 * Stripe integration
+* api setup
 
 ---
 
@@ -24,7 +25,15 @@ Quickstart
 Step 1:
   
     git clone https://github.com/alberto56/lakaylink.git
-    cd lakaylink && ./scripts/deploy.sh
+    cd lakaylink
+
+    If you are setting up in local then goto docker-resources/nginx/default.conf file
+    and comment the code below lines.
+
+    ```
+      # fastcgi_param HTTPS on;
+      # fastcgi_param HTTP_X_FORWARDED_PROTO https;
+    ```
 
 Step 2: update .env files
 
@@ -39,8 +48,13 @@ Step 2: update .env files
     - [refer step0, step1 and step2 to get client id and client secret](readme/social-auth-google-configuration.md)
     - [refer stripe setup to get publishable key, secret key, webhook signing secret](readme/drupal-coomerce-stripe-connect.md)
 
-    ./scripts/deploy.sh
+    - create public and private keys to setup simple oauth.
 
+      * openssl genrsa -out drupal/starter-data/private-files/social-auth-oauth-keys/private.key  2048
+
+      * openssl rsa -in drupal/starter-data/private-files/social-auth-oauth-keys/private.key -pubout -out drupal/starter-data/private-files/social-auth-oauth-keys/public.key
+
+    ./scripts/deploy.sh
 
 ### 1. Anonymous Access
 
@@ -144,3 +158,7 @@ Required fields:
 ---
 
 - [Refer Importing products and variants](readme/importing-products-variants.md)
+
+# API Setup
+
+- [api setup](readme/api-setup.md)

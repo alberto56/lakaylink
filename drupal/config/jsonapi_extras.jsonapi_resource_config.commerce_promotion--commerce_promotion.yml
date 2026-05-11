@@ -1,0 +1,155 @@
+uuid: 4a52d6c2-1324-43ea-8fb0-206e47f49cc7
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_promotion
+id: commerce_promotion--commerce_promotion
+disabled: true
+path: commerce_promotion/commerce_promotion
+resourceType: commerce_promotion--commerce_promotion
+resourceFields:
+  promotion_id:
+    disabled: false
+    fieldName: promotion_id
+    publicName: promotion_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  name:
+    disabled: false
+    fieldName: name
+    publicName: name
+    enhancer:
+      id: ''
+  display_name:
+    disabled: false
+    fieldName: display_name
+    publicName: display_name
+    enhancer:
+      id: ''
+  description:
+    disabled: false
+    fieldName: description
+    publicName: description
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  order_types:
+    disabled: false
+    fieldName: order_types
+    publicName: order_types
+    enhancer:
+      id: ''
+  stores:
+    disabled: false
+    fieldName: stores
+    publicName: stores
+    enhancer:
+      id: ''
+  offer:
+    disabled: false
+    fieldName: offer
+    publicName: offer
+    enhancer:
+      id: ''
+  conditions:
+    disabled: false
+    fieldName: conditions
+    publicName: conditions
+    enhancer:
+      id: ''
+  condition_operator:
+    disabled: false
+    fieldName: condition_operator
+    publicName: condition_operator
+    enhancer:
+      id: ''
+  coupons:
+    disabled: false
+    fieldName: coupons
+    publicName: coupons
+    enhancer:
+      id: ''
+  usage_limit:
+    disabled: false
+    fieldName: usage_limit
+    publicName: usage_limit
+    enhancer:
+      id: ''
+  usage_limit_customer:
+    disabled: false
+    fieldName: usage_limit_customer
+    publicName: usage_limit_customer
+    enhancer:
+      id: ''
+  start_date:
+    disabled: false
+    fieldName: start_date
+    publicName: start_date
+    enhancer:
+      id: ''
+  end_date:
+    disabled: false
+    fieldName: end_date
+    publicName: end_date
+    enhancer:
+      id: ''
+  compatibility:
+    disabled: false
+    fieldName: compatibility
+    publicName: compatibility
+    enhancer:
+      id: ''
+  require_coupon:
+    disabled: false
+    fieldName: require_coupon
+    publicName: require_coupon
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  weight:
+    disabled: false
+    fieldName: weight
+    publicName: weight
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: false
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''

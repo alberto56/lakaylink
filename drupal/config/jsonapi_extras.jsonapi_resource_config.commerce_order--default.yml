@@ -1,0 +1,185 @@
+uuid: 1a8bffb3-3ba8-44d5-974c-ac99022766c3
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_type.default
+id: commerce_order--default
+disabled: true
+path: commerce_order/default
+resourceType: commerce_order--default
+resourceFields:
+  order_id:
+    disabled: false
+    fieldName: order_id
+    publicName: order_id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  order_number:
+    disabled: false
+    fieldName: order_number
+    publicName: order_number
+    enhancer:
+      id: ''
+  version:
+    disabled: false
+    fieldName: version
+    publicName: version
+    enhancer:
+      id: ''
+  store_id:
+    disabled: false
+    fieldName: store_id
+    publicName: store_id
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  mail:
+    disabled: false
+    fieldName: mail
+    publicName: mail
+    enhancer:
+      id: ''
+  ip_address:
+    disabled: false
+    fieldName: ip_address
+    publicName: ip_address
+    enhancer:
+      id: ''
+  billing_profile:
+    disabled: false
+    fieldName: billing_profile
+    publicName: billing_profile
+    enhancer:
+      id: ''
+  order_items:
+    disabled: false
+    fieldName: order_items
+    publicName: order_items
+    enhancer:
+      id: ''
+  adjustments:
+    disabled: false
+    fieldName: adjustments
+    publicName: adjustments
+    enhancer:
+      id: ''
+  total_price:
+    disabled: false
+    fieldName: total_price
+    publicName: total_price
+    enhancer:
+      id: ''
+  total_paid:
+    disabled: false
+    fieldName: total_paid
+    publicName: total_paid
+    enhancer:
+      id: ''
+  balance:
+    disabled: false
+    fieldName: balance
+    publicName: balance
+    enhancer:
+      id: ''
+  state:
+    disabled: false
+    fieldName: state
+    publicName: state
+    enhancer:
+      id: ''
+  data:
+    disabled: false
+    fieldName: data
+    publicName: data
+    enhancer:
+      id: ''
+  locked:
+    disabled: false
+    fieldName: locked
+    publicName: locked
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  placed:
+    disabled: false
+    fieldName: placed
+    publicName: placed
+    enhancer:
+      id: ''
+  completed:
+    disabled: false
+    fieldName: completed
+    publicName: completed
+    enhancer:
+      id: ''
+  customer_comments:
+    disabled: false
+    fieldName: customer_comments
+    publicName: customer_comments
+    enhancer:
+      id: ''
+  cart:
+    disabled: false
+    fieldName: cart
+    publicName: cart
+    enhancer:
+      id: ''
+  checkout_flow:
+    disabled: false
+    fieldName: checkout_flow
+    publicName: checkout_flow
+    enhancer:
+      id: ''
+  checkout_step:
+    disabled: false
+    fieldName: checkout_step
+    publicName: checkout_step
+    enhancer:
+      id: ''
+  payment_gateway:
+    disabled: false
+    fieldName: payment_gateway
+    publicName: payment_gateway
+    enhancer:
+      id: ''
+  payment_method:
+    disabled: false
+    fieldName: payment_method
+    publicName: payment_method
+    enhancer:
+      id: ''
+  coupons:
+    disabled: false
+    fieldName: coupons
+    publicName: coupons
+    enhancer:
+      id: ''

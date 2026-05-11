@@ -7,7 +7,7 @@ dependencies:
 id: commerce_product
 label: 'commerce product'
 type: 'canonical_entities:commerce_product'
-pattern: '[commerce_product:title]'
+pattern: '/[commerce_product:title]'
 selection_criteria:
   c2ff6eda-88d5-4edf-90e0-7aef19f6552c:
     id: 'entity_bundle:commerce_product'

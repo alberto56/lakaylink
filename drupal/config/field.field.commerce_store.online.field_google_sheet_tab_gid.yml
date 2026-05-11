@@ -10,7 +10,7 @@ field_name: field_google_sheet_tab_gid
 entity_type: commerce_store
 bundle: online
 label: 'Google Sheet Tab GID'
-description: null
+description: ''
 required: true
 translatable: true
 default_value: {  }

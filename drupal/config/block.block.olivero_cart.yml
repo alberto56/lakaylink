@@ -10,7 +10,7 @@ dependencies:
 id: olivero_cart
 theme: olivero
 region: secondary_menu
-weight: 0
+weight: -5
 provider: null
 plugin: commerce_cart
 settings:

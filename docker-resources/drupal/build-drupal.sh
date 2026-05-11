@@ -58,7 +58,11 @@ rm -rf modules/contrib
   drupal/social_auth_google \
   drupal/login_disable \
   drupal/redirect \
-  drupal/registration_role
+  drupal/registration_role \
+  drupal/simple_oauth \
+  drupal/jsonapi_extras \
+  drupal/jsonapi_menu_items \
+  drupal/jsonapi_hypermedia
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.

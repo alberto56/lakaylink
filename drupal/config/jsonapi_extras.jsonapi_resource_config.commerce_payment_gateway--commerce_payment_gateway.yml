@@ -1,0 +1,89 @@
+uuid: 0df5382f-c8c8-4d92-9e2b-9b4ff33a19c6
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_payment
+id: commerce_payment_gateway--commerce_payment_gateway
+disabled: true
+path: commerce_payment_gateway/commerce_payment_gateway
+resourceType: commerce_payment_gateway--commerce_payment_gateway
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  weight:
+    disabled: false
+    fieldName: weight
+    publicName: weight
+    enhancer:
+      id: ''
+  plugin:
+    disabled: false
+    fieldName: plugin
+    publicName: plugin
+    enhancer:
+      id: ''
+  configuration:
+    disabled: false
+    fieldName: configuration
+    publicName: configuration
+    enhancer:
+      id: ''
+  conditions:
+    disabled: false
+    fieldName: conditions
+    publicName: conditions
+    enhancer:
+      id: ''
+  conditionOperator:
+    disabled: false
+    fieldName: conditionOperator
+    publicName: conditionOperator
+    enhancer:
+      id: ''

@@ -1,0 +1,113 @@
+uuid: 4078c51a-d0b4-444d-b5be-8a19dcf12d6f
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_order
+id: commerce_order_type--commerce_order_type
+disabled: true
+path: commerce_order_type/commerce_order_type
+resourceType: commerce_order_type--commerce_order_type
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  workflow:
+    disabled: false
+    fieldName: workflow
+    publicName: workflow
+    enhancer:
+      id: ''
+  numberPattern:
+    disabled: false
+    fieldName: numberPattern
+    publicName: numberPattern
+    enhancer:
+      id: ''
+  refresh_mode:
+    disabled: false
+    fieldName: refresh_mode
+    publicName: refresh_mode
+    enhancer:
+      id: ''
+  refresh_frequency:
+    disabled: false
+    fieldName: refresh_frequency
+    publicName: refresh_frequency
+    enhancer:
+      id: ''
+  sendReceipt:
+    disabled: false
+    fieldName: sendReceipt
+    publicName: sendReceipt
+    enhancer:
+      id: ''
+  receiptBcc:
+    disabled: false
+    fieldName: receiptBcc
+    publicName: receiptBcc
+    enhancer:
+      id: ''
+  receiptSubject:
+    disabled: false
+    fieldName: receiptSubject
+    publicName: receiptSubject
+    enhancer:
+      id: ''
+  traits:
+    disabled: false
+    fieldName: traits
+    publicName: traits
+    enhancer:
+      id: ''
+  locked:
+    disabled: false
+    fieldName: locked
+    publicName: locked
+    enhancer:
+      id: ''

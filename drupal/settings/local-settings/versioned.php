@@ -68,6 +68,9 @@ $config['commerce_payment.commerce_payment_gateway.stripe']['configuration'] = [
   'webhook_signing_secret' =>  getenv('WEBHOOK_SIGNING_SECRET'),
 ];
 
+$config['simple_oauth.settings']['public_key'] = 'private://social-auth-oauth-keys/public.key';
+$config['simple_oauth.settings']['private_key'] = 'private://social-auth-oauth-keys/private.key';
+
 $settings['reverse_proxy'] = TRUE;
 
 $settings['reverse_proxy_trusted_headers'] =

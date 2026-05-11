@@ -1,0 +1,71 @@
+uuid: 12436dba-4525-4f0d-9a89-561d012ef1a2
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_checkout
+id: commerce_checkout_flow--commerce_checkout_flow
+disabled: true
+path: commerce_checkout_flow/commerce_checkout_flow
+resourceType: commerce_checkout_flow--commerce_checkout_flow
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  plugin:
+    disabled: false
+    fieldName: plugin
+    publicName: plugin
+    enhancer:
+      id: ''
+  configuration:
+    disabled: false
+    fieldName: configuration
+    publicName: configuration
+    enhancer:
+      id: ''

@@ -1,0 +1,95 @@
+uuid: a40bc2c0-5fe2-43e7-a7e1-69eabb534302
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+id: commerce_product_type--commerce_product_type
+disabled: true
+path: commerce_product_type/commerce_product_type
+resourceType: commerce_product_type--commerce_product_type
+resourceFields:
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  dependencies:
+    disabled: false
+    fieldName: dependencies
+    publicName: dependencies
+    enhancer:
+      id: ''
+  third_party_settings:
+    disabled: false
+    fieldName: third_party_settings
+    publicName: third_party_settings
+    enhancer:
+      id: ''
+  _core:
+    disabled: false
+    fieldName: _core
+    publicName: _core
+    enhancer:
+      id: ''
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  description:
+    disabled: false
+    fieldName: description
+    publicName: description
+    enhancer:
+      id: ''
+  variationTypes:
+    disabled: false
+    fieldName: variationTypes
+    publicName: variationTypes
+    enhancer:
+      id: ''
+  multipleVariations:
+    disabled: false
+    fieldName: multipleVariations
+    publicName: multipleVariations
+    enhancer:
+      id: ''
+  injectVariationFields:
+    disabled: false
+    fieldName: injectVariationFields
+    publicName: injectVariationFields
+    enhancer:
+      id: ''
+  traits:
+    disabled: false
+    fieldName: traits
+    publicName: traits
+    enhancer:
+      id: ''
+  locked:
+    disabled: false
+    fieldName: locked
+    publicName: locked
+    enhancer:
+      id: ''

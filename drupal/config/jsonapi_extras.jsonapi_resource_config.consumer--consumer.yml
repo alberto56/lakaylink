@@ -1,0 +1,155 @@
+uuid: 5c958836-e023-44f9-8a5c-3daa9674819f
+langcode: en
+status: true
+dependencies:
+  module:
+    - consumers
+id: consumer--consumer
+disabled: true
+path: consumer/consumer
+resourceType: consumer--consumer
+resourceFields:
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: false
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  owner_id:
+    disabled: false
+    fieldName: owner_id
+    publicName: owner_id
+    enhancer:
+      id: ''
+  client_id:
+    disabled: false
+    fieldName: client_id
+    publicName: client_id
+    enhancer:
+      id: ''
+  label:
+    disabled: false
+    fieldName: label
+    publicName: label
+    enhancer:
+      id: ''
+  description:
+    disabled: false
+    fieldName: description
+    publicName: description
+    enhancer:
+      id: ''
+  image:
+    disabled: false
+    fieldName: image
+    publicName: image
+    enhancer:
+      id: ''
+  third_party:
+    disabled: false
+    fieldName: third_party
+    publicName: third_party
+    enhancer:
+      id: ''
+  is_default:
+    disabled: false
+    fieldName: is_default
+    publicName: is_default
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: false
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  secret:
+    disabled: false
+    fieldName: secret
+    publicName: secret
+    enhancer:
+      id: ''
+  grant_types:
+    disabled: false
+    fieldName: grant_types
+    publicName: grant_types
+    enhancer:
+      id: ''
+  confidential:
+    disabled: false
+    fieldName: confidential
+    publicName: confidential
+    enhancer:
+      id: ''
+  scopes:
+    disabled: false
+    fieldName: scopes
+    publicName: scopes
+    enhancer:
+      id: ''
+  redirect:
+    disabled: false
+    fieldName: redirect
+    publicName: redirect
+    enhancer:
+      id: ''
+  access_token_expiration:
+    disabled: false
+    fieldName: access_token_expiration
+    publicName: access_token_expiration
+    enhancer:
+      id: ''
+  refresh_token_expiration:
+    disabled: false
+    fieldName: refresh_token_expiration
+    publicName: refresh_token_expiration
+    enhancer:
+      id: ''
+  user_id:
+    disabled: false
+    fieldName: user_id
+    publicName: user_id
+    enhancer:
+      id: ''
+  pkce:
+    disabled: false
+    fieldName: pkce
+    publicName: pkce
+    enhancer:
+      id: ''
+  automatic_authorization:
+    disabled: false
+    fieldName: automatic_authorization
+    publicName: automatic_authorization
+    enhancer:
+      id: ''
+  remember_approval:
+    disabled: false
+    fieldName: remember_approval
+    publicName: remember_approval
+    enhancer:
+      id: ''
+  authorization_code_scopes:
+    disabled: false
+    fieldName: authorization_code_scopes
+    publicName: authorization_code_scopes
+    enhancer:
+      id: ''
