@@ -121,7 +121,9 @@ resourceFields:
     fieldName: field_image
     publicName: field_image
     enhancer:
-      id: ''
+      id: url_link
+      settings:
+        absolute_url: '1'
   field_inventory_status:
     disabled: false
     fieldName: field_inventory_status
