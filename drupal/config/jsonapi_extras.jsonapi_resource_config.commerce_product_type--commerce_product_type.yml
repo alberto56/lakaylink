@@ -4,8 +4,12 @@ status: true
 dependencies:
   module:
     - commerce_product
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    page_limit: 50
 id: commerce_product_type--commerce_product_type
-disabled: true
+disabled: false
 path: commerce_product_type/commerce_product_type
 resourceType: commerce_product_type--commerce_product_type
 resourceFields:

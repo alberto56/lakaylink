@@ -109,6 +109,17 @@ GET /api/product_variation/grocery_variation
 Single variation
 GET /api/product_variation/grocery_variation/{uuid}
 
+
+### Get published product and variant and get variations and images fields.
+
+```
+https://<domain name>/api/product/grocery?filter[status][value]=1&filter[variations.status][value]=1&include=variations,field_image,variations.field_image
+
+```
+
+we can also add filters, sort by, include options in json api resources (/admin/config/services/jsonapi/resource_types).
+
+
 ### Get customers 
 /api/profile/customer	
 
