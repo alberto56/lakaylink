@@ -233,7 +233,6 @@ function fetchCsvFromUrl($url) {
   }
 }
 
-
 /**
  * Process all CSV rows.
  *
@@ -267,7 +266,7 @@ function processRows(array $rows, $store_id) {
 
       $variation = loadOrCreateVariation($data, $langcode);
       if ($variation) {
-        updateVariation($variation, $data, $langcode);
+        updateVariation($variation, $data, $langcode, $context);
       }
 
       attachVariationToProduct($product, $variation);
@@ -354,30 +353,6 @@ function updateProduct($product, array $data, $context, $langcode = 'en') {
   $translated->set('field_sub_category', get_or_create_term('sub_category', $data['sub_category'], $data['sub_category_code'], $langcode));
 
   $translated->save();
-
-  // Image
-  if (!empty($data['image_url'])) {
-    $file = my_grocery_download_image($data['image_url'], $context);
-
-    if ($file) {
-      $product->set('field_image', [
-        'target_id' => $file->id(),
-        'alt' => $data['product_name'],
-      ]);
-    }
-    else {
-      \Drupal::logger('grocery_import')->error(
-        "Line {$context['line']} store {$context['store_id']} invalid image URL: {$data['image_url']}"
-      );
-
-      // Placeholder fallback
-      $product->set('field_image', [
-        'uri' => 'https://via.placeholder.com/300',
-        'alt' => $data['product_name'],
-      ]);
-    }
-  }
-
   $product->save();
 }
 
@@ -423,7 +398,7 @@ function loadOrCreateVariation(array $data, $langcode = 'en') {
  * @param \Drupal\commerce_product\Entity\ProductVariation $variation
  * @param array $data
  */
-function updateVariation($variation, array $data, $langcode = 'en') {
+function updateVariation($variation, array $data, $langcode = 'en', $context) {
 
   if ($variation->hasTranslation($langcode)) {
     $translated = $variation->getTranslation($langcode);
@@ -432,7 +407,6 @@ function updateVariation($variation, array $data, $langcode = 'en') {
   }
 
   $translated->setTitle($data['variant_name']);
-
   $translated->save();
 
   $variation->set('price', [
@@ -451,6 +425,30 @@ function updateVariation($variation, array $data, $langcode = 'en') {
   $status = trim($data['status'] ?? '');
 
   $variation->set('status', $status);
+
+  /**
+   * IMAGE HANDLING
+   */
+  if (!empty($data['image_url'])) {
+
+    $file = my_grocery_download_image($data['image_url'], $context);
+
+    if ($file) {
+
+      $variation->set('field_image', [
+        'target_id' => $file->id(),
+        'alt' => $data['variant_name'] ?? $data['product_name'],
+      ]);
+
+    }
+    else {
+
+      \Drupal::logger('grocery_import')->error(
+        "Line {$context['line']} store {$context['store_id']} invalid image URL: {$data['image_url']}"
+      );
+
+    }
+  }
 
   $variation->save();
 }

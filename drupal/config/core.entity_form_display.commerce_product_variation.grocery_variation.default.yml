@@ -5,6 +5,7 @@ dependencies:
   config:
     - commerce_product.commerce_product_variation_type.grocery_variation
     - field.field.commerce_product_variation.grocery_variation.field_expiry_days
+    - field.field.commerce_product_variation.grocery_variation.field_image
     - field.field.commerce_product_variation.grocery_variation.field_inventory_status
     - field.field.commerce_product_variation.grocery_variation.field_origin
     - field.field.commerce_product_variation.grocery_variation.field_pack_type
@@ -12,8 +13,10 @@ dependencies:
     - field.field.commerce_product_variation.grocery_variation.field_stock
     - field.field.commerce_product_variation.grocery_variation.field_storage_type
     - field.field.commerce_product_variation.grocery_variation.field_unit
+    - image.style.thumbnail
   module:
     - commerce_price
+    - image
 id: commerce_product_variation.grocery_variation.default
 targetEntityType: commerce_product_variation
 bundle: grocery_variation
@@ -31,6 +34,14 @@ content:
     region: content
     settings:
       placeholder: ''
+    third_party_settings: {  }
+  field_image:
+    type: image_image
+    weight: 16
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
     third_party_settings: {  }
   field_inventory_status:
     type: boolean_checkbox
