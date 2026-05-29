@@ -6,6 +6,7 @@ dependencies:
     - commerce_product.commerce_product_variation_type.grocery_variation
     - core.entity_view_mode.commerce_product_variation.summary
     - field.field.commerce_product_variation.grocery_variation.field_expiry_days
+    - field.field.commerce_product_variation.grocery_variation.field_image
     - field.field.commerce_product_variation.grocery_variation.field_inventory_status
     - field.field.commerce_product_variation.grocery_variation.field_origin
     - field.field.commerce_product_variation.grocery_variation.field_pack_type
@@ -132,4 +133,5 @@ content:
     weight: 4
     region: content
 hidden:
+  field_image: true
   langcode: true
