@@ -754,6 +754,3 @@ $settings['trusted_host_patterns'] = [
   '^lakaybeta\.dcycleproject\.org$',
 ];
 $settings['require_login'] = TRUE;
-
-$settings['reverse_proxy'] = TRUE;
-$settings['reverse_proxy_addresses'] = array($_SERVER['REMOTE_ADDR']);
