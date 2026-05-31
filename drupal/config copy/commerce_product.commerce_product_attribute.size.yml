@@ -1,7 +1,0 @@
-uuid: 56bcea2c-8b17-4a55-95f0-dfb4daadfd66
-langcode: en
-status: true
-dependencies: {  }
-id: size
-label: Size
-elementType: select
