@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Electro Commerce theme implementation for product mini/bestseller grid rows (3-column).
+ * Used by the Bestsellers view.
+ *
+ * Variables:
+ * - rows: A list of row items.
+ */
+#}
+<div class="row g-4">
+  {% for row in rows %}
+    <div class="col-md-6 col-lg-6 col-xl-4">
+      {{ row.content }}
+    </div>
+  {% endfor %}
+</div>

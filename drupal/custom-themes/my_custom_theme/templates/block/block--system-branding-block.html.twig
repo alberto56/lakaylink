@@ -1,0 +1,9 @@
+<a href="{{ path('<front>') }}" class="navbar-brand p-0" title="{{ 'Home'|t }}" rel="home">
+  <span class="display-5 text-primary m-0">
+    {% if site_logo %}
+        <img src="{{ site_logo }}" class="lakaylink-site-logo" alt="{{ 'Home'|t }}" class="img-fluid d-inline-block align-top">
+    {% endif %}
+
+    {{ site_name }}
+  </span>
+</a>

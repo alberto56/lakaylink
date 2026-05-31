@@ -1,0 +1,23 @@
+uuid: 04b39b86-96ed-4c07-8f86-d440883cbc3a
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:2f1a11c9-8cb8-4bc6-abff-588ae1919eac'
+  module:
+    - block_content
+  theme:
+    - my_custom_theme
+id: my_custom_theme_footerinformation
+theme: my_custom_theme
+region: footer_information
+weight: 0
+provider: null
+plugin: 'block_content:2f1a11c9-8cb8-4bc6-abff-588ae1919eac'
+settings:
+  id: 'block_content:2f1a11c9-8cb8-4bc6-abff-588ae1919eac'
+  label: 'Footer Information'
+  label_display: '0'
+  provider: block_content
+  view_mode: full
+visibility: {  }

@@ -9,6 +9,7 @@ dependencies:
     - field.field.commerce_product.grocery_product.field_brand
     - field.field.commerce_product.grocery_product.field_category
     - field.field.commerce_product.grocery_product.field_image
+    - field.field.commerce_product.grocery_product.field_product_comments
     - field.field.commerce_product.grocery_product.field_product_id
     - field.field.commerce_product.grocery_product.field_sub_category
   module:
@@ -122,4 +123,6 @@ content:
     weight: 1
     region: content
 hidden:
+  field_product_comments: true
   langcode: true
+  overall_rating: true

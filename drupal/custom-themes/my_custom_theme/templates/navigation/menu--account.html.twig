@@ -1,0 +1,41 @@
+{#
+/**
+ * @file
+ * Theme override for account menu as dropdown.
+ */
+#}
+
+{#
+/**
+ * @file
+ * Account menu dropdown template.
+ */
+#}
+
+{% if items %}
+  <div class="dropdown">
+    
+    {# Dropdown Toggle #}
+    <a href="#"
+       class="dropdown-toggle text-muted ms-2"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+      <small>
+        <i class="fa fa-home me-2"></i>
+        {{ 'My Dashboard'|t }}
+      </small>
+    </a>
+
+    {# Dropdown Menu #}
+    <div class="dropdown-menu rounded">
+
+      {% for item in items %}
+        <a href="{{ item.url }}"
+           class="dropdown-item {{ item.in_active_trail ? 'active' : '' }}">
+          {{ item.title }}
+        </a>
+      {% endfor %}
+
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Electro Commerce theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function electro_commerce_preprocess_html(&$variables) {
+  // Add body classes for page type.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === '<front>') {
+    $variables['attributes']['class'][] = 'page-front';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.html.twig.
+ */
+function electro_commerce_preprocess_page(&$variables) {
+  // Pass site name to page template.
+  $config = \Drupal::config('system.site');
+  $variables['site_name'] = $config->get('name');
+  $variables['site_slogan'] = $config->get('slogan');
+
+  // Check if this is the front page.
+  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block.html.twig.
+ */
+function electro_commerce_preprocess_block(&$variables) {
+  // Add block plugin ID as a class.
+  $variables['attributes']['class'][] = 'block-' . str_replace('_', '-', $variables['plugin_id']);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.html.twig.
+ */
+function electro_commerce_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $variables['node_type'] = $node->getType();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for commerce_product.html.twig.
+ */
+function electro_commerce_preprocess_commerce_product(&$variables) {
+  // Add product view mode class.
+  $variables['attributes']['class'][] = 'product-view-mode-' . $variables['view_mode'];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for blocks.
+ */
+function electro_commerce_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // Add region-based block suggestions.
+  $block = $variables['elements'];
+  if (isset($block['#id'])) {
+    // Load block config to get region.
+    $block_config = \Drupal::entityTypeManager()
+      ->getStorage('block')
+      ->load($block['#id']);
+    if ($block_config) {
+      $region = $block_config->getRegion();
+      $suggestions[] = 'block__region__' . $region;
+      $suggestions[] = 'block__region__' . $region . '__' . $block['#plugin_id'];
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for page.
+ */
+function electro_commerce_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // Add front page suggestion.
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $suggestions[] = 'page__front';
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function electro_commerce_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Style the search block form.
+  if ($form_id === 'search_block_form') {
+    $form['keys']['#attributes']['class'][] = 'form-control';
+    $form['keys']['#attributes']['class'][] = 'border-0';
+    $form['keys']['#attributes']['class'][] = 'rounded-pill';
+    $form['keys']['#attributes']['placeholder'] = t('Search Looking For?');
+    $form['actions']['submit']['#attributes']['class'][] = 'btn';
+    $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+    $form['actions']['submit']['#attributes']['class'][] = 'rounded-pill';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views-view-list.html.twig.
+ */
+function electro_commerce_preprocess_views_view(&$variables) {
+  // Add view ID and display ID as classes.
+  $view = $variables['view'];
+  $variables['attributes']['class'][] = 'view-' . $view->id();
+  $variables['attributes']['class'][] = 'view-display-' . $view->current_display;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for menu.html.twig.
+ */
+function electro_commerce_preprocess_menu(&$variables) {
+  // Add Bootstrap nav classes based on menu name.
+  if (isset($variables['menu_name'])) {
+    $variables['menu_name_class'] = str_replace('_', '-', $variables['menu_name']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for commerce_product_variation.
+ */
+function electro_commerce_preprocess_commerce_product_variation(&$variables) {
+  // Ensure proper classes for product variation display.
+  $variables['attributes']['class'][] = 'product-variation';
+}

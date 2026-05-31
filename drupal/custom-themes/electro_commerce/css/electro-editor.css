@@ -1,0 +1,34 @@
+/**
+ * @file
+ * Electro Commerce CKEditor styles.
+ * Mirrors front-end typography for accurate WYSIWYG editing.
+ */
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  color: #333;
+}
+
+a {
+  color: #0d6efd;
+}
+
+.text-primary { color: #0d6efd !important; }
+.text-secondary { color: #f28b00 !important; }
+.text-muted { color: #6c757d !important; }
+
+.btn-primary {
+  background: #0d6efd;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  display: inline-block;
+}

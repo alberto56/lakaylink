@@ -1,0 +1,846 @@
+/**
+ * @file
+ * Electro Commerce Theme Stylesheet
+ * Drupal 11 Commerce Bootstrap 5 Subtheme
+ */
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================ */
+:root {
+  --ec-primary:    #0d6efd;
+  --ec-secondary:  #f28b00;
+  --ec-dark:       #1a1a2e;
+  --ec-light:      #f8f9fa;
+  --ec-border:     #dee2e6;
+  --ec-text-muted: #6c757d;
+  --ec-transition: all 0.3s ease;
+  --ec-shadow:     0 0.125rem 0.25rem rgba(0,0,0,0.075);
+  --ec-shadow-lg:  0 1rem 3rem rgba(0,0,0,0.175);
+  --ec-font-base:  'Open Sans', sans-serif;
+  --ec-font-head:  'Roboto', sans-serif;
+}
+
+/* ============================================================
+   BASE / RESET
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--ec-font-base);
+  color: #555;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--ec-font-head);
+  font-weight: 700;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: var(--ec-primary);
+  transition: var(--ec-transition);
+}
+
+a:hover {
+  color: var(--ec-secondary);
+}
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+#page-spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+#topbar {
+  background: #fff;
+  font-size: 0.875rem;
+}
+
+#topbar a {
+  color: var(--ec-text-muted);
+}
+
+#topbar a:hover {
+  color: var(--ec-primary);
+}
+
+/* ============================================================
+   HEADER (Logo / Search / Cart)
+   ============================================================ */
+#header {
+  background: #fff;
+  box-shadow: var(--ec-shadow);
+}
+
+#header .navbar-brand h1 {
+  font-size: 2rem;
+}
+
+/* Search bar */
+#header .search-wrapper {
+  position: relative;
+}
+
+#header .search-wrapper .form-control {
+  border-radius: 50px;
+  border: 1px solid var(--ec-border);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+#header .search-wrapper .btn {
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Cart icon area */
+.header-cart-icon {
+  position: relative;
+}
+
+.header-cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--ec-secondary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon buttons (wishlist, compare, cart) */
+.btn-md-square {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-sm-square {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+#navbar {
+  position: relative;
+  z-index: 100;
+}
+
+#navbar .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  padding: 1rem 0.85rem;
+  transition: var(--ec-transition);
+}
+
+#navbar .navbar-nav .nav-link:hover,
+#navbar .navbar-nav .nav-item.active .nav-link,
+#navbar .navbar-nav .nav-link.active {
+  color: var(--ec-secondary);
+}
+
+#navbar .dropdown-menu {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: var(--ec-shadow-lg);
+  margin-top: 0;
+  min-width: 12rem;
+}
+
+#navbar .dropdown-item {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+#navbar .dropdown-item:hover {
+  background: var(--ec-primary);
+  color: #fff;
+}
+
+/* All Categories sidebar list */
+.categories-bars {
+  background: #fff;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: var(--ec-shadow-lg);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-width: 250px;
+}
+
+.categories-bars-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1.25rem;
+  border-bottom: 1px solid var(--ec-border);
+}
+
+.categories-bars-item:last-child {
+  border-bottom: none;
+}
+
+.categories-bars-item a {
+  color: #333;
+  font-weight: 500;
+}
+
+.categories-bars-item a:hover {
+  color: var(--ec-primary);
+}
+
+.categories-bars-item span {
+  color: var(--ec-text-muted);
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   HERO CAROUSEL
+   ============================================================ */
+#hero-section .carousel-content {
+  padding: 2rem;
+}
+
+#hero-section .carousel-img img {
+  max-height: 420px;
+  object-fit: contain;
+}
+
+/* Hero carousel controls */
+.carousel-nav-btn {
+  width: 45px;
+  height: 45px;
+  background: var(--ec-primary);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--ec-transition);
+}
+
+.carousel-nav-btn:hover {
+  background: var(--ec-secondary);
+}
+
+/* Hero right banner */
+.carousel-header-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-header-banner img {
+  object-fit: cover;
+}
+
+.carousel-banner-offer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.carousel-banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 1rem;
+  text-align: center;
+}
+
+/* ============================================================
+   SERVICES BAR
+   ============================================================ */
+#services-bar .col-6,
+#services-bar .col-md-4,
+#services-bar .col-lg-2 {
+  transition: var(--ec-transition);
+}
+
+#services-bar .col-6:hover,
+#services-bar .col-md-4:hover,
+#services-bar .col-lg-2:hover {
+  background: var(--ec-light);
+}
+
+#services-bar h6 {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+#services-bar p {
+  font-size: 0.8rem;
+  color: var(--ec-text-muted);
+}
+
+/* ============================================================
+   PRODUCT OFFERS
+   ============================================================ */
+#product-offers .offer-card {
+  transition: var(--ec-transition);
+}
+
+#product-offers .offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ec-shadow-lg);
+}
+
+/* ============================================================
+   PRODUCT CARDS (Our Products / Teaser)
+   ============================================================ */
+.product-item {
+  transition: var(--ec-transition);
+}
+
+.product-item:hover {
+  transform: translateY(-4px);
+}
+
+.product-item-inner {
+  overflow: hidden;
+  background: #fff;
+}
+
+.product-item-inner-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-item-inner-item img {
+  transition: transform 0.4s ease;
+}
+
+.product-item-inner-item:hover img {
+  transform: scale(1.05);
+}
+
+/* New / Sale badges */
+.product-new,
+.product-sale {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.product-new {
+  background: var(--ec-primary);
+  color: #fff;
+}
+
+.product-sale {
+  background: var(--ec-secondary);
+  color: #fff;
+}
+
+/* Quick-view overlay */
+.product-details {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: var(--ec-transition);
+  z-index: 3;
+}
+
+.product-item-inner-item:hover .product-details {
+  opacity: 1;
+}
+
+.product-details a {
+  width: 45px;
+  height: 45px;
+  background: var(--ec-primary);
+  color: #fff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+/* Add to cart section (hover reveal) */
+.product-item-add {
+  background: #fff;
+  transform: translateY(0);
+  transition: var(--ec-transition);
+}
+
+/* Price display */
+.product-item del,
+.products-mini-item del {
+  color: var(--ec-text-muted);
+}
+
+/* Stars */
+.product-item .fas.fa-star,
+.products-mini-item .fas.fa-star {
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   PRODUCT TABS (Our Products section)
+   ============================================================ */
+.nav-pills .nav-link {
+  color: #333;
+  border-radius: 50px;
+  transition: var(--ec-transition);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link:hover {
+  background: var(--ec-primary) !important;
+  color: #fff !important;
+}
+
+.nav-pills .nav-link.active span,
+.nav-pills .nav-link:hover span {
+  color: #fff !important;
+}
+
+.tab-pane {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   PRODUCT MINI / BESTSELLER CARDS
+   ============================================================ */
+.products-mini-item {
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background: #fff;
+  transition: var(--ec-transition);
+}
+
+.products-mini-item:hover {
+  box-shadow: var(--ec-shadow-lg);
+  transform: translateY(-2px);
+}
+
+.products-mini-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.products-mini-img img {
+  transition: transform 0.4s ease;
+}
+
+.products-mini-img:hover img {
+  transform: scale(1.05);
+}
+
+.products-mini-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: var(--ec-transition);
+}
+
+.products-mini-img:hover .products-mini-icon {
+  opacity: 1;
+}
+
+.products-mini-content {
+  font-size: 0.9rem;
+}
+
+.products-mini-content h4 {
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.products-mini-add {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-top: 1px solid var(--ec-border);
+}
+
+/* ============================================================
+   SECTION TITLE / BADGE
+   ============================================================ */
+.title-border-radius {
+  border-radius: 0 0.5rem 0.5rem 0;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   PRODUCT BANNERS
+   ============================================================ */
+#product-banners .banner-card {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+#product-banners .banner-card .banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#footer {
+  background: #1a1a2e;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+#footer h4 {
+  color: var(--ec-primary);
+  font-size: 1.1rem;
+}
+
+#footer p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+#footer a {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.875rem;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  transition: var(--ec-transition);
+}
+
+#footer a:hover {
+  color: var(--ec-primary);
+  padding-left: 6px;
+}
+
+.footer-icon-box {
+  width: 70px;
+  height: 70px;
+  background: var(--ec-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* Newsletter form */
+.footer-newsletter .input-group {
+  position: relative;
+}
+
+.footer-newsletter .form-control {
+  border-radius: 50px;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.footer-newsletter .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-newsletter .btn {
+  border-radius: 50px;
+  padding: 0.5rem 1.25rem;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  z-index: 5;
+}
+
+/* ============================================================
+   COPYRIGHT BAR
+   ============================================================ */
+#copyright {
+  background: #0f0f1e;
+  font-size: 0.875rem;
+}
+
+/* ============================================================
+   BACK TO TOP BUTTON
+   ============================================================ */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 45px;
+  height: 45px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  z-index: 999;
+  box-shadow: var(--ec-shadow-lg);
+  transition: var(--ec-transition);
+}
+
+.back-to-top:hover {
+  background: var(--ec-secondary);
+  transform: translateY(-3px);
+}
+
+.back-to-top.show {
+  display: flex;
+}
+
+/* ============================================================
+   DRUPAL COMMERCE - ADD TO CART FORM
+   ============================================================ */
+.commerce-order-item-add-to-cart-form .form-item {
+  margin-bottom: 0;
+}
+
+.commerce-order-item-add-to-cart-form .form-submit,
+.commerce-order-item-add-to-cart-form button[type="submit"] {
+  border-radius: 50px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  background: var(--ec-primary);
+  border: 1px solid var(--ec-secondary);
+  color: #fff;
+  cursor: pointer;
+  transition: var(--ec-transition);
+  margin-bottom: 1rem;
+}
+
+.commerce-order-item-add-to-cart-form .form-submit:hover,
+.commerce-order-item-add-to-cart-form button[type="submit"]:hover {
+  background: var(--ec-secondary);
+  border-color: var(--ec-secondary);
+}
+
+/* Hide quantity field in product cards (show on single page) */
+.product-item .commerce-order-item-add-to-cart-form .form-item--quantity,
+.products-mini-item .commerce-order-item-add-to-cart-form .form-item--quantity {
+  display: none;
+}
+
+/* ============================================================
+   DRUPAL MESSAGES
+   ============================================================ */
+.messages--status {
+  border-left: 4px solid var(--ec-primary);
+}
+
+.messages--error {
+  border-left: 4px solid #dc3545;
+}
+
+.messages--warning {
+  border-left: 4px solid #ffc107;
+}
+
+/* ============================================================
+   DRUPAL BLOCKS - SEARCH FORM
+   ============================================================ */
+.block-search .search-form {
+  display: flex;
+  border: 1px solid var(--ec-border);
+  border-radius: 50px;
+}
+
+.block-search .form-control {
+  border: none;
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+}
+
+.block-search .form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.block-search .btn {
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+}
+
+/* ============================================================
+   DRUPAL PAGER
+   ============================================================ */
+.pager__items {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  gap: 0.35rem;
+}
+
+.pager__item a,
+.pager__item.is-active a {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--ec-border);
+  color: #333;
+  transition: var(--ec-transition);
+}
+
+.pager__item a:hover,
+.pager__item.is-active a {
+  background: var(--ec-primary);
+  border-color: var(--ec-primary);
+  color: #fff;
+}
+
+/* ============================================================
+   SHOP PAGE - FILTERS SIDEBAR
+   ============================================================ */
+.shop-filters .block-title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--ec-primary);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.facets-widget-checkbox .facets-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+/* ============================================================
+   RESPONSIVE UTILITIES
+   ============================================================ */
+@media (max-width: 991.98px) {
+  #navbar .navbar-nav .nav-link {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  #header {
+    display: none !important;
+  }
+
+  #topbar {
+    display: none !important;
+  }
+
+  #hero-section .carousel-content {
+    padding: 1.5rem 1rem;
+  }
+
+  #hero-section .display-3 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .products-mini-add {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--ec-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+  border-radius: 0 0 0.25rem 0;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ec-primary);
+  outline-offset: 2px;
+}

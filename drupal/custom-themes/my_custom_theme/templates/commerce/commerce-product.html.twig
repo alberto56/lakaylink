@@ -1,0 +1,160 @@
+{#
+/**
+ * @file
+ *
+ * Default product template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - product: The rendered product fields.
+ *   Use 'product' to print them all, or print a subset such as
+ *   'product.title'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ product|without('title') }}
+ *   @endcode
+ * - product_entity: The product entity.
+ * - product_url: The product URL.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ *
+ * @ingroup themeable
+ */
+#}
+
+<article{{ attributes }}>
+
+  {{ title_prefix }}
+
+  <div class="container py-5">
+
+    <div class="row">
+
+      {# SIDEBAR #}
+      <div class="col-lg-3">
+
+        Sidebar Here
+
+      </div>
+
+      {# PRODUCT CONTENT #}
+      <div class="col-lg-9">
+
+        <div class="row">
+
+          {# IMAGE #}
+          <div class="col-md-6">
+            {{ product.field_image }}
+          </div>
+
+          {# PRODUCT INFO #}
+          <div class="col-md-6">
+            <h4 class="fw-bold mb-3">{{ product.title }} - {{ product.variation_title }}</h4>
+
+            <h5 class="fw-bold mb-3">{{ product.stores }}</h5>
+
+            <p class="mb-3">{{ product.field_category }}</p>
+            <p class="mb-3">{{ product.field_sub_category }}</p>
+            <p class="mb-3">{{ product.variation_field_origin }}</p>
+            <p class="mb-3">{{ product.field_product_id }}</p>
+
+            <p class="mb-3">{{ product.variation_field_pack_type }}</p>
+            <p class="mb-3">{{ product.variation_list_price }}</p>
+            <p class="mb-3">{{ product.variation_field_storage_type }}</p>
+
+            <p class="mb-3">{{ product.variation_field_unit }}</p>
+
+            <p class="mb-3">{{ product.variation_field_expiry_days }}</p>
+            <p class="mb-3">{{ product.variation_field_quantity }}</p>
+
+
+
+
+            <h5 class="fw-bold mb-3">{{ product.variation_price }}</h5>
+
+            <div class="brand mb-2">
+              {{ product.field_brand }}
+            </div>
+
+
+            <div class="d-flex mb-4">
+              {{ product.overall_rating }}
+            </div>
+
+  
+
+
+            <div class="d-flex flex-column mb-3">
+              <small>{{ product.variation_sku }}</small>
+              <small>{{ product.variation_field_stock }}</small>
+              <small>{{ product.variation_field_inventory_status }}</small>
+              {# <small>Available: <strong class="text-primary">20 items in stock</strong></small> #}
+            </div>
+
+
+            {{ product.variations }}
+
+
+          </div>
+
+        </div>
+
+              <div class="mt-5">
+
+                <ul class="nav nav-tabs">
+
+                  <li class="nav-item">
+                    <button
+                      class="nav-link active"
+                      data-bs-toggle="tab"
+                      data-bs-target="#description">
+                      {{ 'Description'|t }}
+                    </button>
+                  </li>
+
+                  <li class="nav-item">
+                    <button
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#reviews">
+                      {{ 'Reviews'|t }}
+                    </button>
+                  </li>
+
+                </ul>
+
+                <div class="tab-content p-4 border">
+
+                  <div
+                    class="tab-pane fade show active"
+                    id="description">
+
+                    {{ product.body }}
+
+                  </div>
+
+                  <div
+                    class="tab-pane fade"
+                    id="reviews">
+
+                    {{ product.field_product_comments }}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            <div class="mt-5">
+              {{ product.field_product_comments }}
+            </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  {{ title_suffix }}
+</article>

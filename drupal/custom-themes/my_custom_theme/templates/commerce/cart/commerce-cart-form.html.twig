@@ -1,0 +1,109 @@
+{#
+/**
+ * @file
+ * Theme override for the Commerce cart form.
+ *
+ * Available variables:
+ * - form: The cart form render array.
+ *   - form.order_items: Cart line items table.
+ *   - form.coupon_redemption_code: Coupon field.
+ *   - form.actions: Form actions (update / checkout / etc.)
+ */
+#}
+
+<div class="container-fluid py-5">
+  <div class="container py-5">
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Handle</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% for key, row in form.cart_items %}
+            {% if row.quantity is defined %}
+              <tr>
+
+                <td>
+                  <p class="mb-0 py-4">
+                    {{ row.title }}
+                  </p>
+                </td>
+
+                <td>
+                  <p class="mb-0 py-4">
+                    {{ row.purchased_entity['#title']|default('N/A') }}
+                  </p>
+                </td>
+
+                <td>
+                  <p class="mb-0 py-4">
+                    {{ row.unit_price }}
+                  </p>
+                </td>
+
+                <td>
+                  <div class="input-group quantity py-4" style="width:100px;">
+                    {{ row.quantity }}
+                  </div>
+                </td>
+
+                <td>
+                  <p class="mb-0 py-4">
+                    {{ row.total }}
+                  </p>
+                </td>
+
+                <td class="py-4">
+                  {{ row.remove_button }}
+                </td>
+
+              </tr>
+            {% endif %}
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-5">
+      {{ form.coupon }}
+    </div>
+
+    <div class="row g-4 justify-content-end">
+      <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+
+        <div class="bg-light rounded">
+
+          <div class="p-4">
+            <h1 class="display-6 mb-4">
+              Cart <span class="fw-normal">Total</span>
+            </h1>
+
+            {{ form.summary }}
+          </div>
+
+          <div class="p-4">
+            {{ form.actions }}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    {{ form.form_build_id }}
+    {{ form.form_token }}
+    {{ form.form_id }}
+
+  </div>
+</div>

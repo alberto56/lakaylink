@@ -1,0 +1,15 @@
+<div class="navbar-nav ms-auto py-0">
+  <ul class="list-unstyled categories-bars">
+    {% for item in items %}
+      <li>
+        <div class="categories-bars-item">
+          <a href="{{ item.url }}">{{ item.title }}</a>
+
+          {% if item.product_count is defined %}
+            <span>({{ item.product_count }})</span>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

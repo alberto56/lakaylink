@@ -1,0 +1,15 @@
+uuid: 92933e83-72bb-49cc-8333-9e8d7685071c
+langcode: en
+status: true
+dependencies: {  }
+name: product_page_slider
+label: 'product-page-slider (471x377)'
+effects:
+  a9d658f9-d387-4013-9a72-fe3bd937910d:
+    uuid: a9d658f9-d387-4013-9a72-fe3bd937910d
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 471
+      height: 377
+      anchor: center-center

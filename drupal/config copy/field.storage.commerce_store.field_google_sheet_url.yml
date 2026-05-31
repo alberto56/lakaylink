@@ -1,0 +1,19 @@
+uuid: e4502042-b55a-48fe-8379-71408ae2ac40
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_store
+    - link
+id: commerce_store.field_google_sheet_url
+field_name: field_google_sheet_url
+entity_type: commerce_store
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

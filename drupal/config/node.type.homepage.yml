@@ -1,0 +1,17 @@
+uuid: ca753299-12ce-4f77-a2f8-d0144d5f9714
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Homepage
+type: homepage
+description: null
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

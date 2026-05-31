@@ -1,0 +1,28 @@
+uuid: 08d63d64-ef24-426f-9706-257224ffe9d8
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:cb786ebe-420c-416a-b592-176b205502cf'
+  module:
+    - block_content
+    - system
+  theme:
+    - my_custom_theme
+id: my_custom_theme_services
+theme: my_custom_theme
+region: services
+weight: 0
+provider: null
+plugin: 'block_content:cb786ebe-420c-416a-b592-176b205502cf'
+settings:
+  id: 'block_content:cb786ebe-420c-416a-b592-176b205502cf'
+  label: Services
+  label_display: '0'
+  provider: block_content
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/checkout/*/order_information\r\n<front>"

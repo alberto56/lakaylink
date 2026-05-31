@@ -5,6 +5,7 @@ dependencies:
   config:
     - system.menu.main
   module:
+    - address
     - commerce_store
 id: stores
 label: Stores
@@ -87,6 +88,20 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        address__country_code:
+          id: address__country_code
+          table: commerce_store_field_data
+          field: address__country_code
+          entity_type: commerce_store
+          entity_field: address
+          plugin_id: country
+        default_currency:
+          id: default_currency
+          table: commerce_store_field_data
+          field: default_currency
+          entity_type: commerce_store
+          entity_field: default_currency
+          plugin_id: field
       pager:
         type: mini
         options:

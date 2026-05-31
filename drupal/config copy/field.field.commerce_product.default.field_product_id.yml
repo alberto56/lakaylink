@@ -1,0 +1,19 @@
+uuid: 4e33c7e7-57a6-4cd3-89cc-770d0c16354c
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.default
+    - field.storage.commerce_product.field_product_id
+id: commerce_product.default.field_product_id
+field_name: field_product_id
+entity_type: commerce_product
+bundle: default
+label: 'Product ID'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,98 @@
+{#
+/**
+ * @file
+ * Electro Commerce theme implementation for the "Our Products" tabbed view.
+ *
+ * This template wraps a Views display that uses attachment displays for tabs.
+ * The view should be configured as:
+ *   - Main display with tab navigation using Views UI tabs or a custom block
+ *   - Four tab displays: All Products, New Arrivals, Featured, Top Selling
+ *
+ * Variables:
+ * - view: The view object.
+ * - rows: The row content.
+ * - options: The display plugin options.
+ * - id: The display ID.
+ */
+#}
+
+<div class="tab-class">
+  <div class="row g-4">
+    <div class="col-lg-4 text-start">
+      <h1>{{ 'Our Products'|t }}</h1>
+    </div>
+    <div class="col-lg-8 text-end">
+      <ul class="nav nav-pills d-inline-flex text-center mb-5" role="tablist">
+        <li class="nav-item mb-4">
+          <a class="d-flex mx-2 py-2 bg-light rounded-pill active"
+             id="all-products-tab"
+             data-bs-toggle="pill"
+             href="#tab-all-products"
+             role="tab"
+             aria-controls="tab-all-products"
+             aria-selected="true">
+            <span class="text-dark" style="width: 130px;">{{ 'All Products'|t }}</span>
+          </a>
+        </li>
+        <li class="nav-item mb-4">
+          <a class="d-flex py-2 mx-2 bg-light rounded-pill"
+             id="new-arrivals-tab"
+             data-bs-toggle="pill"
+             href="#tab-new-arrivals"
+             role="tab"
+             aria-controls="tab-new-arrivals"
+             aria-selected="false">
+            <span class="text-dark" style="width: 130px;">{{ 'New Arrivals'|t }}</span>
+          </a>
+        </li>
+        <li class="nav-item mb-4">
+          <a class="d-flex mx-2 py-2 bg-light rounded-pill"
+             id="featured-tab"
+             data-bs-toggle="pill"
+             href="#tab-featured"
+             role="tab"
+             aria-controls="tab-featured"
+             aria-selected="false">
+            <span class="text-dark" style="width: 130px;">{{ 'Featured'|t }}</span>
+          </a>
+        </li>
+        <li class="nav-item mb-4">
+          <a class="d-flex mx-2 py-2 bg-light rounded-pill"
+             id="top-selling-tab"
+             data-bs-toggle="pill"
+             href="#tab-top-selling"
+             role="tab"
+             aria-controls="tab-top-selling"
+             aria-selected="false">
+            <span class="text-dark" style="width: 130px;">{{ 'Top Selling'|t }}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div id="tab-all-products"
+         class="tab-pane fade show p-0 active"
+         role="tabpanel"
+         aria-labelledby="all-products-tab">
+      {{ rows }}
+    </div>
+    {# Additional tab panes are populated via attached displays or AJAX #}
+    <div id="tab-new-arrivals"
+         class="tab-pane fade show p-0"
+         role="tabpanel"
+         aria-labelledby="new-arrivals-tab">
+    </div>
+    <div id="tab-featured"
+         class="tab-pane fade show p-0"
+         role="tabpanel"
+         aria-labelledby="featured-tab">
+    </div>
+    <div id="tab-top-selling"
+         class="tab-pane fade show p-0"
+         role="tabpanel"
+         aria-labelledby="top-selling-tab">
+    </div>
+  </div>
+</div>

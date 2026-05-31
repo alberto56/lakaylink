@@ -1,0 +1,23 @@
+global-styles:
+  version: 1.0
+  css:
+    # base:
+    #   assets/css/bootstrap.min.css: {}
+    #   assets/css/style.css: {}  # Electro's main CSS  
+    theme:
+      assets/css/electro-overrides.css: {}
+      # assets/css/cart.css: {}
+      # assets/css/checkout.css: {}
+
+# global-scripts:
+#   js:
+#     # assets/js/bootstrap.bundle.min.js: {}
+#     # assets/js/main.js: {}  # Electro's custom JS  
+#     assets/js/electro-custom.js: {}
+#     # assets/js/cart.js: {}
+#     # assets/js/checkout.js: {}
+#   dependencies:
+#     - core/drupal
+#     - core/jquery
+#     - core/jquery.once
+#     - bootstrap/global-scripts  # Inherit Bootstrap 5 JS

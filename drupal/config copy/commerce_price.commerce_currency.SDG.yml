@@ -1,0 +1,9 @@
+uuid: bab18f67-6019-4144-8664-404516aa298b
+langcode: en
+status: true
+dependencies: {  }
+currencyCode: SDG
+name: 'Sudanese Pound'
+numericCode: '938'
+symbol: SDG
+fractionDigits: 2

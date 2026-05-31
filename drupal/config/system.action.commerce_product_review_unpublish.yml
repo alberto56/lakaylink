@@ -1,0 +1,13 @@
+uuid: b5b36871-42f2-4179-bac4-647de5bb1a8e
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product_review
+_core:
+  default_config_hash: D0GQzRG2KHa8ZeKsMjDjXtWIYxNccsVOJ4Eq9iHaudA
+id: commerce_product_review_unpublish
+label: 'Unpublish review'
+type: commerce_product_review
+plugin: commerce_product_review_unpublish
+configuration: {  }

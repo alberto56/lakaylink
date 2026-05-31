@@ -1,0 +1,25 @@
+uuid: e52d1f55-25d7-4ae3-adc0-f8e5c20b96cc
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.categories
+  module:
+    - system
+  theme:
+    - my_custom_theme
+id: my_custom_theme_categories
+theme: my_custom_theme
+region: nav_categories
+weight: 0
+provider: null
+plugin: 'system_menu_block:categories'
+settings:
+  id: 'system_menu_block:categories'
+  label: 'All Categories'
+  label_display: visible
+  provider: system
+  level: 1
+  depth: null
+  expand_all_items: false
+visibility: {  }

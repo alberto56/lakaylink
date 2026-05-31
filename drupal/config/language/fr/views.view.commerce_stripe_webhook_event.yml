@@ -1,9 +1,42 @@
 display:
   default:
+    display_title: 'Par défaut'
     display_options:
       fields:
         nothing:
           admin_label: Icône
+        type:
+          label: Type
+        status:
+          label: État
+        processed:
+          label: Traité
+        received:
+          label: Reçu
+        ip:
+          label: IP
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
       exposed_form:
         options:
           submit_button: Filtrer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      filters:
+        type:
+          expose:
+            label: Type
+        status:
+          expose:
+            label: État
+  page:
+    display_title: Page

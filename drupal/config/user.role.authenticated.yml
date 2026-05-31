@@ -10,6 +10,7 @@ dependencies:
     - commerce_order
     - commerce_payment
     - commerce_product
+    - commerce_product_review
     - commerce_store
     - file
     - filter
@@ -35,6 +36,7 @@ permissions:
   - 'use text format basic_html'
   - 'view commerce_product'
   - 'view commerce_product_attribute'
+  - 'view commerce_product_review'
   - 'view commerce_store'
   - 'view default commerce_product'
   - 'view grocery_product commerce_product'

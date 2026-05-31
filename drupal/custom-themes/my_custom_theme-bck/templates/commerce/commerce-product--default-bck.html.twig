@@ -1,0 +1,12 @@
+<div class="product-details-area">
+  <div class="row">
+    <div class="col-lg-6">
+      {{ product.variation.field_product_images|render }}
+    </div>
+    <div class="col-lg-6">
+      <h1>{{ product.label }}</h1>
+      <div class="price">{{ product.variation.price|commerce_price_format }}</div>
+      {{ product.variation.add_to_cart_form }}
+    </div>
+  </div>
+</div>

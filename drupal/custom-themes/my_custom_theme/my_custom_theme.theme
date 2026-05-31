@@ -6,3 +6,27 @@
  *
  * Place your custom PHP code in this file.
  */
+
+function my_custom_theme_preprocess_commerce_cart_block(&$variables) {
+  $order = $variables['order'] ?? NULL;
+
+  if ($order) {
+    $variables['cart_total'] = $order->getTotalPrice()->__toString();
+  }
+  else {
+    $variables['cart_total'] = '$0.00';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_views_view_alter().
+ */
+function my_custom_theme_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  $view = $variables['view'];
+
+  $suggestions[] = sprintf(
+    'views_view__%s__%s',
+    $view->id(),
+    str_replace('-', '_', $view->current_display)
+  );
+}

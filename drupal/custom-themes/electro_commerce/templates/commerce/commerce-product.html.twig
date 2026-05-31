@@ -1,0 +1,143 @@
+{#
+/**
+ * @file
+ * Electro Commerce theme implementation for commerce product (teaser/card view).
+ *
+ * Available variables:
+ * - product: The commerce product entity.
+ * - product_entity: The product entity with all fields.
+ * - view_mode: The current view mode.
+ * - product_url: The product URL.
+ * - attributes: HTML attributes for the product wrapper.
+ *
+ * @see template_preprocess_commerce_product()
+ */
+#}
+
+{%
+  set classes = [
+    'product-item',
+    'rounded',
+    view_mode == 'teaser' ? 'product-item--teaser' : '',
+    view_mode == 'full' ? 'product-item--full' : '',
+  ]|filter
+%}
+
+<div{{ attributes.addClass(classes) }}>
+  <div class="product-item-inner border rounded">
+    <div class="product-item-inner-item">
+
+      {# Product Image #}
+      {% if product.field_images is defined and product.field_images.0 %}
+        <a href="{{ product_url }}" aria-label="{{ product.title.value }}">
+          {{ product.field_images.0 }}
+        </a>
+      {% elseif product.field_image is defined and product.field_image.0 %}
+        <a href="{{ product_url }}" aria-label="{{ product.title.value }}">
+          {{ product.field_image.0 }}
+        </a>
+      {% else %}
+        <a href="{{ product_url }}" aria-label="{{ product.title.value }}">
+          <img src="/themes/custom/electro_commerce/images/product-placeholder.png"
+               class="img-fluid w-100 rounded-top"
+               alt="{{ product.title.value }}" />
+        </a>
+      {% endif %}
+
+      {# New / Sale badge #}
+      {% if product.field_badge is defined and product.field_badge.value %}
+        {% if product.field_badge.value == 'new' %}
+          <div class="product-new">{{ 'New'|t }}</div>
+        {% elseif product.field_badge.value == 'sale' %}
+          <div class="product-sale">{{ 'Sale'|t }}</div>
+        {% endif %}
+      {% endif %}
+
+      {# Quick view overlay #}
+      <div class="product-details">
+        <a href="{{ product_url }}" aria-label="{{ 'Quick view'|t }}">
+          <i class="fa fa-eye fa-1x"></i>
+        </a>
+      </div>
+    </div>
+
+    {# Product Info #}
+    <div class="text-center rounded-bottom p-4">
+      {% if product.field_category is defined and product.field_category.0 %}
+        <a href="{{ product.field_category.0.entity.url }}" class="d-block mb-2">
+          {{ product.field_category.0.entity.label }}
+        </a>
+      {% endif %}
+
+      <a href="{{ product_url }}" class="d-block h4">
+        {{ product.title.value }}
+      </a>
+
+      {# Price #}
+      {% if product.variations is defined %}
+        {% set variation = product.variations.0.entity %}
+        {% if variation %}
+          <div class="product-price">
+            {% if variation.field_compare_price is defined and variation.field_compare_price.0 %}
+              <del class="me-2 fs-5">{{ variation.field_compare_price.0.value }}</del>
+            {% endif %}
+            <span class="text-primary fs-5">{{ variation.price.0 }}</span>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  {# Add to Cart + Actions #}
+  <div class="product-item-add border border-top-0 rounded-bottom text-center p-4 pt-0">
+
+    {# Add to Cart form #}
+    {% if product.variations is defined %}
+      {{ drupal_form('Drupal\\commerce_cart\\Form\\AddToCartForm', {product_id: product.product_id.value}) }}
+    {% else %}
+      <a href="{{ product_url }}"
+         class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4">
+        <i class="fas fa-shopping-cart me-2"></i>{{ 'Add To Cart'|t }}
+      </a>
+    {% endif %}
+
+    {# Star Rating + Wishlist/Compare #}
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      {# Rating stars #}
+      <div class="d-flex" aria-label="{{ 'Product rating'|t }}">
+        {% if product.field_rating is defined %}
+          {% set rating = product.field_rating.value|default(4) %}
+          {% for i in 1..5 %}
+            <i class="fas fa-star {% if i <= rating %}text-primary{% endif %}"></i>
+          {% endfor %}
+        {% else %}
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star"></i>
+        {% endif %}
+      </div>
+
+      {# Compare + Wishlist icons #}
+      <div class="d-flex">
+        <a href="{{ product_url }}?action=compare"
+           class="text-primary d-flex align-items-center justify-content-center me-3"
+           aria-label="{{ 'Compare'|t }}"
+           title="{{ 'Compare'|t }}">
+          <span class="rounded-circle btn-sm-square border">
+            <i class="fas fa-random"></i>
+          </span>
+        </a>
+        <a href="{{ product_url }}?action=wishlist"
+           class="text-primary d-flex align-items-center justify-content-center"
+           aria-label="{{ 'Add to Wishlist'|t }}"
+           title="{{ 'Add to Wishlist'|t }}">
+          <span class="rounded-circle btn-sm-square border">
+            <i class="fas fa-heart"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

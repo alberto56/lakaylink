@@ -1,0 +1,10 @@
+<div class="footer-item d-flex flex-column">
+    <h4 class="text-primary mb-4">{{ items ? menu_name|default('Customer Service') : 'Customer Service' }}</h4>
+
+    {% for item in items %}
+        <a href="{{ item.url.toString() }}">
+            <i class="fas fa-angle-right me-2"></i>
+            {{ item.title }}
+        </a>
+    {% endfor %}
+</div>

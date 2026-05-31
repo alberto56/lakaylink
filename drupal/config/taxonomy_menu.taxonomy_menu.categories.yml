@@ -1,0 +1,16 @@
+uuid: 0500f8f3-95aa-468b-ab3f-8e7f0965a920
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.categories
+    - taxonomy.vocabulary.category
+id: categories
+label: Categories
+vocabulary: category
+menu: categories
+expanded: false
+depth: 0
+menu_parent: 'categories:'
+description_field_name: ''
+use_term_weight_order: true
