@@ -1,5 +1,20 @@
+parameters:
+  my_module.allowed_anonymous_routes:
+    - user.login
+    - user.logout
+    - openid_connect.redirect_controller_redirect
+    - openid_connect.redirect_controller_return
+
 services:
   my_custom_module.route_subscriber:
     class: Drupal\my_custom_module\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  my_module.force_google_login_subscriber:
+    class: Drupal\my_custom_module\EventSubscriber\ForceGoogleLoginSubscriber
+    arguments:
+      - '@current_user'
+      - '%my_module.allowed_anonymous_routes%'
     tags:
       - { name: event_subscriber }
