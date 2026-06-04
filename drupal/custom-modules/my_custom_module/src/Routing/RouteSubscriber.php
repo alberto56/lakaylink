@@ -26,6 +26,16 @@ class RouteSubscriber extends RouteSubscriberBase {
     if ($route = $collection->get('user.register')) {
       $route->setRequirement('_access', 'FALSE');
     }
+
+    if ($route = $collection->get('entity.commerce_store.canonical')) {
+
+      $route->setRequirement(
+        '_custom_access',
+        '\Drupal\my_custom_module\Access\StoreAccess::access'
+      );
+
+    }
+
   }
 
 }

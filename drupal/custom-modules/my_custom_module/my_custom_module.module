@@ -1,14 +1,18 @@
 <?php
 
-use Drupal\commerce_product\Entity\Product;
-use Drupal\commerce_product\Entity\ProductVariation;
-use Drupal\file\Entity\File;
-use Drupal\my_custom_module\App;
-use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\file\Entity\File;
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\my_custom_module\App;
 
 /**
  * Handy wrapper around App::instance().
@@ -566,4 +570,28 @@ function validateRow(array $row, $line, $store_id) {
  */
 function my_custom_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   App::instance()->hookFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_entity_field_access().
+ */
+function my_custom_module_entity_field_access(
+  $operation,
+  FieldDefinitionInterface $field_definition,
+  AccountInterface $account,
+  ?FieldItemListInterface $items = NULL
+) {
+
+  if ($field_definition->getName() !== 'field_allowed_stores') {
+    return AccessResult::neutral();
+  }
+
+  if ($operation === 'edit') {
+    return AccessResult::allowedIfHasPermission(
+      $account,
+      'manage buyer store assignments'
+    );
+  }
+
+  return AccessResult::neutral();
 }
