@@ -33,7 +33,6 @@ if (class_exists('\Drupal\smtp\Plugin\Mail\SMTPMailSystems')) {
   $config['system.mail']['interface']['default'] = 'SMTPMailSystem';
 }
 
-$config['system.logging']['error_level'] = 'verbose';
 $settings['file_private_path'] = '/drupal-private-files';
 
 $config['system.performance']['css']['preprocess'] = FALSE;
