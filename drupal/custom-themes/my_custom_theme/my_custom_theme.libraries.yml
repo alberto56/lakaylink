@@ -14,17 +14,54 @@ global-styling:
       https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css:
         { type: external }
 
-      # Custom Bootstrap file
-      css/bootstrap.min.css: {}
+      # Bootstrap CSS
+      https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css:
+        { type: external }
 
-      # Local CSS
+      # Animate.css
+      https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css:
+        { type: external }
+
+      # Owl Carousel CSS
+      https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css:
+        { type: external }
+
+      https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css:
+        { type: external }
+
+      # Your theme styles
       css/style.css: {}
-      lib/animate/animate.min.css: {}
-      # lib/owlcarousel/dist/assets/owl.carousel.min.css: {}
 
   js:
-    lib/wow/wow.min.js: {}
-    # lib/owlcarousel/dist/owl.carousel.min.js: {}
+    # WOW.js
+    https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js:
+      { type: external, minified: true }
+
+    # jQuery Easing
+    https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js:
+      { type: external, minified: true }
+
+    # CounterUp
+    https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js:
+      { type: external, minified: true }
+
+    # Waypoints (required by CounterUp)
+    https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js:
+      { type: external, minified: true }
+
+    # Lightbox2
+    https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js:
+      { type: external, minified: true }
+
+    # Owl Carousel
+    https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js:
+      { type: external, minified: true }
+
+    # Bootstrap JS Bundle
+    https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js:
+      { type: external, minified: true }
+
+    # Theme JS
     js/main.js: {}
 
   dependencies:
