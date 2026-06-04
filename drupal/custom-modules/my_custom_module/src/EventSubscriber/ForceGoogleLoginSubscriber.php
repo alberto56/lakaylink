@@ -29,6 +29,10 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
 
     $path = $request->getPathInfo();
 
+    if (str_starts_with($path, '/api/')) {
+      return;
+    }
+
     $allowed = [
       '/user/login/google',
       '/oauth',
