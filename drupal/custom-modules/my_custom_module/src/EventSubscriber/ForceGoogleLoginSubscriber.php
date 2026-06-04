@@ -36,6 +36,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     $allowed = [
       '/user/login/google',
       '/oauth',
+      '/user/logout',
     ];
 
     foreach ($allowed as $prefix) {
