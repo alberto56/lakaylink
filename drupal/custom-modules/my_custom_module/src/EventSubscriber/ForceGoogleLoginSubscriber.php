@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\my_custom_module\EventSubscriber;
 
-use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -13,49 +12,36 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * Forces anonymous users through Google authentication.
  */
-final class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
+class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
 
-  /**
-   * Constructor.
-   */
-  public function __construct(
-    private readonly AccountProxyInterface $currentUser,
-    private readonly array $allowedRoutes,
-  ) {}
+  public static function getSubscribedEvents() {
+    return [
+      KernelEvents::REQUEST => ['onRequest', 300],
+    ];
+  }
 
-  /**
-   * Handles request events.
-   */
-  public function onRequest(RequestEvent $event): void {
-
-    if (!$event->isMainRequest()) {
-      return;
-    }
-
-    if (!$this->currentUser->isAnonymous()) {
-      return;
-    }
-
+  public function onRequest(RequestEvent $event) {
     $request = $event->getRequest();
 
-    $routeName = $request->attributes->get('_route');
-
-    if ($routeName && in_array($routeName, $this->allowedRoutes, TRUE)) {
+    if (\Drupal::currentUser()->isAuthenticated()) {
       return;
+    }
+
+    $path = $request->getPathInfo();
+
+    $allowed = [
+      '/user/login/google',
+      '/oauth',
+    ];
+
+    foreach ($allowed as $prefix) {
+      if (str_starts_with($path, $prefix)) {
+        return;
+      }
     }
 
     $event->setResponse(
       new RedirectResponse('/user/login/google')
     );
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function getSubscribedEvents(): array {
-    return [
-      KernelEvents::REQUEST => ['onRequest', 100],
-    ];
-  }
-
 }
