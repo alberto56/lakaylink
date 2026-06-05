@@ -29,7 +29,7 @@ final class BuyerLoginRedirectController extends ControllerBase {
   public function landing(): RedirectResponse {
 
     // Anonymous users.
-    if ($this->currentUser->isAnonymous()) {
+    if ($this->currentUser()->isAnonymous()) {
       return new RedirectResponse(
         Url::fromRoute('my_custom_module.custom_login')->toString()
       );
