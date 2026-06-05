@@ -1,0 +1,59 @@
+uuid: c0a406e6-e683-410e-83a5-cfc43861a222
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_store.commerce_store_type.online
+    - core.entity_view_mode.commerce_store.store_selector
+    - field.field.commerce_store.online.field_google_sheet_tab_gid
+    - field.field.commerce_store.online.field_google_sheet_url
+    - field.field.commerce_store.online.field_image
+  module:
+    - address
+    - image
+_core:
+  default_config_hash: TXXGt2nhVIkNciw-z_ybNwsIZnsyMLKvqUFjsZFUmwI
+id: commerce_store.online.store_selector
+targetEntityType: commerce_store
+bundle: online
+mode: store_selector
+content:
+  address:
+    type: address_default
+    label: visually_hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  name:
+    type: string
+    label: visually_hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  billing_countries: true
+  created: true
+  default_currency: true
+  field_google_sheet_tab_gid: true
+  field_google_sheet_url: true
+  is_default: true
+  langcode: true
+  mail: true
+  prices_include_tax: true
+  tax_registrations: true
+  timezone: true
+  uid: true

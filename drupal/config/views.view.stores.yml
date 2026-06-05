@@ -2,8 +2,6 @@ uuid: 0516ea08-a7f8-4910-93af-ca82398add68
 langcode: en
 status: true
 dependencies:
-  config:
-    - system.menu.main
   module:
     - address
     - commerce_store
@@ -173,10 +171,14 @@ display:
       display_extenders: {  }
       path: stores
       menu:
-        type: normal
+        type: none
         title: Stores
+        description: ''
+        weight: 0
+        expanded: false
         menu_name: main
         parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
