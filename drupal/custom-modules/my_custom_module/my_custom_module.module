@@ -581,16 +581,14 @@ function my_custom_module_entity_field_access(
   AccountInterface $account,
   ?FieldItemListInterface $items = NULL
 ) {
-
   if ($field_definition->getName() !== 'field_allowed_stores') {
     return AccessResult::neutral();
   }
 
   if ($operation === 'edit') {
-    return AccessResult::allowedIfHasPermission(
-      $account,
-      'manage buyer store assignments'
-    );
+    return $account->hasPermission('manage buyer store assignments')
+      ? AccessResult::allowed()
+      : AccessResult::forbidden();
   }
 
   return AccessResult::neutral();
