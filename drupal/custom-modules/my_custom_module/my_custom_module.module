@@ -595,3 +595,17 @@ function my_custom_module_entity_field_access(
 
   return AccessResult::neutral();
 }
+
+/**
+ * Implements hook_theme().
+ */
+function my_custom_module_theme($existing, $type, $theme, $path) {
+  return [
+    'custom_login_page' => [
+      'variables' => [
+        'social_login_block' => NULL,
+      ],
+      'template' => 'custom-login-page',
+    ],
+  ];
+}

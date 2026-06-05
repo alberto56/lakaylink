@@ -6,6 +6,7 @@ dependencies:
     - system.menu.categories
   module:
     - system
+    - user
   theme:
     - my_custom_theme
 id: my_custom_theme_categories
@@ -22,4 +23,11 @@ settings:
   level: 1
   depth: null
   expand_all_items: false
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated

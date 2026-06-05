@@ -4,3 +4,11 @@ my_custom_module.settings:
     _form: '\Drupal\my_custom_module\Form\AdminSettingsForm'
   requirements:
     _permission: 'administer site configuration'
+
+my_custom_module.login:
+  path: '/custom-login'
+  defaults:
+    _title: 'Login'
+    _controller: '\Drupal\my_custom_module\Controller\LoginController::loginPage'
+  requirements:
+    _access: 'TRUE'

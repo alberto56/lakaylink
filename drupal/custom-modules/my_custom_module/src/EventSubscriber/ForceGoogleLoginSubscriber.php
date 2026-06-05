@@ -34,6 +34,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     }
 
     $allowed = [
+      '/custom-login',
       '/user/login/google',
       '/oauth',
       '/user/logout',
@@ -46,7 +47,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     }
 
     $event->setResponse(
-      new RedirectResponse('/user/login/google')
+      new RedirectResponse('/custom-login')
     );
   }
 }
