@@ -67,7 +67,8 @@ rm -rf modules/contrib
   drupal/taxonomy_menu \
   drupal/structure_sync \
   drupal/commerce_product_review \
-  drupal/lang_dropdown
+  drupal/lang_dropdown \
+  drupal/user_redirect
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.

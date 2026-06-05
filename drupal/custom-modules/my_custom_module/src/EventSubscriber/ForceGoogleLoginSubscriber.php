@@ -40,6 +40,10 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
       '/user/logout',
     ];
 
+    if (preg_match('#^/user/reset/\d+/.+/login$#', $path)) {
+      return;
+    }
+
     foreach ($allowed as $prefix) {
       if (str_starts_with($path, $prefix)) {
         return;

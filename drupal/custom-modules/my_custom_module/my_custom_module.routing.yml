@@ -5,10 +5,17 @@ my_custom_module.settings:
   requirements:
     _permission: 'administer site configuration'
 
-my_custom_module.login:
+my_custom_module.custom_login:
   path: '/custom-login'
   defaults:
     _title: 'Login'
     _controller: '\Drupal\my_custom_module\Controller\LoginController::loginPage'
+  requirements:
+    _access: 'TRUE'
+
+my_custom_module.buyer_login_redirect:
+  path: '/buyer-login-redirect'
+  defaults:
+    _controller: '\Drupal\my_custom_module\Controller\BuyerLoginRedirectController::landing'
   requirements:
     _access: 'TRUE'

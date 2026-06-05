@@ -12,11 +12,3 @@ services:
   my_custom_module.buyer_store_resolver:
     class: Drupal\my_custom_module\BuyerStoreResolver
     arguments: ['@entity_type.manager']
-
-  my_custom_module.login_subscriber:
-    class: Drupal\my_custom_module\EventSubscriber\LoginSubscriber
-    arguments:
-      - '@my_custom_module.buyer_store_resolver'
-      - '@url_generator'
-    tags:
-      - { name: event_subscriber }
