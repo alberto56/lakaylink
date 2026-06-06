@@ -1,0 +1,15 @@
+uuid: 555a72af-58d2-4974-b05a-02fc5fb7fda2
+langcode: en
+status: true
+dependencies: {  }
+name: store_300x200
+label: 'Store (300x200)'
+effects:
+  54575875-6994-4f0d-97e8-19360cda2662:
+    uuid: 54575875-6994-4f0d-97e8-19360cda2662
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 300
+      height: 200
+      anchor: center-center

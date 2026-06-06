@@ -8,6 +8,7 @@ dependencies:
     - field.field.commerce_store.online.field_google_sheet_tab_gid
     - field.field.commerce_store.online.field_google_sheet_url
     - field.field.commerce_store.online.field_image
+    - image.style.thumbnail
   module:
     - address
     - image
@@ -27,10 +28,10 @@ content:
     region: content
   field_image:
     type: image
-    label: above
+    label: visually_hidden
     settings:
       image_link: ''
-      image_style: ''
+      image_style: thumbnail
       image_loading:
         attribute: lazy
     third_party_settings: {  }
@@ -40,7 +41,7 @@ content:
     type: string
     label: visually_hidden
     settings:
-      link_to_entity: false
+      link_to_entity: true
     third_party_settings: {  }
     weight: 1
     region: content
