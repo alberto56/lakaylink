@@ -7,6 +7,10 @@ use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Subscribes to route alterations for my_custom_module.
+ *
+ * Disable user login and user register route. User should login from
+ * google signin.
+ *
  */
 class RouteSubscriber extends RouteSubscriberBase {
 

@@ -1,9 +1,6 @@
 <?php
 
-use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
@@ -581,29 +578,17 @@ function my_custom_module_entity_field_access(
   AccountInterface $account,
   ?FieldItemListInterface $items = NULL
 ) {
-  if ($field_definition->getName() !== 'field_allowed_stores') {
-    return AccessResult::neutral();
-  }
-
-  if ($operation === 'edit') {
-    return $account->hasPermission('manage buyer store assignments')
-      ? AccessResult::allowed()
-      : AccessResult::forbidden();
-  }
-
-  return AccessResult::neutral();
+  App::instance()->hookEntityFieldAccess(
+    $operation,
+    $field_definition,
+    $account,
+    $items
+  );
 }
 
 /**
  * Implements hook_theme().
  */
 function my_custom_module_theme($existing, $type, $theme, $path) {
-  return [
-    'custom_login_page' => [
-      'variables' => [
-        'social_login_block' => NULL,
-      ],
-      'template' => 'custom-login-page',
-    ],
-  ];
+  return App::instance()->hookTheme();
 }

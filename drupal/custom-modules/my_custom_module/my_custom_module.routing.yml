@@ -5,6 +5,9 @@ my_custom_module.settings:
   requirements:
     _permission: 'administer site configuration'
 
+# Public login page used to initiate Google authentication.
+# Anonymous users are redirected here by the
+# ForceGoogleLoginSubscriber.
 my_custom_module.custom_login:
   path: '/custom-login'
   defaults:
@@ -13,6 +16,8 @@ my_custom_module.custom_login:
   requirements:
     _access: 'TRUE'
 
+# Landing page used after authentication to determine the
+# appropriate buyer destination and perform any required redirects.
 my_custom_module.buyer_login_redirect:
   path: '/buyer-login-redirect'
   defaults:

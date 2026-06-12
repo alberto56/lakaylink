@@ -8,23 +8,34 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * @todo Add class description.
+ * Resolves store assignments for buyer accounts.
+ *
+ * Reads the values stored in the field_allowed_stores user field and
+ * returns the corresponding store IDs or loaded Commerce store entities.
  */
 final class BuyerStoreResolver implements BuyerStoreResolverInterface {
 
   /**
    * Constructs a BuyerStoreResolver object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager service.
    */
   public function __construct(
     private readonly EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
+  /**
+   * {@inheritdoc}
+   */
   public function getAllowedStoreIds(AccountInterface $account): array {
 
     $user = $this->entityTypeManager
       ->getStorage('user')
       ->load($account->id());
 
+    // Return an empty array if the user cannot be loaded or does not
+    // contain the allowed stores field.
     if (!$user || !$user->hasField('field_allowed_stores')) {
       return [];
     }
@@ -35,10 +46,14 @@ final class BuyerStoreResolver implements BuyerStoreResolverInterface {
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getAllowedStores(AccountInterface $account): array {
 
     $ids = $this->getAllowedStoreIds($account);
 
+    // No assigned stores.
     if (!$ids) {
       return [];
     }
