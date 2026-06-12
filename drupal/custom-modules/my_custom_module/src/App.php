@@ -4,7 +4,6 @@ namespace Drupal\my_custom_module;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
