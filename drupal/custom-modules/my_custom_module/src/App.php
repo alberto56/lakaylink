@@ -83,34 +83,34 @@ class App {
     }
   }
 
-/**
- * Testable implementation of hook_entity_field_access().
- *
- * Controls access to the buyer store assignment field.
- *
- * Restricts editing of the field_allowed_stores field to users who have
- * the "manage buyer store assignments" permission. All other field access
- * operations are left unchanged.
- *
- * @param string $operation
- *   The operation being performed ('view' or 'edit').
- * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
- *   The field definition being accessed.
- * @param \Drupal\Core\Session\AccountInterface $account
- *   The user account requesting access.
- * @param \Drupal\Core\Field\FieldItemListInterface|null $items
- *   (optional) The field values.
- *
- * @return \Drupal\Core\Access\AccessResult
- *   The access result for the requested operation.
- *
- * @see hook_entity_field_access()
- */
-function hookEntityFieldAccess(
+  /**
+   * Testable implementation of hook_entity_field_access().
+   *
+   * Controls access to the buyer store assignment field.
+   *
+   * Restricts editing of the field_allowed_stores field to users who have
+   * the "manage buyer store assignments" permission. All other field access
+   * operations are left unchanged.
+   *
+   * @param string $operation
+   *   The operation being performed ('view' or 'edit').
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition being accessed.
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The user account requesting access.
+   * @param \Drupal\Core\Field\FieldItemListInterface|null $items
+   *   (optional) The field values.
+   *
+   * @return \Drupal\Core\Access\AccessResult
+   *   The access result for the requested operation.
+   *
+   * @see hook_entity_field_access()
+   */
+  public function hookEntityFieldAccess(
     $operation,
     FieldDefinitionInterface $field_definition,
     AccountInterface $account,
-    ?FieldItemListInterface $items = NULL
+    ?FieldItemListInterface $items = NULL,
   ) {
     if ($field_definition->getName() !== 'field_allowed_stores') {
       return AccessResult::neutral();
@@ -122,7 +122,7 @@ function hookEntityFieldAccess(
         : AccessResult::forbidden();
     }
 
-    return AccessResult::neutral();    
+    return AccessResult::neutral();
   }
 
   /**
@@ -133,22 +133,12 @@ function hookEntityFieldAccess(
    * Defines the custom login page theme implementation used to render
    * the Google authentication login screen.
    *
-   * @param array $existing
-   *   An array of existing implementations that may be used for override
-   *   purposes.
-   * @param string $type
-   *   The type of the extension.
-   * @param string $theme
-   *   The active theme name.
-   * @param string $path
-   *   The path to the module providing the hook implementation.
-   *
    * @return array
    *   An associative array containing theme hook definitions.
    *
    * @see hook_theme()
    */
-  function hookTheme() {
+  public function hookTheme() {
     return [
       'custom_login_page' => [
         'variables' => [

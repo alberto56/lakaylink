@@ -32,7 +32,7 @@ class BuyerLoginRedirectController extends ControllerBase {
    *   The buyer store resolver service.
    */
   public function __construct(
-    private readonly BuyerStoreResolverInterface $buyerStoreResolver
+    private readonly BuyerStoreResolverInterface $buyerStoreResolver,
   ) {}
 
   /**
