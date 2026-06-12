@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\my_custom_module\EventSubscriber;
 
+use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
