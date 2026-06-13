@@ -1,3 +1,68 @@
+{#
+/**
+ * @file
+ * Main page template (page.html.twig)
+ *
+ * This template defines the global layout structure for all pages in the site.
+ * It controls the rendering order of major regions such as:
+ * - Spinner (page loading indicator)
+ * - Topbar (utility navigation)
+ * - Header (logo, search, actions)
+ * - Primary navigation (navbar + categories)
+ * - Page header (title + breadcrumb)
+ * - System messages and help text
+ * - Hero section
+ * - Main content area
+ * - Footer (multi-column layout)
+ * - Copyright bar
+ * - Back-to-top button
+ *
+ * VARIABLES
+ * ----------
+ * page.* : Rendered regions provided by Drupal (blocks, menus, views, etc.)
+ * title  : Page title (used in non-front pages)
+ * is_front : Boolean indicating homepage
+ *
+ * KEY REGIONS
+ * -----------
+ * page.topbar_left     : Utility links (left side topbar)
+ * page.topbar_center   : Contact/phone or central info
+ * page.topbar_right    : Currency / language / user menu
+ *
+ * page.header_branding : Site logo / branding block
+ * page.header_search   : Search form region
+ * page.header_actions   : Cart / wishlist / compare icons
+ *
+ * page.nav_categories  : Category sidebar / mega menu trigger
+ * page.primary_menu    : Main navigation menu
+ *
+ * page.hero            : Hero section content
+ * page.content         : Main page content (node, views, blocks)
+ *
+ * page.footer          : Footer contact strip
+ * page.footer_col1     : Footer column 1 (newsletter / about)
+ * page.footer_col2     : Footer column 2 (links)
+ * page.footer_col3     : Footer column 3 (info)
+ * page.footer_col4     : Footer column 4 (extras)
+ *
+ * page.footer_information : Bottom-left footer text
+ * page.copyright          : Bottom-right copyright text
+ *
+ * BEHAVIOR
+ * --------
+ * - Topbar, header, and navbar are hidden on mobile where appropriate (Bootstrap d-none d-lg-block).
+ * - Spinner is shown during initial page load.
+ * - Page header and breadcrumb are hidden on the front page.
+ * - All regions are optional and rendered only if populated.
+ *
+ * DEPENDENCIES
+ * ------------
+ * - Bootstrap 5 grid and utilities
+ * - WOW.js (for animations like fadeInUp / fadeIn)
+ * - Font Awesome (icons)
+ */
+#}
+
 {% set topbar_attributes = topbar_attributes ?: create_attribute() %}
 
 {% set spinner_attributes = spinner_attributes ?: create_attribute() %}
@@ -194,12 +259,16 @@
    wrapper keeps a consistent full-width container.
    ======================================================== #}
 {% block content %}
-<main id="main-content" role="main">
+  <div class="container-fluid py-5">
+    <div class="container py-5">
+      <main id="main-content" role="main">
 
-  {# Default: full-width content — each page template handles its own padding/containers #}
-  {{ page.content }}
+        {# Default: full-width content — each page template handles its own padding/containers #}
+        {{ page.content }}
 
-</main>
+      </main>
+    </div>
+  </div>
 {% endblock %}
 
 

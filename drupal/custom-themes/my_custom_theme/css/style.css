@@ -874,3 +874,14 @@
     padding-right: 0px !important;
     padding-top: 8px !important;
 }
+
+
+#edit-actions {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+
+#edit-actions input.form-submit {
+  width: auto;
+}

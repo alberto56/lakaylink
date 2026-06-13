@@ -32,3 +32,9 @@ regions:
 
 libraries:
   - 'my_custom_theme/global-styling'
+
+libraries-override:
+  bootstrap_barrio/global-styling:
+    css:
+      component:
+        css/components/table.css: false

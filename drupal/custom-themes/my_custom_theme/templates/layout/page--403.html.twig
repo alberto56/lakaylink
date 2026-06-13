@@ -1,3 +1,108 @@
+{#
+/**
+ * @file
+ * 403 page template (page--403.html.twig)
+ *
+ * This template defines the global layout structure for the site and controls
+ * the rendering of all major UI regions including header, navigation, content,
+ * footer, and utility elements.
+ *
+ * It follows a Bootstrap-based responsive layout and is designed to work with
+ * Drupal region system.
+ *
+ * --------------------------------------------------------
+ * OVERVIEW
+ * --------------------------------------------------------
+ * The page is composed of the following sections:
+ *
+ * 1. Spinner (loading indicator)
+ * 2. Topbar (utility navigation row)
+ * 3. Header (branding, search, actions)
+ * 4. Navbar (main menu + categories)
+ * 5. Page header (title + breadcrumb, non-front pages)
+ * 6. Messages / Help / Hero regions
+ * 7. Main content area
+ * 8. Footer (multi-column layout)
+ * 9. Copyright bar
+ * 10. Back-to-top button
+ *
+ * --------------------------------------------------------
+ * VARIABLES
+ * --------------------------------------------------------
+ *
+ * page.* : Drupal-rendered regions (blocks, views, menus, etc.)
+ * title   : Page title (used on non-front pages)
+ * is_front: Boolean indicating homepage
+ *
+ * --------------------------------------------------------
+ * CORE REGIONS
+ * --------------------------------------------------------
+ *
+ * TOPBAR
+ *   page.topbar_left     → Utility links (left)
+ *   page.topbar_center   → Phone / contact / center info
+ *   page.topbar_right    → Language / currency / user tools
+ *
+ * HEADER
+ *   page.header_branding → Logo / site branding
+ *   page.header_search   → Search form
+ *   page.header_actions  → Cart / wishlist / compare icons
+ *
+ * NAVIGATION
+ *   page.nav_categories → Category / mega menu toggle
+ *   page.primary_menu   → Main navigation menu
+ *
+ * CONTENT
+ *   page.hero     → Hero banner section (optional)
+ *   page.content  → Main page content (nodes, views, blocks)
+ *
+ * FOOTER
+ *   page.footer            → Footer contact/info strip
+ *   page.footer_col1       → Newsletter / about section
+ *   page.footer_col2       → Customer service links
+ *   page.footer_col3       → Information links
+ *   page.footer_col4       → Extra links
+ *   page.footer_information→ Bottom-left footer text
+ *   page.copyright         → Bottom-right copyright text
+ *
+ * --------------------------------------------------------
+ * SPECIAL BEHAVIOR
+ * --------------------------------------------------------
+ *
+ * - Spinner is shown during initial page load.
+ * - Topbar, header, and navbar are hidden on small screens using Bootstrap utilities.
+ * - Page header + breadcrumb are only shown when NOT on the front page.
+ * - All regions are optional and rendered only if they contain content.
+ *
+ * --------------------------------------------------------
+ * CONTENT AREA BEHAVIOR
+ * --------------------------------------------------------
+ *
+ * The main content block is overridden here to render a custom 404-style layout:
+ *
+ * - If this template is used for a 404 route override,
+ *   it displays a full-page “Page Not Found” message.
+ * - Includes:
+ *     • Icon
+ *     • 404 title
+ *     • translated message strings
+ *     • link back to homepage (path('<front>'))
+ *
+ * NOTE:
+ * This replaces the default {{ page.content }} rendering in this template.
+ *
+ * --------------------------------------------------------
+ * DEPENDENCIES
+ * --------------------------------------------------------
+ *
+ * - Bootstrap 5 (grid, spacing, utilities)
+ * - Bootstrap Icons (bi bi-exclamation-triangle)
+ * - Font Awesome (back-to-top icon)
+ * - WOW.js (scroll animations: fadeIn, fadeInUp)
+ *
+ */
+#}
+
 {% set topbar_attributes = topbar_attributes ?: create_attribute() %}
 
 {% set spinner_attributes = spinner_attributes ?: create_attribute() %}
