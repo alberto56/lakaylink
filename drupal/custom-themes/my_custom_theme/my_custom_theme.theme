@@ -2,21 +2,10 @@
 
 /**
  * @file
- * Bootstrap sub-theme.
+ * Bootstrap Barrio sub-theme.
  *
  * Place your custom PHP code in this file.
  */
-
-function my_custom_theme_preprocess_commerce_cart_block(&$variables) {
-  $order = $variables['order'] ?? NULL;
-
-  if ($order) {
-    $variables['cart_total'] = $order->getTotalPrice()->__toString();
-  }
-  else {
-    $variables['cart_total'] = '$0.00';
-  }
-}
 
 /**
  * Implements hook_theme_suggestions_views_view_alter().
