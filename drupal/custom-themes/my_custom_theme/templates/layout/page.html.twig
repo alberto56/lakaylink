@@ -55,7 +55,7 @@
 
     {# ---- Right: currency / language / my-dashboard dropdowns ---- #}
     <div class="col-lg-4 text-center text-lg-end">
-      <div class="d-inline-flex align-items-center" style="height: 45px;">
+      <div class="d-flex align-items-center justify-content-end gap-3" style="height: 45px;">
           {{ page.topbar_right }}
       </div>
     </div>
@@ -124,14 +124,14 @@
           {% endif %}
         </div>
 
-
-
     {# ---- Main navigation ---- #}
     <div class="col-12 col-lg-9">
+      <div class="menu-wrapper d-flex justify-content-lg-end align-items-center">
         {# Render the main menu #}
         {% if page.primary_menu %}
           {{ page.primary_menu }}
         {% endif %}
+      </div>
     </div>
   </div>
 </div>

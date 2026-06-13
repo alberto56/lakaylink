@@ -1,36 +1,72 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <a href="/" class="navbar-brand d-block d-lg-none">
-        <h1 class="display-5 text-secondary m-0">
-            <i class="fas fa-shopping-bag text-white me-2"></i>Electro
-        </h1>
-        <!-- <img src="img/logo.png" alt="Logo"> -->
+{#
+/**
+ * @file
+ * Bootstrap Barrio's override to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ */
+#}
+
+    <a href="" class="navbar-brand d-block d-lg-none">
+      <h1 class="display-5 text-secondary m-0"><i class="fas fa-shopping-bag text-white me-2"></i>{{ site_name }}</h1>
+      <!-- <img src="img/logo.png" alt="Logo"> -->
     </a>
-    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <button class="navbar-toggler ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="fa fa-bars fa-1x"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
-            <a href="/" class="nav-item nav-link active" aria-current="page">Home</a>
-            <a href="/store-selector" class="nav-item nav-link">Stores</a>
-            <a href="/products" class="nav-item nav-link">Products</a>
 
-            <!-- Optional Dropdown Example -->
-            <!--
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu m-0">
-                    <a href="#" class="dropdown-item">Page 1</a>
-                    <a href="#" class="dropdown-item">Page 2</a>
-                </div>
-            </div>
-            -->
+            {% for item in items %}
+
+                {% if item.below %}
+
+                    <div class="nav-item dropdown">
+                        <a href="{{ item.url }}"
+                           class="nav-link dropdown-toggle {{ item.in_active_trail ? 'active' }}"
+                           data-bs-toggle="dropdown">
+                            {{ item.title }}
+                        </a>
+
+                        <div class="dropdown-menu m-0">
+                            {% for child in item.below %}
+                                <a href="{{ child.url }}"
+                                   class="dropdown-item {{ child.in_active_trail ? 'active' }}">
+                                    {{ child.title }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <a href="{{ item.url }}"
+                       class="nav-item nav-link {{ item.in_active_trail ? 'active' }}">
+                        {{ item.title }}
+                    </a>
+
+                {% endif %}
+
+            {% endfor %}
+
         </div>
-
-        <!-- Optional Call Button -->
-        <a href="tel:+01234567890" class="btn btn-secondary rounded-pill py-2 px-4 px-lg-3 mb-3 mb-md-3 mb-lg-0">
-            <i class="fa fa-mobile-alt me-2"></i> +0123 456 7890
-        </a>
-
-
     </div>
-</nav>
