@@ -882,6 +882,116 @@
   gap: 100px;
 }
 
-#edit-actions input.form-submit {
-  width: auto;
+/* Payment Information Section */
+#edit-payment-information {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+#edit-payment-information legend {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 1rem;
+}
+
+/* Two-column layout for inline containers */
+.address-container-inline {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.address-container-inline > .form-item {
+    flex: 1;
+    min-width: 220px;
+}
+
+/* Labels */
+#edit-payment-information label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+/* Inputs & Selects */
+#edit-payment-information .form-control,
+#edit-payment-information .form-select {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+/* Focus State */
+#edit-payment-information .form-control:focus,
+#edit-payment-information .form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+    outline: none;
+}
+
+/* Full-width fields */
+.form-item-payment-information-billing-information-address-0-address-organization,
+.form-item-payment-information-billing-information-address-0-address-address-line1,
+.form-item-payment-information-billing-information-address-0-address-address-line2 {
+    width: 100%;
+}
+
+/* Checkbox Styling */
+.form-check {
+    margin-top: 20px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.form-check-input {
+    cursor: pointer;
+}
+
+.form-check-label {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .address-container-inline {
+        flex-direction: column;
+    }
+
+    .address-container-inline > .form-item {
+        width: 100%;
+    }
+
+    #edit-payment-information {
+        padding: 16px;
+    }
+}
+
+#edit-payment-information-billing-information-address-0-address {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.form-item-payment-information-billing-information-address-0-address-address-line1,
+.form-item-payment-information-billing-information-address-0-address-address-line2,
+.form-item-payment-information-billing-information-address-0-address-organization {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+    #edit-payment-information-billing-information-address-0-address {
+        grid-template-columns: 1fr;
+    }
+}
+
+#block-my-custom-theme-mobile {
+  height: 35px;
 }
