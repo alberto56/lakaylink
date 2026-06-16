@@ -1,0 +1,13 @@
+uuid: 20ad1bdd-a8ff-4cb5-b921-d3668b96a5e4
+langcode: en
+status: true
+dependencies: {  }
+id: grocery_product_review
+label: 'Grocery Product Review'
+description: ''
+requireTitle: true
+requirePublishedAs: true
+descriptionPlaceholder: ''
+notificationEmail: ''
+productTypes:
+  grocery_product: grocery_product

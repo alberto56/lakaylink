@@ -1,0 +1,22 @@
+uuid: 0de52b84-fe94-4788-9fb5-e9687c690463
+langcode: en
+status: true
+dependencies:
+  module:
+    - my_custom_module
+  theme:
+    - my_custom_theme
+id: my_custom_theme_customcommercecart
+theme: my_custom_theme
+region: header_actions
+weight: 0
+provider: null
+plugin: custom_commerce_cart
+settings:
+  id: custom_commerce_cart
+  label: 'Custom Commerce Cart'
+  label_display: '0'
+  provider: my_custom_module
+  dropdown: '1'
+  show_if_empty: 1
+visibility: {  }

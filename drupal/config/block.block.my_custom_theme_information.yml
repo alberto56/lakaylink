@@ -1,0 +1,25 @@
+uuid: 5fdb120a-c68a-4c22-956e-fe69a0154af3
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.information
+  module:
+    - system
+  theme:
+    - my_custom_theme
+id: my_custom_theme_information
+theme: my_custom_theme
+region: footer_col3
+weight: 0
+provider: null
+plugin: 'system_menu_block:information'
+settings:
+  id: 'system_menu_block:information'
+  label: Information
+  label_display: visible
+  provider: system
+  level: 1
+  depth: null
+  expand_all_items: false
+visibility: {  }

@@ -6,8 +6,11 @@ dependencies:
     - commerce_store.commerce_store_type.online
     - field.field.commerce_store.online.field_google_sheet_tab_gid
     - field.field.commerce_store.online.field_google_sheet_url
+    - field.field.commerce_store.online.field_image
+    - image.style.thumbnail
   module:
     - address
+    - image
     - link
     - path
 _core:
@@ -51,6 +54,14 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_image:
+    type: image_image
+    weight: 11
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
     third_party_settings: {  }
   is_default:
     type: boolean_checkbox

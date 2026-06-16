@@ -1,0 +1,6 @@
+# Allows administrators to manage store access for buyer accounts.
+# Users with this permission can assign and update the stores that
+# a buyer is permitted to access.
+manage buyer store assignments:
+  title: 'Manage buyer store assignments'
+  description: 'Assign allowed stores to buyers.'

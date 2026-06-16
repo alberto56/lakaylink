@@ -51,7 +51,7 @@ rm -rf modules/contrib
   drupal/webform:^6 \
   drupal/paragraphs \
   drupal/masquerade \
-  drupal/bootstrap \
+  drupal/bootstrap_barrio \
   drupal/letsencrypt_challenge \
   drupal/smtp \
   drupal/commerce_stripe \
@@ -62,7 +62,13 @@ rm -rf modules/contrib
   drupal/simple_oauth \
   drupal/jsonapi_extras \
   drupal/jsonapi_menu_items \
-  drupal/jsonapi_hypermedia
+  drupal/jsonapi_hypermedia \
+  drupal/facets \
+  drupal/taxonomy_menu \
+  drupal/structure_sync \
+  drupal/commerce_product_review \
+  drupal/lang_dropdown \
+  drupal/user_redirect
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.

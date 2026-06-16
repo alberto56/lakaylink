@@ -1,0 +1,541 @@
+blocks:
+  -
+    info: mobile
+    langcode: en
+    uuid: cac6e3c1-71aa-40e3-941f-5434dd2f2d03
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<p><a class="btn btn-secondary rounded-pill py-2 px-4 px-lg-3 mb-3 mb-md-3 mb-lg-0" href=""><em><i class="fa=" fa-mobile-alt=""><span>+0123 456 7890</span></i></em></a></p>'
+          summary: ''
+          format: full_html
+  -
+    info: Services
+    langcode: en
+    uuid: cb786ebe-420c-416a-b592-176b205502cf
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<div class="container-fluid px-0"><div class="row g-0"><div class="col-6 col-md-4 col-lg-2 border-start border-end wow fadeInUp" style="animation-delay:0.1s;animation-name:fadeInUp;visibility:visible;" data-wow-delay="0.1s"><div class="p-4"><div class="d-inline-flex align-items-center"><div class="ms-4"><h6 class="text-uppercase mb-2">Free Return</h6><p class="mb-0">30 days money back guarantee!</p></div></div></div></div><div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" style="animation-delay:0.2s;animation-name:fadeInUp;visibility:visible;" data-wow-delay="0.2s"><div class="p-4"><div class="d-flex align-items-center"><div class="ms-4"><h6 class="text-uppercase mb-2">Free Shipping</h6><p class="mb-0">Free shipping on all order</p></div></div></div></div><div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" style="animation-delay:0.3s;animation-name:fadeInUp;visibility:visible;" data-wow-delay="0.3s"><div class="p-4"><div class="d-flex align-items-center"><div class="ms-4"><h6 class="text-uppercase mb-2">Support 24/7</h6><p class="mb-0">We support online 24 hrs a day</p></div></div></div></div><div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" style="animation-delay:0.4s;animation-name:fadeInUp;visibility:visible;" data-wow-delay="0.4s"><div class="p-4"><div class="d-flex align-items-center"><div class="ms-4"><h6 class="text-uppercase mb-2">Receive Gift Card</h6><p class="mb-0">Recieve gift all over oder $50</p></div></div></div></div><div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" style="animation-delay:0.5s;animation-name:fadeInUp;visibility:visible;" data-wow-delay="0.5s"><div class="p-4"><div class="d-flex align-items-center"><div class="ms-4"><h6 class="text-uppercase mb-2">Secure Payment</h6><p class="mb-0">We Value Your Security</p></div></div></div></div><div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" style="animation-delay:0.6s;animation-name:fadeInUp;visibility:visible;" data-wow-delay="0.6s"><div class="p-4"><div class="d-flex align-items-center"><div class="ms-4"><h6 class="text-uppercase mb-2">Online Service</h6><p class="mb-0">Free return products in 30 days</p></div></div></div></div></div></div>'
+          summary: ''
+          format: full_html
+  -
+    info: 'Footer Information'
+    langcode: en
+    uuid: 2f1a11c9-8cb8-4bc6-abff-588ae1919eac
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<p><a class="border-bottom text-white" href="#"><span class="text-white">Your Site Name</span></a><span class="text-white">, All right reserved.</span></p>'
+          summary: ''
+          format: full_html
+  -
+    info: 'Powered by'
+    langcode: en
+    uuid: d24cb7fa-cbb1-4129-9fb9-11af438bb841
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<p>Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a> . Distributed By <a class="border-bottom text-white" href="https://themewagon.com">ThemeWagon</a></p>'
+          summary: ''
+          format: full_html
+  -
+    info: 'Site information'
+    langcode: en
+    uuid: bce62e7e-e95f-4dbf-a2ec-580d6025a2a6
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<p><span class="text-white”&gt; &lt;a href=" fas="" fa-copyright="" text-light="">Your Site Name, All right reserved.</span></p>'
+          summary: ''
+          format: full_html
+  -
+    info: footer
+    langcode: en
+    uuid: e762b89f-d087-4765-91d8-445e349c75f5
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<div class="row g-4 rounded mb-5" style="background-color:rgba(255, 255, 255, .03);"><div class="col-md-6 col-lg-6 col-xl-3"><div class="rounded p-4"><div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="height:70px;width:70px;">&nbsp; <em><i class="fas fa-map-marker-alt fa-2x text-primary">&nbsp;</i></em></div><div><h4 class="text-white">Address</h4><p class="mb-2">123 Street New York.USA</p></div></div></div><div class="col-md-6 col-lg-6 col-xl-3"><div class="rounded p-4"><div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="height:70px;width:70px;" fas="" fa-envelope="" fa-2x="">&nbsp;&nbsp;<em><i class="fas fa-envelope fa-2x text-primary">&nbsp;</i></em></div><div><h4 class="text-white">Mail Us</h4><p class="mb-2">info@example.com</p></div></div></div><div class="col-md-6 col-lg-6 col-xl-3"><div class="rounded p-4"><div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="height:70px;width:70px;">&nbsp; <em><i class="fa fa-phone-alt fa-2x text-primary">&nbsp;</i></em></div><div><h4 class="text-white">Telephone</h4><p class="mb-2">(+012) 3456 7890</p></div></div></div><div class="col-md-6 col-lg-6 col-xl-3"><div class="rounded p-4"><div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="height:70px;width:70px;"><em><i class="fab fa-firefox-browser fa-2x text-primary">&nbsp;</i></em></div><div><h4 class="text-white">Yoursite@ex.com</h4><p class="mb-2">(+012) 3456 7890</p></div></div></div></div>'
+          summary: ''
+          format: full_html
+  -
+    info: 'Call Us'
+    langcode: en
+    uuid: f68bf7c3-ecdf-41b4-a092-d3dedc793d84
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<p><small class="text-dark">Call Us:</small> <a class="text-muted" href="#!">(+012) 1234 567890</a></p>'
+          summary: ''
+          format: full_html
+  -
+    info: 'Reach out'
+    langcode: en
+    uuid: 9380b076-84f2-4370-b0b8-92e418110423
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<p><a class="text-muted me-2" href="#!">Help</a><small> / </small><a class="text-muted mx-2" href="#!">Support</a><small> / </small><a class="text-muted ms-2" href="#!">Contact</a></p>'
+          summary: ''
+          format: full_html
+menus:
+  -
+    menu_name: extras
+    title: Brands
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: ca08d56b-8334-4706-b9b9-6dc7fa9ad643
+    options: {  }
+  -
+    menu_name: extras
+    title: 'Gift Vouchers'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 3cbced5e-5a3d-4223-ada1-0c73149f756a
+    options: {  }
+  -
+    menu_name: extras
+    title: Affiliates
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: d8203855-2f59-4a8a-8d69-96de547d4304
+    options: {  }
+  -
+    menu_name: extras
+    title: Wishlist
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: d4a037eb-694b-42c4-b8ad-2938cd362794
+    options: {  }
+  -
+    menu_name: extras
+    title: 'Order History'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 136d5535-e2fa-484f-b453-4c00234ae122
+    options: {  }
+  -
+    menu_name: extras
+    title: 'Track Your Order'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 12a8783e-f78d-444f-982e-6457e3140095
+    options: {  }
+  -
+    menu_name: information
+    title: 'About Us'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 4d13bc0e-6e6e-4de7-b823-90bed14d4c7d
+    options: {  }
+  -
+    menu_name: information
+    title: 'Delivery information'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: e6875c63-32de-44db-bdf2-00bc230296a3
+    options: {  }
+  -
+    menu_name: information
+    title: 'Privacy Policy'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 75be1960-b017-4811-82bf-391166be971b
+    options: {  }
+  -
+    menu_name: information
+    title: 'Terms & Conditions'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: fcaeea25-9792-48b5-87b2-55f9123cd72b
+    options: {  }
+  -
+    menu_name: customer-service
+    title: 'Contact Us'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 2397c64f-7e08-46c9-bb28-7770b22e8df2
+    options: {  }
+  -
+    menu_name: customer-service
+    title: Returns
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 624757fa-7eaa-4eeb-b5bb-72cdc86b6b6a
+    options: {  }
+  -
+    menu_name: customer-service
+    title: 'Order History'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: fc2dd9b4-3cb6-4640-b5c1-ea281aba8441
+    options: {  }
+  -
+    menu_name: customer-service
+    title: 'Site Map'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 0aa87a05-55ec-42aa-86be-7635bfad9a0b
+    options: {  }
+  -
+    menu_name: customer-service
+    title: Testimonials
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 22e05e9a-d979-4f47-8f6c-fae983998576
+    options: {  }
+  -
+    menu_name: customer-service
+    title: 'My Account'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: f864f5a4-1b88-4ccd-99ce-80c427a2944d
+    options: {  }
+  -
+    menu_name: customer-service
+    title: 'Unsubscribe Notification'
+    parent: null
+    uri: 'internal:/'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: b24bb8d2-550e-4cc7-9434-080aa08bbce7
+    options: {  }
+taxonomies:
+  brand:
+    -
+      vid: brand
+      tid: '10'
+      langcode: en
+      name: Amul
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: ebf2da33-1e6c-47c3-ba3e-c63c7f80b7f2
+      field_brand_code:
+        -
+          value: Amul
+    -
+      vid: brand
+      tid: '4'
+      langcode: en
+      name: Nestle
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: fece279a-0033-436a-a63e-80e1d1f8b9a9
+      field_brand_code:
+        -
+          value: Nestle
+    -
+      vid: brand
+      tid: '9'
+      langcode: en
+      name: 'Organic India'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 800614e8-0dfc-4c06-ba93-ae06e3ac12b4
+      field_brand_code:
+        -
+          value: 'Organic India'
+    -
+      vid: brand
+      tid: '1'
+      langcode: en
+      name: Tata
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: daa09dfc-92d5-4861-8d8a-36be68cefae7
+      field_brand_code:
+        -
+          value: Tata
+  category:
+    -
+      vid: category
+      tid: '13'
+      langcode: en
+      name: Dairy
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 7fc05087-a86f-49b0-9d45-14762c346a3b
+      field_category_code:
+        -
+          value: Dairy
+    -
+      vid: category
+      tid: '11'
+      langcode: en
+      name: Fruits
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: a010ee33-97e8-4c49-bce3-fcc6fb70b439
+      field_category_code:
+        -
+          value: Fruits
+    -
+      vid: category
+      tid: '15'
+      langcode: en
+      name: Snacks
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 78c65659-0214-48b8-9091-e55042f2a3e3
+      field_category_code:
+        -
+          value: Snacks
+    -
+      vid: category
+      tid: '2'
+      langcode: en
+      name: Spices
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 12626c0a-4333-43e6-b770-5601ca2aa524
+      field_category_code:
+        -
+          value: Spices
+    -
+      vid: category
+      tid: '7'
+      langcode: en
+      name: Staples
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: b7f55113-425b-437b-a91b-a1aeaf9d2988
+      field_category_code:
+        -
+          value: Staples
+    -
+      vid: category
+      tid: '5'
+      langcode: en
+      name: Vegetables
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 18f74bd2-0cf2-489c-9c24-e35d62e3c1ed
+      field_category_code:
+        -
+          value: Vegetables
+  sub_category:
+    -
+      vid: sub_category
+      tid: '14'
+      langcode: en
+      name: Dairy
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 3e0d0394-6298-41cf-8e93-2db2374dfa07
+      field_sub_category_code:
+        -
+          value: Dairy
+    -
+      vid: sub_category
+      tid: '12'
+      langcode: en
+      name: Fruits
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: d48ccb3f-8a57-4d39-91f8-987a0276dc7b
+      field_sub_category_code:
+        -
+          value: Fruits
+    -
+      vid: sub_category
+      tid: '16'
+      langcode: en
+      name: Snacks
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 393b1574-3fa3-4ed3-b627-5ddc37f5f247
+      field_sub_category_code:
+        -
+          value: Snacks
+    -
+      vid: sub_category
+      tid: '3'
+      langcode: en
+      name: Spices
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 116770b6-deef-4b78-82c3-88246f20c06b
+      field_sub_category_code:
+        -
+          value: Spices
+    -
+      vid: sub_category
+      tid: '8'
+      langcode: en
+      name: Staples
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 2c6e64d1-eb0a-42a6-ae13-f76e6b70fdfb
+      field_sub_category_code:
+        -
+          value: Staples
+    -
+      vid: sub_category
+      tid: '6'
+      langcode: en
+      name: Vegetables
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 3a173de8-c3e3-444a-8d43-137f94a76526
+      field_sub_category_code:
+        -
+          value: Vegetables
+  tags: {  }
+log: 1

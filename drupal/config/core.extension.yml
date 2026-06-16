@@ -19,6 +19,7 @@ module:
   commerce_payment_example: 0
   commerce_price: 0
   commerce_product: 0
+  commerce_product_review: 0
   commerce_promotion: 0
   commerce_store: 0
   commerce_stripe: 0
@@ -45,6 +46,7 @@ module:
   jsonapi: 0
   jsonapi_defaults: 0
   jsonapi_extras: 0
+  lang_dropdown: 0
   language: 0
   link: 0
   locale: 0
@@ -69,13 +71,16 @@ module:
   social_auth: 0
   social_auth_google: 0
   state_machine: 0
+  structure_sync: 0
   system: 0
   taxonomy: 0
+  taxonomy_menu: 0
   text: 0
   token: 0
   toolbar: 0
   update: 0
   user: 0
+  user_redirect: 0
   views_ui: 0
   pathauto: 1
   content_translation: 10
@@ -85,4 +90,6 @@ theme:
   olivero: 0
   claro: 0
   gin: 0
+  bootstrap_barrio: 0
+  my_custom_theme: 0
 profile: standard

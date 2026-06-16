@@ -6,8 +6,10 @@ dependencies:
     - commerce_store.commerce_store_type.online
     - field.field.commerce_store.online.field_google_sheet_tab_gid
     - field.field.commerce_store.online.field_google_sheet_url
+    - field.field.commerce_store.online.field_image
   module:
     - address
+    - image
     - link
     - options
 _core:
@@ -77,6 +79,17 @@ content:
       target: ''
     third_party_settings: {  }
     weight: 10
+    region: content
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 11
     region: content
   is_default:
     type: boolean

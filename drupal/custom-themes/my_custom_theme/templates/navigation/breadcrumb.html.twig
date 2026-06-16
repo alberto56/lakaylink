@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Theme override for a breadcrumb trail.
+ *
+ * Available variables:
+ * - breadcrumb: Breadcrumb trail items.
+ * - breadcrumb_divider: Breadcrumb divider character
+ */
+#}
+
+<nav role="navigation" aria-label="breadcrumb">
+  <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp"
+      data-wow-delay="0.3s">
+
+    {% for item in breadcrumb %}
+      {% if not loop.last %}
+        <li class="breadcrumb-item">
+          <a href="{{ item.url }}">{{ item.text }}</a>
+        </li>
+      {% else %}
+        <li class="breadcrumb-item active text-white">
+          {{ item.text }}
+        </li>
+      {% endif %}
+    {% endfor %}
+
+  </ol>
+</nav>

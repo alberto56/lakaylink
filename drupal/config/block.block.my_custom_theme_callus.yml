@@ -1,0 +1,23 @@
+uuid: 8b818c2e-b9dd-472f-b539-e87a46eaa44e
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:f68bf7c3-ecdf-41b4-a092-d3dedc793d84'
+  module:
+    - block_content
+  theme:
+    - my_custom_theme
+id: my_custom_theme_callus
+theme: my_custom_theme
+region: topbar_center
+weight: 0
+provider: null
+plugin: 'block_content:f68bf7c3-ecdf-41b4-a092-d3dedc793d84'
+settings:
+  id: 'block_content:f68bf7c3-ecdf-41b4-a092-d3dedc793d84'
+  label: 'Call Us'
+  label_display: '0'
+  provider: block_content
+  view_mode: full
+visibility: {  }

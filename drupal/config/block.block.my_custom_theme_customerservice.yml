@@ -1,0 +1,25 @@
+uuid: 35b86fdd-490f-4877-b661-80cd8ee1ad06
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.customer-service
+  module:
+    - system
+  theme:
+    - my_custom_theme
+id: my_custom_theme_customerservice
+theme: my_custom_theme
+region: footer_col2
+weight: 0
+provider: null
+plugin: 'system_menu_block:customer-service'
+settings:
+  id: 'system_menu_block:customer-service'
+  label: 'Customer Service'
+  label_display: visible
+  provider: system
+  level: 1
+  depth: null
+  expand_all_items: false
+visibility: {  }

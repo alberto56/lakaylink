@@ -1,0 +1,6 @@
+{% for item in items %}
+    <a href="{{ item.url.toString() }}">
+        <i class="fas fa-angle-right me-2"></i>
+        {{ item.title }}
+    </a>
+{% endfor %}

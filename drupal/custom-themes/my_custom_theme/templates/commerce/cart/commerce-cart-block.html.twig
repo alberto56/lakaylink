@@ -1,0 +1,23 @@
+<div{{ attributes}}>
+  <div class="cart-block--summary">
+    <a class="cart-block--link__expand text-muted d-flex align-items-center justify-content-center" href="{{ url }}">
+      <span class="rounded-circle btn-md-square border">
+      <i class="fas fa-shopping-cart"></i></span> <span class="text-dark ms-2">
+       {{ cart_total }}
+     </span>
+    </a>
+
+  </div>
+  {% if content %}
+  <div class="cart-block--contents">
+    <div class="cart-block--contents__inner">
+      <div class="cart-block--contents__items">
+        {{ content }}
+      </div>
+      <div class="cart-block--contents__links">
+        {{ links }}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>

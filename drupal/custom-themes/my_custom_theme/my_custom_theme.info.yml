@@ -1,23 +1,40 @@
 core_version_requirement: ^10 || ^11
 type: theme
-base theme: bootstrap
-
+base theme: bootstrap_barrio
 name: 'My Custom Theme'
-description: 'Uses the jsDelivr CDN for all CSS and JavaScript. No source files or compiling is necessary and is recommended for simple sites or beginners.'
-package: 'Bootstrap'
+description: 'Custom boostrap 5 theme converted https://themewagon.com/themes/electro-bootstrap/ template'
+package: 'Custom'
 
 regions:
-  navigation: 'Navigation'
-  navigation_collapsible: 'Navigation (Collapsible)'
-  header: 'Top Bar'
+  topbar_left: 'Topbar Left'
+  topbar_center: 'Topbar Center'
+  topbar_right: 'Topbar Right'
+  header_branding: 'Header Branding'
+  header_search: 'Header Search'
+  header_actions: 'Header Actions'
+  nav_categories: 'Nav - Categories'
+  primary_menu: 'Primary Menu'
+  breadcrumb: 'Breadcrumb'
+  services: 'Services'
+  hero: 'Hero / Carousel'
   highlighted: 'Highlighted'
   help: 'Help'
   content: 'Content'
-  sidebar_first: 'Primary'
-  sidebar_second: 'Secondary'
+  sidebar_first: 'Sidebar First'
+  sidebar_second: 'Sidebar Second'
   footer: 'Footer'
-  page_top: 'Page top'
-  page_bottom: 'Page bottom'
+  footer_col1: 'Footer Column 1'
+  footer_col2: 'Footer Column 2'
+  footer_col3: 'Footer Column 3'
+  footer_col4: 'Footer Column 4'
+  footer_information: 'Footer Information'
+  copyright: 'Copyright'
 
 libraries:
   - 'my_custom_theme/global-styling'
+
+libraries-override:
+  bootstrap_barrio/global-styling:
+    css:
+      component:
+        css/components/table.css: false

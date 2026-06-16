@@ -1,0 +1,11 @@
+uuid: 492ffcfd-f900-47c2-9892-0e7c47b5ae61
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_store
+id: commerce_store.store_selector
+label: 'Store Selector'
+description: null
+targetEntityType: commerce_store
+cache: true

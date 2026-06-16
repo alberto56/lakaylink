@@ -1,0 +1,408 @@
+{#
+/**
+ * @file
+ * 404 page template (page--404.html.twig)
+ *
+ * This template defines the global layout structure for the site and controls
+ * the rendering of all major UI regions including header, navigation, content,
+ * footer, and utility elements.
+ *
+ * It follows a Bootstrap-based responsive layout and is designed to work with
+ * Drupal region system.
+ *
+ * --------------------------------------------------------
+ * OVERVIEW
+ * --------------------------------------------------------
+ * The page is composed of the following sections:
+ *
+ * 1. Spinner (loading indicator)
+ * 2. Topbar (utility navigation row)
+ * 3. Header (branding, search, actions)
+ * 4. Navbar (main menu + categories)
+ * 5. Page header (title + breadcrumb, non-front pages)
+ * 6. Messages / Help / Hero regions
+ * 7. Main content area
+ * 8. Footer (multi-column layout)
+ * 9. Copyright bar
+ * 10. Back-to-top button
+ *
+ * --------------------------------------------------------
+ * VARIABLES
+ * --------------------------------------------------------
+ *
+ * page.* : Drupal-rendered regions (blocks, views, menus, etc.)
+ * title   : Page title (used on non-front pages)
+ * is_front: Boolean indicating homepage
+ *
+ * --------------------------------------------------------
+ * CORE REGIONS
+ * --------------------------------------------------------
+ *
+ * TOPBAR
+ *   page.topbar_left     → Utility links (left)
+ *   page.topbar_center   → Phone / contact / center info
+ *   page.topbar_right    → Language / currency / user tools
+ *
+ * HEADER
+ *   page.header_branding → Logo / site branding
+ *   page.header_search   → Search form
+ *   page.header_actions  → Cart / wishlist / compare icons
+ *
+ * NAVIGATION
+ *   page.nav_categories → Category / mega menu toggle
+ *   page.primary_menu   → Main navigation menu
+ *
+ * CONTENT
+ *   page.hero     → Hero banner section (optional)
+ *   page.content  → Main page content (nodes, views, blocks)
+ *
+ * FOOTER
+ *   page.footer            → Footer contact/info strip
+ *   page.footer_col1       → Newsletter / about section
+ *   page.footer_col2       → Customer service links
+ *   page.footer_col3       → Information links
+ *   page.footer_col4       → Extra links
+ *   page.footer_information→ Bottom-left footer text
+ *   page.copyright         → Bottom-right copyright text
+ *
+ * --------------------------------------------------------
+ * SPECIAL BEHAVIOR
+ * --------------------------------------------------------
+ *
+ * - Spinner is shown during initial page load.
+ * - Topbar, header, and navbar are hidden on small screens using Bootstrap utilities.
+ * - Page header + breadcrumb are only shown when NOT on the front page.
+ * - All regions are optional and rendered only if they contain content.
+ *
+ * --------------------------------------------------------
+ * CONTENT AREA BEHAVIOR
+ * --------------------------------------------------------
+ *
+ * The main content block is overridden here to render a custom 404-style layout:
+ *
+ * - If this template is used for a 404 route override,
+ *   it displays a full-page “Page Not Found” message.
+ * - Includes:
+ *     • Icon
+ *     • 404 title
+ *     • translated message strings
+ *     • link back to homepage (path('<front>'))
+ *
+ * NOTE:
+ * This replaces the default {{ page.content }} rendering in this template.
+ *
+ * --------------------------------------------------------
+ * DEPENDENCIES
+ * --------------------------------------------------------
+ *
+ * - Bootstrap 5 (grid, spacing, utilities)
+ * - Bootstrap Icons (bi bi-exclamation-triangle)
+ * - Font Awesome (back-to-top icon)
+ * - WOW.js (scroll animations: fadeIn, fadeInUp)
+ *
+ */
+#}
+
+{% set topbar_attributes = topbar_attributes ?: create_attribute() %}
+
+{% set spinner_attributes = spinner_attributes ?: create_attribute() %}
+
+
+{# ========================================================
+   SPINNER
+   Shown while the page assets are loading.
+   ======================================================== #}
+{% block spinner %}
+    <div{{ spinner_attributes.addClass(
+  'show',
+  'bg-white',
+  'position-fixed',
+  'translate-middle',
+  'w-100',
+  'vh-100',
+  'top-50',
+  'start-50',
+  'd-flex',
+  'align-items-center',
+  'justify-content-center'
+) }}  id="spinner">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">{{ 'Loading...'|t }}</span>
+    </div>
+    </div>
+{% endblock %}
+
+
+{# ---------------- TOPBAR ---------------- #}
+{% block topbar %}
+{% if page.topbar_left or page.topbar_center or page.topbar_right %}
+<div{{ topbar_attributes.addClass(
+  container_topbar ? 'container-fluid' : '',
+  'px-5',
+  'd-none',
+  'border-bottom',
+  'd-lg-block'
+) }}>
+
+  <div class="row gx-0 align-items-center">
+
+    {# ---- Left: utility links ---- #}
+    <div class="col-lg-4 text-center text-lg-start mb-lg-0">
+      <div class="d-inline-flex align-items-center" style="height: 45px;">
+          {{ page.topbar_left }}
+      </div>
+    </div>
+
+    {# ---- Center: phone number ---- #}
+    <div class="col-lg-4 text-center d-flex align-items-center justify-content-center">
+          {{ page.topbar_center }}
+    </div>
+
+    {# ---- Right: currency / language / my-dashboard dropdowns ---- #}
+    <div class="col-lg-4 text-center text-lg-end">
+      <div class="d-inline-flex align-items-center" style="height: 45px;">
+          {{ page.topbar_right }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+
+
+
+
+{# ========================================================
+   LOGO + SEARCH BAR  (desktop only)
+   ======================================================== #}
+{% block header %}
+<div class="container-fluid px-5 py-4 d-none d-lg-block">
+  <div class="row gx-0 align-items-center text-center">
+
+    {# ---- Logo ---- #}
+    {% if page.header_branding %}
+    <div class="col-md-4 col-lg-3 text-center text-lg-start">
+      <div class="d-inline-flex align-items-center">
+        {{   page.header_branding  }}
+      </div>
+    </div>
+    {% endif %}
+
+
+    {# ---- Search bar ---- #}
+
+    <div class="col-md-4 col-lg-6 text-center">
+      <div class="position-relative ps-4">
+        {% if page.header_search %}
+          {{ page.header_search }}
+        {% endif %}
+      </div>
+    </div>
+
+
+    {# ---- Cart / Wishlist / Compare icons ---- #}
+      <div class="col-md-4 col-lg-3 text-center text-lg-end">
+        <div class="d-inline-flex align-items-center">
+          {% if page.header_actions %}
+            {{ page.header_actions }}
+          {% endif %}
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{# ========================================================
+   NAVBAR  (primary navigation + all-categories mega menu)
+   ======================================================== #}
+{% block navbar %}
+<div class="container-fluid nav-bar p-0">
+  <div class="row gx-0 bg-primary px-5 align-items-center">
+
+    {# ---- All Categories sidebar toggle (desktop) ---- #}    
+        <div class="col-lg-3 d-none d-lg-block">
+          {% if page.nav_categories %}
+            {{ page.nav_categories }}
+          {% endif %}
+        </div>
+
+
+
+    {# ---- Main navigation ---- #}
+    <div class="col-12 col-lg-9">
+        {# Render the main menu #}
+        {% if page.primary_menu %}
+          {{ page.primary_menu }}
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% if not is_front %}
+
+<div class="container-fluid page-header py-5">
+
+  {{ title }}
+
+  <div class="wow fadeInUp"
+       data-wow-delay="0.3s">
+    {{ page.breadcrumb }}
+  </div>
+
+</div>
+
+{% endif %}
+
+{# ========================================================
+   MESSAGES  (Drupal status / warning / error messages)
+   ======================================================== #}
+{% if page.highlighted %}
+  <div class="container-fluid px-5 py-2">
+    {{ page.highlighted }}
+  </div>
+{% endif %}
+
+{# ========================================================
+   HELP TEXT  (shown on admin pages)
+   ======================================================== #}
+{% if page.help %}
+  <div class="container-fluid px-5 py-2">
+    {{ page.help }}
+  </div>
+{% endif %}
+
+
+{# ========================================================
+   hero
+   ======================================================== #}
+{% if page.hero %}
+  <div class="container-fluid px-5 pt-3">
+    {{ page.hero }}
+  </div>
+{% endif %}
+
+
+{# ========================================================
+   MAIN CONTENT AREA
+   Each page type (home, shop, cart, checkout …) renders its
+   own blocks / views into page.content.  The surrounding
+   wrapper keeps a consistent full-width container.
+   ======================================================== #}
+{% block content %}
+<main id="main-content" role="main">
+
+    <div class="container-fluid py-5">
+    <div class="container py-5 text-center">
+        <div class="row justify-content-center">
+        <div class="col-lg-6">
+
+            <i class="bi bi-exclamation-triangle display-1 text-secondary"></i>
+
+            <h1 class="display-1">404</h1>
+            <h1 class="mb-4">{{ 'Page Not Found'|t }} </h1>
+
+            <p class="mb-4">
+            {{ 'We’re sorry, the page you are looking for does not exist.'|t }}
+            </p>
+
+            <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ path('<front>') }}">
+            {{ 'Go Back To Home'|t }}
+            </a>
+
+        </div>
+        </div>
+    </div>
+    </div>
+</main>
+{% endblock %}
+
+
+{# ========================================================
+   FOOTER
+   ======================================================== #}
+{% block footer %}
+<div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+  <div class="container py-5">
+
+
+    {# ---- Contact info strip ---- #}
+    {% if page.footer %}
+          {{ page.footer }}
+    {% endif %}
+
+
+    {# ---- Footer columns ---- #}
+    <div class="row g-5">
+
+      {# Newsletter — render from Drupal region or fallback markup #}
+      {% if page.footer_col1 %}
+      <div class="col-md-6 col-lg-6 col-xl-3">
+        <div class="footer-item d-flex flex-column">
+            {{ page.footer_col1 }}
+        </div>
+      </div>
+      {% endif %}
+
+      {# Customer Service links #}
+      {% if page.footer_col2 %}
+        <div class="col-md-6 col-lg-6 col-xl-3">
+            {{ page.footer_col2 }}
+        </div>
+      {% endif %}
+
+      {# Information links #}
+      {% if page.footer_col3 %}
+        <div class="col-md-6 col-lg-6 col-xl-3">        
+            {{ page.footer_col3 }}
+        </div>
+      {% endif %}
+
+      {# Extras links #}
+      {% if page.footer_col4 %}
+        <div class="col-md-6 col-lg-6 col-xl-3">
+          {{ page.footer_col4 }}  
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{# ========================================================
+   COPYRIGHT BAR
+   ======================================================== #}
+{% block copyright %}
+<div class="container-fluid copyright py-4">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-6 text-center text-md-start mb-md-0">
+
+        {% if page.footer_information %}
+          {{ page.footer_information }}
+        {% endif %}
+
+      </div>
+      <div class="col-md-6 text-center text-md-end text-white">
+        {% if page.copyright %}
+          {{ page.copyright }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{# ========================================================
+   BACK TO TOP
+   ======================================================== #}
+{% block back_to_top %}
+<a href="#" class="btn btn-primary btn-lg-square back-to-top" aria-label="{{ 'Back to top'|t }}">
+  <i class="fa fa-arrow-up"></i>
+</a>
+{% endblock %}

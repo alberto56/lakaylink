@@ -4,6 +4,11 @@ status: true
 dependencies:
   config:
     - commerce_product.commerce_product_type.grocery_product
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    page_limit: 50
 id: commerce_product--grocery_product
 disabled: false
 path: product/grocery
@@ -93,6 +98,24 @@ resourceFields:
     publicName: default_langcode
     enhancer:
       id: ''
+  overall_rating:
+    disabled: false
+    fieldName: overall_rating
+    publicName: overall_rating
+    enhancer:
+      id: ''
+  content_translation_source:
+    disabled: false
+    fieldName: content_translation_source
+    publicName: content_translation_source
+    enhancer:
+      id: ''
+  content_translation_outdated:
+    disabled: false
+    fieldName: content_translation_outdated
+    publicName: content_translation_outdated
+    enhancer:
+      id: ''
   body:
     disabled: false
     fieldName: body
@@ -115,6 +138,12 @@ resourceFields:
     disabled: false
     fieldName: field_image
     publicName: field_image
+    enhancer:
+      id: ''
+  field_product_comments:
+    disabled: false
+    fieldName: field_product_comments
+    publicName: field_product_comments
     enhancer:
       id: ''
   field_product_id:

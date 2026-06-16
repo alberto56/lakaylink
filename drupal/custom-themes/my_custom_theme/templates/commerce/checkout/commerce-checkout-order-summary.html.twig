@@ -1,0 +1,111 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the checkout order summary.
+ *
+ * The rendered order totals come from commerce-order-total-summary.html.twig.
+ * See commerce-order-receipt.html.twig for examples of manual total theming.
+ *
+ * Available variables:
+ * - order_entity: The order entity.
+ * - checkout_step: The current checkout step.
+ * - totals: An array of order total values with the following keys:
+ *   - subtotal: The order subtotal price.
+ *   - adjustments: An array of adjustment totals:
+ *     - type: The adjustment type.
+ *     - label: The adjustment label.
+ *     - total: The adjustment total price.
+ *     - weight: The adjustment weight, taken from the adjustment type.
+ *   - total: The order total price.
+ * - rendered_totals: The rendered order totals.
+ */
+#}
+<div{{ attributes.addClass('checkout-order-summary', 'table-responsive') }}>
+  <table class="table">
+    <thead>
+      <tr class="text-center">
+        <th scope="col" class="text-start">{{ 'Name'|t }}</th>
+        <th scope="col">{{ 'Price'|t }}</th>
+        <th scope="col">{{ 'Quantity'|t }}</th>
+        <th scope="col">{{ 'Total'|t }}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for order_item in order_entity.getItems %}
+        {% set variation = order_item.getPurchasedEntity %}
+
+        <tr class="text-center">
+          <th scope="row" class="text-start py-4">
+            {{ order_item.label }}
+          </th>
+
+          <td class="py-4">
+            {{ variation.getPrice|commerce_price_format }}
+          </td>
+
+          <td class="py-4">
+            {{ order_item.getQuantity|number_format }}
+          </td>
+
+          <td class="py-4">
+            {{ order_item.getTotalPrice|commerce_price_format }}
+          </td>
+        </tr>
+      {% endfor %}
+
+      {# Subtotal #}
+      <tr>
+        <td colspan="2"></td>
+        <td class="py-4">
+          <p class="mb-0 text-dark py-2">Subtotal</p>
+        </td>
+        <td class="py-4">
+          <div class="py-2 text-center border-bottom border-top">
+            <p class="mb-0 text-dark">
+              {{ totals.subtotal|commerce_price_format }}
+            </p>
+          </div>
+        </td>
+      </tr>
+
+      {# Adjustments (Shipping, Tax, Discounts, etc.) #}
+      {% for adjustment in totals.adjustments %}
+        <tr>
+          <td colspan="2"></td>
+          <td class="py-4">
+            <p class="mb-0 text-dark py-2">
+              {{ adjustment.label }}
+            </p>
+          </td>
+          <td class="py-4">
+            <div class="py-2 text-center border-bottom border-top">
+              <p class="mb-0 text-dark">
+                {{ adjustment.total|commerce_price_format }}
+              </p>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+
+      {# Grand Total #}
+      <tr>
+        <td colspan="3"></td>
+        <td class="py-4">
+          <p class="mb-0 text-dark text-uppercase py-2">
+            Total
+          </p>
+        </td>
+        <td class="py-4">
+          <div class="py-2 text-center border-bottom border-top">
+            <p class="mb-0 text-dark">
+              {{ totals.total|commerce_price_format }}
+            </p>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

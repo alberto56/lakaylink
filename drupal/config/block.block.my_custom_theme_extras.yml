@@ -1,0 +1,25 @@
+uuid: dd9d8d4d-a940-4488-a338-8138cef006a4
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.extras
+  module:
+    - system
+  theme:
+    - my_custom_theme
+id: my_custom_theme_extras
+theme: my_custom_theme
+region: footer_col4
+weight: 0
+provider: null
+plugin: 'system_menu_block:extras'
+settings:
+  id: 'system_menu_block:extras'
+  label: Extras
+  label_display: visible
+  provider: system
+  level: 1
+  depth: null
+  expand_all_items: false
+visibility: {  }

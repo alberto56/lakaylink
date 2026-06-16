@@ -2,11 +2,17 @@
 
 namespace Drupal\my_custom_module;
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\my_custom_module\traits\Environment;
 use Drupal\my_custom_module\traits\Singleton;
+
 
 /**
  * Module-wide functionality.
@@ -78,6 +84,72 @@ class App {
         $form["#access"] = FALSE;
       }
     }
+  }
+
+  /**
+   * Testable implementation of hook_entity_field_access().
+   *
+   * Controls access to the buyer store assignment field.
+   *
+   * Restricts editing of the field_allowed_stores field to users who have
+   * the "manage buyer store assignments" permission. All other field access
+   * operations are left unchanged.
+   *
+   * @param string $operation
+   *   The operation being performed ('view' or 'edit').
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition being accessed.
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The user account requesting access.
+   * @param \Drupal\Core\Field\FieldItemListInterface|null $items
+   *   (optional) The field values.
+   *
+   * @return \Drupal\Core\Access\AccessResult
+   *   The access result for the requested operation.
+   *
+   * @see hook_entity_field_access()
+   */
+  public function hookEntityFieldAccess(
+    $operation,
+    FieldDefinitionInterface $field_definition,
+    AccountInterface $account,
+    ?FieldItemListInterface $items = NULL,
+  ) {
+    if ($field_definition->getName() !== 'field_allowed_stores') {
+      return AccessResult::neutral();
+    }
+
+    if ($operation === 'edit') {
+      return $account->hasPermission('manage buyer store assignments')
+        ? AccessResult::allowed()
+        : AccessResult::forbidden();
+    }
+
+    return AccessResult::neutral();
+  }
+
+  /**
+   * Testable implementation of hook_theme().
+   *
+   * Registers theme hooks provided by the module.
+   *
+   * Defines the custom login page theme implementation used to render
+   * the Google authentication login screen.
+   *
+   * @return array
+   *   An associative array containing theme hook definitions.
+   *
+   * @see hook_theme()
+   */
+  public function hookTheme() {
+    return [
+      'custom_login_page' => [
+        'variables' => [
+          'social_login_block' => NULL,
+        ],
+        'template' => 'custom-login-page',
+      ],
+    ];
   }
 
 }

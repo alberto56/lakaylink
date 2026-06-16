@@ -1,0 +1,23 @@
+uuid: 7d7468f5-04f4-41eb-a538-634c05f55d73
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:9380b076-84f2-4370-b0b8-92e418110423'
+  module:
+    - block_content
+  theme:
+    - my_custom_theme
+id: my_custom_theme_reachout
+theme: my_custom_theme
+region: topbar_left
+weight: 0
+provider: null
+plugin: 'block_content:9380b076-84f2-4370-b0b8-92e418110423'
+settings:
+  id: 'block_content:9380b076-84f2-4370-b0b8-92e418110423'
+  label: 'Reach out'
+  label_display: '0'
+  provider: block_content
+  view_mode: full
+visibility: {  }

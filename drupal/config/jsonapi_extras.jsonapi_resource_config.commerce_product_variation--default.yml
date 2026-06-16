@@ -4,6 +4,11 @@ status: true
 dependencies:
   config:
     - commerce_product.commerce_product_variation_type.default
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    page_limit: 50
 id: commerce_product_variation--default
 disabled: false
 path: product_variation
@@ -91,5 +96,17 @@ resourceFields:
     disabled: false
     fieldName: default_langcode
     publicName: default_langcode
+    enhancer:
+      id: ''
+  content_translation_source:
+    disabled: false
+    fieldName: content_translation_source
+    publicName: content_translation_source
+    enhancer:
+      id: ''
+  content_translation_outdated:
+    disabled: false
+    fieldName: content_translation_outdated
+    publicName: content_translation_outdated
     enhancer:
       id: ''

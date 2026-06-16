@@ -1,0 +1,20 @@
+uuid: bec63868-520b-484d-a904-4e01a69c25d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_store
+    - user
+id: user.field_allowed_stores
+field_name: field_allowed_stores
+entity_type: user
+type: entity_reference
+settings:
+  target_type: commerce_store
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
