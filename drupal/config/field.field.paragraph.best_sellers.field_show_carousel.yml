@@ -1,0 +1,21 @@
+uuid: ae253a37-2a1a-4571-a763-bb6806923515
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_show_carousel
+    - paragraphs.paragraphs_type.best_sellers
+id: paragraph.best_sellers.field_show_carousel
+field_name: field_show_carousel
+entity_type: paragraph
+bundle: best_sellers
+label: 'Show Carousel'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

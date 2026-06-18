@@ -1,0 +1,23 @@
+uuid: 56e12206-69c5-4d3f-bf06-2db0e1a597f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_product_count
+    - paragraphs.paragraphs_type.best_sellers
+id: paragraph.best_sellers.field_product_count
+field_name: field_product_count
+entity_type: paragraph
+bundle: best_sellers
+label: 'Product Count'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

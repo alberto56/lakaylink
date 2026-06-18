@@ -1,0 +1,19 @@
+uuid: 9e1e9839-fece-4a85-a598-8a34fe54fdf7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_countdown_date
+    - paragraphs.paragraphs_type.offer_banner
+id: paragraph.offer_banner.field_countdown_date
+field_name: field_countdown_date
+entity_type: paragraph
+bundle: offer_banner
+label: 'Countdown Date '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: timestamp

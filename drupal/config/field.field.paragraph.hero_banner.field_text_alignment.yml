@@ -1,0 +1,21 @@
+uuid: 20c5c285-0e2b-42ec-bd1e-3b28bb6cb181
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_text_alignment
+    - paragraphs.paragraphs_type.hero_banner
+  module:
+    - options
+id: paragraph.hero_banner.field_text_alignment
+field_name: field_text_alignment
+entity_type: paragraph
+bundle: hero_banner
+label: 'Text Alignment'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

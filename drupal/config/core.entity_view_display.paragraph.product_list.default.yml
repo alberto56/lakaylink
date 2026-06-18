@@ -1,0 +1,63 @@
+uuid: efa75a9f-8ad9-4d2b-81e9-78203be68a5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.product_list.field_product_count
+    - field.field.paragraph.product_list.field_section_title
+    - field.field.paragraph.product_list.field_show_filters
+    - field.field.paragraph.product_list.field_show_pagination
+    - field.field.paragraph.product_list.field_view_block
+    - paragraphs.paragraphs_type.product_list
+id: paragraph.product_list.default
+targetEntityType: paragraph
+bundle: product_list
+mode: default
+content:
+  field_product_count:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_section_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_show_filters:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_show_pagination:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_view_block:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  search_api_excerpt: true

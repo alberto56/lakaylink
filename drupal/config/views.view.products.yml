@@ -1743,6 +1743,7 @@ display:
         title: products
         description: ''
         weight: 0
+        enabled: false
         expanded: false
         menu_name: main
         parent: ''

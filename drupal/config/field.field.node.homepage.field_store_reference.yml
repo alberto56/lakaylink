@@ -1,0 +1,29 @@
+uuid: 0bb812c2-1abc-41d4-a8a1-23a6ee7e0b3d
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_store.commerce_store_type.online
+    - field.storage.node.field_store_reference
+    - node.type.homepage
+id: node.homepage.field_store_reference
+field_name: field_store_reference
+entity_type: node
+bundle: homepage
+label: 'Store Reference'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:commerce_store'
+  handler_settings:
+    target_bundles:
+      online: online
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

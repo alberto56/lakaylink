@@ -1,0 +1,10 @@
+uuid: 3cdad083-7d1d-4d1e-a40e-9d93e2dc1684
+langcode: en
+status: true
+dependencies: {  }
+id: custom_html_block
+label: 'Custom HTML Block'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }
