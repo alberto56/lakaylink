@@ -11,7 +11,7 @@ id: paragraph.carousel_slide.field_button_link
 field_name: field_button_link
 entity_type: paragraph
 bundle: carousel_slide
-label: 'Button Link'
+label: 'Button Text and Link'
 description: ''
 required: false
 translatable: false

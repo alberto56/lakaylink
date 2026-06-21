@@ -1,19 +1,22 @@
-uuid: c3fe8bec-1a6f-4724-bf0b-f7c8d9164f0f
+uuid: 57849d13-efc9-42e7-ba30-541d18cf585a
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_button_text
+    - field.storage.paragraph.field_desc
     - paragraphs.paragraphs_type.carousel_slide
-id: paragraph.carousel_slide.field_button_text
-field_name: field_button_text
+  module:
+    - text
+id: paragraph.carousel_slide.field_desc
+field_name: field_desc
 entity_type: paragraph
 bundle: carousel_slide
-label: 'Button Text'
+label: Desc
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: string
+settings:
+  allowed_formats: {  }
+field_type: text_long

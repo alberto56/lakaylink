@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.carousel_slide.field_button_link
-    - field.field.paragraph.carousel_slide.field_button_text
+    - field.field.paragraph.carousel_slide.field_desc
     - field.field.paragraph.carousel_slide.field_display_order
     - field.field.paragraph.carousel_slide.field_slide_image
     - field.field.paragraph.carousel_slide.field_slide_subtitle
@@ -13,6 +13,7 @@ dependencies:
   module:
     - image
     - link
+    - text
 id: paragraph.carousel_slide.default
 targetEntityType: paragraph
 bundle: carousel_slide
@@ -30,13 +31,12 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
-  field_button_text:
-    type: string
+  field_desc:
+    type: text_default
     label: above
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 6
     region: content
   field_display_order:
     type: number_integer
