@@ -1,16 +1,16 @@
-uuid: 3cd4223a-89a3-4912-913e-56dfca945bba
+uuid: 9f52ff81-8ef5-47a4-a295-acfc0539a565
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_button_link
-    - paragraphs.paragraphs_type.carousel
+    - paragraphs.paragraphs_type.carousel_slide
   module:
     - link
-id: paragraph.carousel.field_button_link
+id: paragraph.carousel_slide.field_button_link
 field_name: field_button_link
 entity_type: paragraph
-bundle: carousel
+bundle: carousel_slide
 label: 'Button Link'
 description: ''
 required: false

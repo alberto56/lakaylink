@@ -1,14 +1,14 @@
-uuid: 81815ae4-8d8a-46e0-9868-e1ad386706f0
+uuid: ccb05b6e-a98c-4b7d-a011-b24ad1e4c3b8
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_display_order
-    - paragraphs.paragraphs_type.carousel
-id: paragraph.carousel.field_display_order
+    - paragraphs.paragraphs_type.carousel_slide
+id: paragraph.carousel_slide.field_display_order
 field_name: field_display_order
 entity_type: paragraph
-bundle: carousel
+bundle: carousel_slide
 label: 'Display Order'
 description: ''
 required: false

@@ -1,14 +1,14 @@
-uuid: 2a812cd1-f675-45f5-be7c-1d9d87711813
+uuid: c3fe8bec-1a6f-4724-bf0b-f7c8d9164f0f
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_button_text
-    - paragraphs.paragraphs_type.carousel
-id: paragraph.carousel.field_button_text
+    - paragraphs.paragraphs_type.carousel_slide
+id: paragraph.carousel_slide.field_button_text
 field_name: field_button_text
 entity_type: paragraph
-bundle: carousel
+bundle: carousel_slide
 label: 'Button Text'
 description: ''
 required: false

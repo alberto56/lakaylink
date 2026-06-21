@@ -1,16 +1,16 @@
-uuid: 0a0f0ad5-c254-40fa-8218-857cd54e4ce4
+uuid: 16274d68-1897-412c-ae03-1e034080ad7a
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_slide_image
-    - paragraphs.paragraphs_type.carousel
+    - paragraphs.paragraphs_type.carousel_slide
   module:
     - image
-id: paragraph.carousel.field_slide_image
+id: paragraph.carousel_slide.field_slide_image
 field_name: field_slide_image
 entity_type: paragraph
-bundle: carousel
+bundle: carousel_slide
 label: 'Slide Image'
 description: ''
 required: false

@@ -1737,7 +1737,7 @@ display:
         filters: false
         filter_groups: false
       display_extenders: {  }
-      path: products
+      path: store/%/shop
       menu:
         type: normal
         title: products

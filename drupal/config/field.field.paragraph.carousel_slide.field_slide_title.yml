@@ -1,14 +1,14 @@
-uuid: a11ba2b3-53c4-46fc-bb81-6ba6d4eb1bd3
+uuid: 9a2dc896-143c-4c2b-b4f6-bcda13cf2729
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_slide_title
-    - paragraphs.paragraphs_type.carousel
-id: paragraph.carousel.field_slide_title
+    - paragraphs.paragraphs_type.carousel_slide
+id: paragraph.carousel_slide.field_slide_title
 field_name: field_slide_title
 entity_type: paragraph
-bundle: carousel
+bundle: carousel_slide
 label: 'Slide Title'
 description: ''
 required: false

@@ -1,0 +1,61 @@
+uuid: 84fef981-ef6e-411e-90ca-a048425b63ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_carousel_slides
+    - paragraphs.paragraphs_type.carousel
+    - paragraphs.paragraphs_type.carousel_slide
+  module:
+    - entity_reference_revisions
+id: paragraph.carousel.field_carousel_slides
+field_name: field_carousel_slides
+entity_type: paragraph
+bundle: carousel
+label: 'Carousel Slides'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      carousel_slide: carousel_slide
+    negate: 0
+    target_bundles_drag_drop:
+      best_sellers:
+        weight: 13
+        enabled: false
+      carousel:
+        weight: 14
+        enabled: false
+      carousel_slide:
+        weight: 12
+        enabled: true
+      custom_html_block:
+        weight: 15
+        enabled: false
+      featured_categories:
+        weight: 16
+        enabled: false
+      featured_products:
+        weight: 17
+        enabled: false
+      hero_banner:
+        weight: 18
+        enabled: false
+      offer_banner:
+        weight: 19
+        enabled: false
+      product_banner:
+        weight: 20
+        enabled: false
+      product_list:
+        weight: 21
+        enabled: false
+      services:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions
