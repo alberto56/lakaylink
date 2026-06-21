@@ -6,6 +6,7 @@ dependencies:
     - 'block_content:basic:cac6e3c1-71aa-40e3-941f-5434dd2f2d03'
   module:
     - block_content
+    - user
   theme:
     - my_custom_theme
 id: my_custom_theme_mobile
@@ -20,4 +21,11 @@ settings:
   label_display: '0'
   provider: block_content
   view_mode: full
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      buyer: buyer
