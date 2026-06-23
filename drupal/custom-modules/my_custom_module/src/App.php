@@ -160,6 +160,12 @@ class App {
         'render element' => 'form',
         'template' => 'buyer-verification-form',
       ],
+      'seller_dashboard' => [
+        'variables' => [
+          'stores' => [],
+        ],
+        'template' => 'seller-dashboard',
+      ],
     ];
   }
 
