@@ -31,7 +31,7 @@ my_custom_module.buyer_verification:
     _form: '\Drupal\my_custom_module\Form\BuyerVerificationForm'
     _title: 'Buyer Verification'
   requirements:
-    _role: 'unverified_buyer'
+    _role: 'unverified'
 
 my_custom_module.seller_dashboard:
   path: '/seller'
@@ -39,7 +39,7 @@ my_custom_module.seller_dashboard:
     _controller: '\Drupal\my_custom_module\Controller\SellerDashboardController::dashboard'
     _title: 'Seller Dashboard'
   requirements:
-    _role: 'seller'
+    _role: 'admin'
 
 my_custom_module.generate_code:
   path: '/seller/store/{commerce_store}/generate-code'
@@ -47,4 +47,4 @@ my_custom_module.generate_code:
     _controller: '\Drupal\my_custom_module\Controller\GenerateCodeController::generate'
     _title: 'Invitation Code'
   requirements:
-    _role: 'seller'
+    _role: 'admin'
