@@ -156,6 +156,10 @@ class App {
         ],
         'template' => 'custom-login-page',
       ],
+      'buyer_verification_form' => [
+        'render element' => 'form',
+        'template' => 'buyer-verification-form',
+      ],
     ];
   }
 

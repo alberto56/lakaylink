@@ -5,9 +5,30 @@ namespace Drupal\my_custom_module\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Drupal\user\Entity\User;
+use Drupal\my_custom_module\BuyerStoreResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class BuyerVerificationForm extends FormBase {
+
+  /**
+   * Constructor.
+   */
+  public function __construct(
+    private readonly BuyerStoreResolverInterface $buyerStoreResolver,
+  ) {}
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): static {
+    return new static(
+      $container->get('my_custom_module.buyer_store_resolver'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -21,19 +42,12 @@ class BuyerVerificationForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $form['instructions'] = [
-      '#markup' => '
-        <p>Contact us by WhatsApp at <strong>555-555-5555</strong> to confirm that your family is within our service area.</p>
-        <p>We will provide a verification code.</p>
-      ',
-    ];
+    $form['#theme'] = 'buyer_verification_form';
 
     $form['verification_code'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Verification code'),
       '#required' => TRUE,
-      '#size' => 80,
-      '#maxlength' => 255,
       '#description' => $this->t('Paste the verification code exactly as provided.'),
     ];
 
@@ -44,7 +58,6 @@ class BuyerVerificationForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Verify Account'),
-      '#button_type' => 'primary',
     ];
 
     return $form;
@@ -112,7 +125,37 @@ class BuyerVerificationForm extends FormBase {
       $this->t('Your account has been verified.')
     );
 
-    $form_state->setRedirect('<front>');
+
+    $stores = $this->buyerStoreResolver
+      ->getAllowedStores($this->currentUser);
+
+    $count = count($stores);
+
+    // Buyers must have at least one assigned store.
+    if ($count === 0) {
+      throw new AccessDeniedHttpException(
+        'No stores have been assigned to your account.'
+      );
+    }
+
+    // Redirect directly when only one store is available.
+    if ($count === 1) {
+      $store = reset($stores);
+
+      $form_state->setRedirectResponse(
+        $store->toUrl()->toString()
+      );
+    }
+    else {
+
+      // Redirect to the store selection page when multiple stores exist.
+      // return new RedirectResponse(
+      //   Url::fromRoute('view.store_selector.page_1')->toString()
+      // );
+      $form_state->setRedirectResponse(
+        Url::fromRoute('view.store_selector.page_1')->toString()
+      );
+    }
   }
 
 }
