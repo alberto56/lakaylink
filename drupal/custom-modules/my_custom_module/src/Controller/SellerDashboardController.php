@@ -9,9 +9,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SellerDashboardController extends ControllerBase {
 
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected AccountProxyInterface $currentUser;
-
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
     AccountProxyInterface $current_user,
@@ -34,7 +31,7 @@ class SellerDashboardController extends ControllerBase {
     $store_storage = $this->entityTypeManager->getStorage('commerce_store');
 
     $store_ids = $store_storage->getQuery()
-      ->condition('uid', $account->id()) // change if your ownership field differs
+      ->condition('uid', $account->id()) // adjust field if needed
       ->accessCheck(TRUE)
       ->execute();
 
