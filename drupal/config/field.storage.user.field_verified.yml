@@ -1,0 +1,18 @@
+uuid: e5167464-1286-4400-aa42-7fd0d95144b4
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_verified
+field_name: field_verified
+entity_type: user
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

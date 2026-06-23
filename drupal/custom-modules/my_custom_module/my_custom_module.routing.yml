@@ -24,3 +24,27 @@ my_custom_module.buyer_login_redirect:
     _controller: '\Drupal\my_custom_module\Controller\BuyerLoginRedirectController::landing'
   requirements:
     _access: 'TRUE'
+
+my_custom_module.buyer_verification:
+  path: '/account/buyer-verification'
+  defaults:
+    _form: '\Drupal\my_custom_module\Form\BuyerVerificationForm'
+    _title: 'Buyer Verification'
+  requirements:
+    _role: 'unverified_buyer'
+
+my_custom_module.seller_dashboard:
+  path: '/seller'
+  defaults:
+    _controller: '\Drupal\my_custom_module\Controller\SellerDashboardController::dashboard'
+    _title: 'Seller Dashboard'
+  requirements:
+    _role: 'seller'
+
+my_custom_module.generate_code:
+  path: '/seller/store/{commerce_store}/generate-code'
+  defaults:
+    _controller: '\Drupal\my_custom_module\Controller\GenerateCodeController::generate'
+    _title: 'Invitation Code'
+  requirements:
+    _role: 'seller'
