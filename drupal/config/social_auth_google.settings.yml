@@ -1,5 +1,5 @@
-client_id: null
-client_secret: null
-scopes: null
-endpoints: null
-restricted_domain: null
+client_id: d1522f5f-3204-4137-a006-f6c2d8cc712b
+client_secret: 95aaea7f-6af6-4586-be13-38c9aed7ecd5
+scopes: 'openid,email,profile'
+endpoints: ''
+restricted_domain: ''

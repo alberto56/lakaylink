@@ -68,7 +68,6 @@ rm -rf modules/contrib
   drupal/structure_sync \
   drupal/commerce_product_review \
   drupal/lang_dropdown \
-  drupal/user_redirect \
   drupal/search_api \
   drupal/better_exposed_filters \
   drupal/facets_pretty_paths \
