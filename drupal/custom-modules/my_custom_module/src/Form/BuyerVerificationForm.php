@@ -111,7 +111,7 @@ class BuyerVerificationForm extends FormBase {
       return;
     }
 
-    $user = $this->userStorage->load(($this->currentUser()->id());
+    $user = $this->userStorage->load($this->currentUser()->id());
 
     if (!$user) {
       $this->messenger()->addError($this->t('Unable to load account.'));
