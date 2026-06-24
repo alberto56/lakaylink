@@ -33,7 +33,7 @@ my_custom_module.buyer_verification:
     _form: '\Drupal\my_custom_module\Form\BuyerVerificationForm'
     _title: 'Buyer Verification'
   requirements:
-    _role: 'unverified'
+    _role: 'unverified+buyer'
 
 # Seller dashboard route.
 # Accessible only to users with the admin role.
