@@ -93,7 +93,7 @@ class BuyerVerificationForm extends FormBase {
       'sha256',
       json_encode([
         (int) $expiry,
-        (int) $store_id,
+        $store_id,
         Settings::get('hash_salt'),
       ])
     );
@@ -112,11 +112,11 @@ class BuyerVerificationForm extends FormBase {
     }
 
     // Optional field if you need store association.
-    if ($user->hasField('field_store')) {
-      $user->set('field_store', $store_id);
+    if ($user->hasField('field_allowed_stores')) {
+      $user->set('field_allowed_stores', $store_id);
     }
 
-    $user->removeRole('unverified_buyer');
+    $user->removeRole('unverified');
     $user->addRole('buyer');
 
     $user->save();
