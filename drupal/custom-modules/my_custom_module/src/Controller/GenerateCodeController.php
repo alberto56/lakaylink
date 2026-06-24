@@ -69,7 +69,6 @@ class GenerateCodeController extends ControllerBase {
     // Build a secure signature using expiry, store ID, and site hash salt.
     $signature = hash(
       'sha256',
-
       // Encode data in a consistent format before hashing.
       Json::encode([
         $expiry,
@@ -87,7 +86,10 @@ class GenerateCodeController extends ControllerBase {
 
     // Return render array for Drupal page output.
     return [
-
+      '#cache' => [
+        'max-age' => 0,
+      ],
+    
       // Store title heading.
       'title' => [
         '#markup' => '<h2>' . $commerce_store->label() . '</h2>',
