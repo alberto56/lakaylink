@@ -150,12 +150,18 @@ class BuyerVerificationForm extends FormBase {
 
     // Associate the verified store with the user account.
     if ($user->hasField('field_allowed_stores')) {
-      $user->set('field_allowed_stores', $store_id);
+      // For a multi-value field, append instead of replacing.
+      $user->get('field_allowed_stores')->appendItem($store_id);
     }
 
     // Update user roles after successful verification.
-    $user->removeRole('unverified');
-    $user->addRole('buyer');
+    if ($user->hasRole('unverified')) {
+      $user->removeRole('unverified');
+    }
+
+    if (!$user->hasRole('buyer')) {
+      $user->addRole('buyer');
+    }
 
     // Save account changes.
     $user->save();
