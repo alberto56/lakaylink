@@ -31,7 +31,8 @@ class SellerDashboardController extends ControllerBase {
     $store_storage = $this->entityTypeManager->getStorage('commerce_store');
 
     $store_ids = $store_storage->getQuery()
-      // ->condition('uid', $account->id()) // adjust field if needed
+      // adjust field if needed
+      // ->condition('uid', $account->id())
       ->accessCheck(TRUE)
       ->execute();
 

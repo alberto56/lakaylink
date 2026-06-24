@@ -25,6 +25,8 @@ my_custom_module.buyer_login_redirect:
   requirements:
     _access: 'TRUE'
 
+# Route for buyers who have not yet been verified.
+# Displays the buyer verification form.
 my_custom_module.buyer_verification:
   path: '/account/buyer-verification'
   defaults:
@@ -33,6 +35,8 @@ my_custom_module.buyer_verification:
   requirements:
     _role: 'unverified'
 
+# Seller dashboard route.
+# Accessible only to users with the admin role.
 my_custom_module.seller_dashboard:
   path: '/seller'
   defaults:
@@ -41,6 +45,9 @@ my_custom_module.seller_dashboard:
   requirements:
     _role: 'admin'
 
+# Route for generating invitation codes for a specific store.
+# The {commerce_store} parameter identifies the target store.
+# Accessible only to users with the admin role.
 my_custom_module.generate_code:
   path: '/seller/store/{commerce_store}/generate-code'
   defaults:

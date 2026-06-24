@@ -19,5 +19,8 @@ services:
 
   my_custom_module.seller_access_subscriber:
     class: Drupal\my_custom_module\EventSubscriber\SellerAccessSubscriber
+    arguments:
+      - '@current_user'
+      - '@current_route_match'
     tags:
       - { name: event_subscriber }
