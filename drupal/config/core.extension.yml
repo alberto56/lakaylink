@@ -20,7 +20,6 @@ module:
   commerce_payment_example: 0
   commerce_price: 0
   commerce_product: 0
-  commerce_product_review: 0
   commerce_store: 0
   commerce_stripe: 0
   commerce_stripe_webhook_event: 0
