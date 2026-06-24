@@ -15,18 +15,13 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class BuyerVerificationForm extends FormBase {
 
-  private EntityStorageInterface $userStorage;
-
   /**
    * Constructor
    */
   public function __construct(
-    BuyerStoreResolverInterface $buyerStoreResolver,
-    EntityTypeManagerInterface $entityTypeManager,
-  ) {
-    $this->buyerStoreResolver = $buyerStoreResolver;
-    $this->userStorage = $entityTypeManager->getStorage('user');
-  }
+    private readonly BuyerStoreResolverInterface $buyerStoreResolver,
+    private readonly EntityStorageInterface $userStorage,
+  ) {}
 
   /**
    * {@inheritdoc}
