@@ -143,19 +143,17 @@ class BuyerVerificationForm extends FormBase {
     if ($count === 1) {
       $store = reset($stores);
 
-      $form_state->setRedirectResponse(
-        $store->toUrl()->toString()
+      $form_state->setRedirectUrl(
+        $store->toUrl()
       );
     }
     else {
 
       // Redirect to the store selection page when multiple stores exist.
-      // return new RedirectResponse(
+      // return new RedirectResponse(setRedirect
       //   Url::fromRoute('view.store_selector.page_1')->toString()
       // );
-      $form_state->setRedirectResponse(
-        Url::fromRoute('view.store_selector.page_1')->toString()
-      );
+      $form_state->setRedirect('view.store_selector.page_1');
     }
   }
 
