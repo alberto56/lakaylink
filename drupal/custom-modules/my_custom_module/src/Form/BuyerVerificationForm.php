@@ -2,11 +2,12 @@
 
 namespace Drupal\my_custom_module\Form;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
-use Drupal\user\Entity\User;
 use Drupal\my_custom_module\BuyerStoreResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,12 +15,18 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class BuyerVerificationForm extends FormBase {
 
+  private EntityStorageInterface $userStorage;
+
   /**
-   * Constructor.
+   * Constructor
    */
   public function __construct(
-    private readonly BuyerStoreResolverInterface $buyerStoreResolver,
-  ) {}
+    BuyerStoreResolverInterface $buyerStoreResolver,
+    EntityTypeManagerInterface $entityTypeManager,
+  ) {
+    $this->buyerStoreResolver = $buyerStoreResolver;
+    $this->userStorage = $entityTypeManager->getStorage('user');
+  }
 
   /**
    * {@inheritdoc}
@@ -27,6 +34,7 @@ class BuyerVerificationForm extends FormBase {
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('my_custom_module.buyer_store_resolver'),
+      $container->get('entity_type.manager')->getStorage('user'),
     );
   }
 
@@ -103,8 +111,7 @@ class BuyerVerificationForm extends FormBase {
       return;
     }
 
-    /** @var \Drupal\user\Entity\User $user */
-    $user = User::load($this->currentUser()->id());
+    $user = $this->userStorage->load(($this->currentUser()->id());
 
     if (!$user) {
       $this->messenger()->addError($this->t('Unable to load account.'));
@@ -125,9 +132,8 @@ class BuyerVerificationForm extends FormBase {
       $this->t('Your account has been verified.')
     );
 
-
     $stores = $this->buyerStoreResolver
-      ->getAllowedStores($this->currentUser);
+      ->getAllowedStores($this->currentUser());
 
     $count = count($stores);
 
