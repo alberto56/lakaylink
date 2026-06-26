@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - my_custom_module
+    - user
   theme:
     - my_custom_theme
 id: my_custom_theme_customcommercecart
@@ -19,4 +20,11 @@ settings:
   provider: my_custom_module
   dropdown: '1'
   show_if_empty: 1
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      buyer: buyer

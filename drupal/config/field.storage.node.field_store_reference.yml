@@ -1,0 +1,20 @@
+uuid: c2ee4ef3-82be-4cb3-aea3-ae4b6d855f53
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_store
+    - node
+id: node.field_store_reference
+field_name: field_store_reference
+entity_type: node
+type: entity_reference
+settings:
+  target_type: commerce_store
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

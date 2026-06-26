@@ -1,0 +1,23 @@
+uuid: ccb05b6e-a98c-4b7d-a011-b24ad1e4c3b8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_display_order
+    - paragraphs.paragraphs_type.carousel_slide
+id: paragraph.carousel_slide.field_display_order
+field_name: field_display_order
+entity_type: paragraph
+bundle: carousel_slide
+label: 'Display Order'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

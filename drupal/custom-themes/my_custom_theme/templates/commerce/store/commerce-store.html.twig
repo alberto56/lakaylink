@@ -1,0 +1,117 @@
+{#
+/**
+ * @file
+ *
+ * Default template for stores.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - store: The rendered store fields.
+ *   Use 'store' to print them all, or print a subset such as
+ *   'store.name'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ store|without('name') }}
+ *   @endcode
+ * - store_entity: The store entity.
+ * - store_url: The store URL.
+ *
+ * @ingroup themeable
+ */
+#}
+
+
+{% set is_admin = user.hasPermission('administer commerce_store') %}
+
+<article{{ attributes.addClass('commerce-store', 'container', 'py-4') }}>
+
+  <div class="row g-4">
+
+    {# LEFT COLUMN - IMAGE #}
+    {% if store.field_image %}
+      <div class="col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-body p-2">
+            {{ store.field_image }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {# RIGHT COLUMN - DETAILS #}
+    <div class="col-lg-7">
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+
+          <h2 class="card-title mb-4">
+            {{ store.label }}
+          </h2>
+
+          {# ADDRESS #}
+          {% if store.address %}
+            <div class="mb-3 border-bottom pb-3">
+              {{ store.address }}
+            </div>
+          {% endif %}
+
+          <div class="row">
+
+            {% if store.uid %}
+              <div class="col-md-6 mb-3">
+                {{ store.uid }}
+              </div>
+            {% endif %}
+
+            {% if store.timezone %}
+              <div class="col-md-6 mb-3">
+                {{ store.timezone }}
+              </div>
+            {% endif %}
+
+            {% if store.billing_countries %}
+              <div class="col-md-6 mb-3">
+                {{ store.billing_countries }}
+              </div>
+            {% endif %}
+
+            {% if store.is_default %}
+              <div class="col-md-6 mb-3">
+                {{ store.is_default }}
+              </div>
+            {% endif %}
+
+            {% if store.created %}
+              <div class="col-md-6 mb-3">
+                {{ store.created }}
+              </div>
+            {% endif %}
+
+            {# ADMIN ONLY FIELDS #}
+            {% if is_admin %}
+
+              {% if store.field_google_sheet_tab_gid %}
+                <div class="col-md-6 mb-3">
+                  {{ store.field_google_sheet_tab_gid }}
+                </div>
+              {% endif %}
+
+            {% endif %}
+
+          </div>
+
+          {# ADMIN ONLY FULL WIDTH FIELD #}
+          {% if is_admin and store.field_google_sheet_url %}
+            <div class="mt-3">
+              {{ store.field_google_sheet_url }}
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</article>

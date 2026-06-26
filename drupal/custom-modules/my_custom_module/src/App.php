@@ -115,17 +115,24 @@ class App {
     AccountInterface $account,
     ?FieldItemListInterface $items = NULL,
   ) {
-    if ($field_definition->getName() !== 'field_allowed_stores') {
+    if ($operation !== 'edit') {
       return AccessResult::neutral();
     }
-
-    if ($operation === 'edit') {
-      return $account->hasPermission('manage buyer store assignments')
-        ? AccessResult::allowed()
-        : AccessResult::forbidden();
+  
+    $field_permissions = [
+      'field_allowed_stores' => 'manage buyer store assignments',
+      'field_verified' => 'update user verification',
+    ];
+  
+    $field_name = $field_definition->getName();
+  
+    if (!isset($field_permissions[$field_name])) {
+      return AccessResult::neutral();
     }
-
-    return AccessResult::neutral();
+  
+    return $account->hasPermission($field_permissions[$field_name])
+      ? AccessResult::allowed()
+      : AccessResult::forbidden();
   }
 
   /**
@@ -148,6 +155,16 @@ class App {
           'social_login_block' => NULL,
         ],
         'template' => 'custom-login-page',
+      ],
+      'buyer_verification_form' => [
+        'render element' => 'form',
+        'template' => 'buyer-verification-form',
+      ],
+      'seller_dashboard' => [
+        'variables' => [
+          'stores' => [],
+        ],
+        'template' => 'seller-dashboard',
       ],
     ];
   }

@@ -1,0 +1,22 @@
+uuid: 57849d13-efc9-42e7-ba30-541d18cf585a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_desc
+    - paragraphs.paragraphs_type.carousel_slide
+  module:
+    - text
+id: paragraph.carousel_slide.field_desc
+field_name: field_desc
+entity_type: paragraph
+bundle: carousel_slide
+label: Desc
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

@@ -13,6 +13,7 @@ dependencies:
     - field.field.commerce_product_variation.grocery_variation.field_stock
     - field.field.commerce_product_variation.grocery_variation.field_storage_type
     - field.field.commerce_product_variation.grocery_variation.field_unit
+    - image.style.product_page_slider
   module:
     - commerce_price
     - image
@@ -32,10 +33,13 @@ content:
     weight: 9
     region: content
   field_image:
-    type: image_url
-    label: above
+    type: image
+    label: hidden
     settings:
-      image_style: ''
+      image_link: content
+      image_style: product_page_slider
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 14
     region: content
@@ -142,3 +146,4 @@ content:
     region: content
 hidden:
   langcode: true
+  search_api_excerpt: true

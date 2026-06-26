@@ -7,6 +7,7 @@ dependencies:
     - field.field.commerce_store.online.field_google_sheet_tab_gid
     - field.field.commerce_store.online.field_google_sheet_url
     - field.field.commerce_store.online.field_image
+    - image.style.product_page_slider
   module:
     - address
     - image
@@ -54,7 +55,7 @@ content:
     region: content
   default_currency:
     type: entity_reference_label
-    label: above
+    label: inline
     settings:
       link: true
     third_party_settings: {  }
@@ -82,10 +83,10 @@ content:
     region: content
   field_image:
     type: image
-    label: above
+    label: hidden
     settings:
-      image_link: ''
-      image_style: ''
+      image_link: content
+      image_style: product_page_slider
       image_loading:
         attribute: lazy
     third_party_settings: {  }
@@ -103,14 +104,14 @@ content:
     region: content
   mail:
     type: basic_string
-    label: above
+    label: inline
     settings: {  }
     third_party_settings: {  }
     weight: 3
     region: content
   name:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -125,7 +126,7 @@ content:
     region: content
   uid:
     type: entity_reference_label
-    label: above
+    label: inline
     settings:
       link: true
     third_party_settings: {  }

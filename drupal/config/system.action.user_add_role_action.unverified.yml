@@ -1,0 +1,14 @@
+uuid: 31d0cfe2-8016-45f2-9b78-097879ed37d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.unverified
+  module:
+    - user
+id: user_add_role_action.unverified
+label: 'Add the Unverified role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: unverified

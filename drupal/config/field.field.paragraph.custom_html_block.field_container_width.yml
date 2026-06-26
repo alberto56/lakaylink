@@ -1,0 +1,21 @@
+uuid: 91030b7a-1f25-4436-ad5f-adeac07d2407
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_container_width
+    - paragraphs.paragraphs_type.custom_html_block
+  module:
+    - options
+id: paragraph.custom_html_block.field_container_width
+field_name: field_container_width
+entity_type: paragraph
+bundle: custom_html_block
+label: 'Container Width'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -69,6 +69,22 @@ class BuyerLoginRedirectController extends ControllerBase {
     }
 
     // Handle buyer-specific redirection logic.
+    if ($this->currentUser->hasRole('unverified')) {
+      // Redirect to the store selection page when multiple stores exist.
+      return new RedirectResponse(
+        Url::fromRoute('my_custom_module.buyer_verification')->toString()
+      );
+    }
+
+    // Handle buyer-specific redirection logic.
+    if ($this->currentUser->hasRole('admin')) {
+      // Redirect to the store selection page when multiple stores exist.
+      return new RedirectResponse(
+        Url::fromRoute('my_custom_module.seller_dashboard')->toString()
+      );
+    }
+
+    // Handle buyer-specific redirection logic.
     if ($this->currentUser->hasRole('buyer')) {
 
       $stores = $this->buyerStoreResolver

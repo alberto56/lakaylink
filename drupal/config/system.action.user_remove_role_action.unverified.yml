@@ -1,0 +1,14 @@
+uuid: 897f2822-90a5-4666-b25b-94405ecb5d80
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.unverified
+  module:
+    - user
+id: user_remove_role_action.unverified
+label: 'Remove the Unverified role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: unverified

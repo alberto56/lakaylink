@@ -1,0 +1,21 @@
+uuid: b4e72bf1-2b1f-4b92-a65a-ff1e5e2ed7ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_show_pagination
+    - paragraphs.paragraphs_type.product_list
+id: paragraph.product_list.field_show_pagination
+field_name: field_show_pagination
+entity_type: paragraph
+bundle: product_list
+label: 'Show Pagination'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

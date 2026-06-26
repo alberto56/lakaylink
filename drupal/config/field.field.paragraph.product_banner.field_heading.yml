@@ -1,0 +1,19 @@
+uuid: 58723e09-0330-4852-8b7b-488159ecaffc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_heading
+    - paragraphs.paragraphs_type.product_banner
+id: paragraph.product_banner.field_heading
+field_name: field_heading
+entity_type: paragraph
+bundle: product_banner
+label: Heading
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

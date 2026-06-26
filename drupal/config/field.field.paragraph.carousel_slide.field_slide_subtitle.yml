@@ -1,0 +1,19 @@
+uuid: 38697a30-dfd3-45fa-82d3-3f8a54754260
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_slide_subtitle
+    - paragraphs.paragraphs_type.carousel_slide
+id: paragraph.carousel_slide.field_slide_subtitle
+field_name: field_slide_subtitle
+entity_type: paragraph
+bundle: carousel_slide
+label: 'Slide Subtitle'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

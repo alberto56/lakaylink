@@ -1,0 +1,37 @@
+uuid: f39d6257-e4b7-4631-a92a-dbf8858aae61
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.featured_categories.field_image
+    - field.field.paragraph.featured_categories.field_taxonomy_category
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.featured_categories
+  module:
+    - image
+id: paragraph.featured_categories.default
+targetEntityType: paragraph
+bundle: featured_categories
+mode: default
+content:
+  field_image:
+    type: image_image
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_taxonomy_category:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
