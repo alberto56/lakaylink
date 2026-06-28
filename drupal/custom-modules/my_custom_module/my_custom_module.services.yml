@@ -24,3 +24,13 @@ services:
       - '@current_route_match'
     tags:
       - { name: event_subscriber }
+
+  my_custom_module.current_store:
+    class: Drupal\my_custom_module\Service\CurrentStore
+    arguments: ['@request_stack']
+
+  my_custom_module.store_context_subscriber:
+    class: Drupal\my_custom_module\EventSubscriber\StoreContextSubscriber
+    arguments: ['@request_stack']
+    tags:
+      - { name: event_subscriber }
