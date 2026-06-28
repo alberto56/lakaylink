@@ -1,0 +1,25 @@
+<div class="container-fluid carousel bg-light px-0">
+        <div class="row g-0 justify-content-end">
+            <div class="col">
+                <div class="swiper header-carousel">
+                    <div class="swiper-wrapper">
+
+                            {% block paragraph %}
+                            <div{{ attributes.addClass(classes) }}>
+                                {% block content %}
+                                {{ content }}
+                                {% endblock %}
+                            </div>
+                            {% endblock paragraph %}
+
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>

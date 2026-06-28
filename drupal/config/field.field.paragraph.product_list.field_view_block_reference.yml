@@ -1,12 +1,14 @@
-uuid: 1eefd103-b752-42b2-842e-77f71f4eb664
+uuid: 46643a06-9c13-4038-a183-0ca90e36aaad
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_view_block
+    - field.storage.paragraph.field_view_block_reference
     - paragraphs.paragraphs_type.product_list
-id: paragraph.product_list.field_view_block
-field_name: field_view_block
+  module:
+    - viewsreference
+id: paragraph.product_list.field_view_block_reference
+field_name: field_view_block_reference
 entity_type: paragraph
 bundle: product_list
 label: 'View Block'
@@ -20,4 +22,9 @@ settings:
   handler_settings:
     target_bundles: null
     auto_create: false
-field_type: entity_reference
+  plugin_types:
+    block: block
+  preselect_views:
+    shop2: shop2
+  enabled_settings: {  }
+field_type: viewsreference

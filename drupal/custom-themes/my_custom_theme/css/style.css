@@ -995,3 +995,9 @@
 #block-my-custom-theme-mobile {
   height: 35px;
 }
+
+
+.shop-page-1 .product .product-item:hover .product-item-add,
+.shop-block-1 .product .product-item:hover .product-item-add {
+  margin-bottom: -95px;
+}

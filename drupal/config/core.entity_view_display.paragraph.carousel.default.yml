@@ -5,19 +5,24 @@ dependencies:
   config:
     - field.field.paragraph.carousel.field_carousel_slides
     - paragraphs.paragraphs_type.carousel
+    - swiper_formatter.swiper_formatter.home_slider_banner
   module:
-    - entity_reference_revisions
+    - swiper_formatter
 id: paragraph.carousel.default
 targetEntityType: paragraph
 bundle: carousel
 mode: default
 content:
   field_carousel_slides:
-    type: entity_reference_revisions_entity_view
+    type: swiper_formatter_paragraphs
     label: hidden
     settings:
       view_mode: default
       link: ''
+      template: home_slider_banner
+      caption: null
+      destination: null
+      swiper_access: false
     third_party_settings: {  }
     weight: 6
     region: content

@@ -1,0 +1,69 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a carousel paragraph.
+ *
+ * Available variables:
+ * - paragraph: Full paragraph entity.
+ *   - id: The paragraph ID.
+ *   - bundle: The type of the paragraph.
+ * - content: All paragraph fields. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_carousel_slides }}.
+ * - attributes: HTML attributes for the containing element.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{#
+/**
+ * @file
+ * Renders the carousel container.
+ */
+#}
+
+{# Get unique ID for this carousel #}
+{% set carousel_id = 'carousel-' ~ paragraph.id.value %}
+
+{# Attach required libraries #}
+{{ attach_library('my_custom_theme/owl-carousel') }}
+{{ attach_library('my_custom_theme/wow-animation') }}
+
+<div class="col-12 col-lg-7 col-xl-9">
+    <div id="{{ carousel_id }}" class="header-carousel owl-carousel bg-light py-5 owl-theme">
+        {# 
+          This renders all child slides.
+          The child slides are already sorted by field_display_order 
+          if you set the field to be sorted in the entity reference field settings
+        #}
+        {{ content.field_carousel_slides }}
+    </div>
+</div>
+
+{# Initialize Owl Carousel #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        var owl = $('#' + '{{ carousel_id }}').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: true,
+            navText: [
+                '<i class="bi bi-arrow-left"></i>',
+                '<i class="bi bi-arrow-right"></i>'
+            ],
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            smartSpeed: 1000,
+            responsive: {
+                0: { items: 1 },
+                768: { items: 1 },
+                992: { items: 1 }
+            }
+        });
+    }, 300);
+});
+</script>

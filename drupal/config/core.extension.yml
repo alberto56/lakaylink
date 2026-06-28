@@ -70,6 +70,7 @@ module:
   social_auth_google: 0
   state_machine: 0
   structure_sync: 0
+  swiper_formatter: 0
   system: 0
   taxonomy: 0
   taxonomy_menu: 0
@@ -80,6 +81,7 @@ module:
   user: 0
   views_filters_summary: 0
   views_ui: 0
+  viewsreference: 0
   pathauto: 1
   content_translation: 10
   views: 10

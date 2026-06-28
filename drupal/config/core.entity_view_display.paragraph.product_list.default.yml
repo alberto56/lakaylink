@@ -3,61 +3,36 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.product_list.field_product_count
     - field.field.paragraph.product_list.field_section_title
-    - field.field.paragraph.product_list.field_show_filters
-    - field.field.paragraph.product_list.field_show_pagination
-    - field.field.paragraph.product_list.field_view_block
+    - field.field.paragraph.product_list.field_view_block_reference
     - paragraphs.paragraphs_type.product_list
+  module:
+    - viewsreference
 id: paragraph.product_list.default
 targetEntityType: paragraph
 bundle: product_list
 mode: default
 content:
-  field_product_count:
-    type: number_integer
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    weight: 2
-    region: content
   field_section_title:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     weight: 0
     region: content
-  field_show_filters:
-    type: boolean
-    label: above
+  field_view_block_reference:
+    type: viewsreference_formatter
+    label: hidden
     settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
+      plugin_types:
+        block: block
+        default: '0'
+        page: '0'
+        feed: '0'
+        embed: '0'
     third_party_settings: {  }
-    weight: 3
-    region: content
-  field_show_pagination:
-    type: boolean
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 4
-    region: content
-  field_view_block:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 1
+    weight: 5
     region: content
 hidden:
   search_api_excerpt: true

@@ -5,16 +5,8 @@ dependencies:
   config:
     - field.storage.node.field_page_sections
     - node.type.homepage
-    - paragraphs.paragraphs_type.best_sellers
     - paragraphs.paragraphs_type.carousel
-    - paragraphs.paragraphs_type.custom_html_block
-    - paragraphs.paragraphs_type.featured_categories
-    - paragraphs.paragraphs_type.featured_products
-    - paragraphs.paragraphs_type.hero_banner
-    - paragraphs.paragraphs_type.offer_banner
-    - paragraphs.paragraphs_type.product_banner
     - paragraphs.paragraphs_type.product_list
-    - paragraphs.paragraphs_type.services
   module:
     - entity_reference_revisions
 id: node.homepage.field_page_sections
@@ -31,46 +23,41 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      best_sellers: best_sellers
       carousel: carousel
-      custom_html_block: custom_html_block
-      featured_categories: featured_categories
-      featured_products: featured_products
-      hero_banner: hero_banner
-      offer_banner: offer_banner
-      product_banner: product_banner
       product_list: product_list
-      services: services
     negate: 0
     target_bundles_drag_drop:
       best_sellers:
         weight: 11
-        enabled: true
+        enabled: false
       carousel:
         weight: 12
         enabled: true
+      carousel_slide:
+        weight: 14
+        enabled: false
       custom_html_block:
         weight: 13
-        enabled: true
+        enabled: false
       featured_categories:
         weight: 14
-        enabled: true
+        enabled: false
       featured_products:
         weight: 15
-        enabled: true
+        enabled: false
       hero_banner:
         weight: 16
-        enabled: true
+        enabled: false
       offer_banner:
         weight: 17
-        enabled: true
+        enabled: false
       product_banner:
         weight: 18
-        enabled: true
+        enabled: false
       product_list:
         weight: 19
         enabled: true
       services:
         weight: 20
-        enabled: true
+        enabled: false
 field_type: entity_reference_revisions

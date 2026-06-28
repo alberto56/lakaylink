@@ -5,7 +5,7 @@ dependencies:
   config:
     - commerce_product.commerce_product_type.grocery_product
     - field.storage.commerce_product_variation.field_image
-    - image.style.store_300x200
+    - image.style.store_305x200
     - taxonomy.vocabulary.category
   module:
     - better_exposed_filters
@@ -83,7 +83,7 @@ display:
           type: image
           settings:
             image_link: content
-            image_style: store_300x200
+            image_style: store_305x200
             image_loading:
               attribute: lazy
           group_column: ''
@@ -629,6 +629,7 @@ display:
           entity_type: commerce_product
           plugin_id: standard
           required: false
+      css_class: shop-page-1
       use_ajax: true
       header: {  }
       footer: {  }
@@ -641,6 +642,77 @@ display:
         - url
         - url.query_args
         - 'url.query_args:sort_by'
+      tags:
+        - 'config:field.storage.commerce_product_variation.field_image'
+  block_1:
+    id: block_1
+    display_title: Block
+    display_plugin: block
+    position: 2
+    display_options:
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 16
+      sorts:
+        created:
+          id: created
+          table: commerce_product_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: commerce_product
+          entity_field: created
+          plugin_id: date
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          granularity: second
+      arguments: {  }
+      filters:
+        status:
+          id: status
+          table: commerce_product_field_data
+          field: status
+          entity_type: commerce_product
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+        type:
+          id: type
+          table: commerce_product_field_data
+          field: type
+          entity_type: commerce_product
+          entity_field: type
+          plugin_id: commerce_entity_bundle
+          value:
+            grocery_product: grocery_product
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      defaults:
+        css_class: false
+        pager: false
+        sorts: false
+        arguments: false
+        filters: false
+        filter_groups: false
+      css_class: shop-block-1
+      display_extenders: {  }
+      block_description: Shop
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
       tags:
         - 'config:field.storage.commerce_product_variation.field_image'
   page_1:

@@ -1,0 +1,93 @@
+{#
+/**
+ * @file
+ * Theme override for a main view template.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ * - css_name: A css-safe version of the view name.
+ * - css_class: The user-specified classes names, if any.
+ * - header: The optional header.
+ * - footer: The optional footer.
+ * - rows: The results of the view query, if any.
+ * - empty: The content to display if there are no rows.
+ * - pager: The optional pager next/prev links to display.
+ * - exposed: Exposed widget form/info to display.
+ * - feed_icons: Optional feed icons to display.
+ * - more: An optional link to the next page of results.
+ * - title: Title of the view, only used when displaying in the admin preview.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the view title.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the view title.
+ * - attachment_before: An optional attachment view to be displayed before the
+ *   view content.
+ * - attachment_after: An optional attachment view to be displayed after the
+ *   view content.
+ * - dom_id: Unique id for every view being printed to give unique class for
+ *   Javascript.
+ *
+ * @see template_preprocess_views_view()
+ */
+#}
+{%
+  set classes = [
+    'view',
+    'view-' ~ id|clean_class,
+    'view-id-' ~ id,
+    'view-display-id-' ~ display_id,
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <div class="row g-4">
+        <div class="col-lg wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+            <div class="row g-4">
+                <div class="col-xl">
+                    {{ exposed }}
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div id="tab-5" class="tab-pane fade show p-0 active">
+                    <div class="row g-4 product">
+
+                        {% for row in rows %}
+                            {% if row|render|trim %}
+                                {{ row }}
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="col-12 wow fadeInUp animated" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                            <div class="pagination d-flex justify-content-center mt-5">
+                                {{ pager }}
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id="tab-6" class="products tab-pane fade show p-0">
+                    <div class="row g-4 products-mini">
+                    {% for row in rows %}
+                        <div class="col-lg-6">
+                        {{ row }}
+                        </div>
+                    {% endfor %}
+
+                    <div class="col-12 wow fadeInUp animated" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                        <div class="pagination d-flex justify-content-center mt-5">
+                            {{ pager }}
+                        </div>
+                    </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -3,24 +3,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.product_list.field_product_count
     - field.field.paragraph.product_list.field_section_title
-    - field.field.paragraph.product_list.field_show_filters
-    - field.field.paragraph.product_list.field_show_pagination
-    - field.field.paragraph.product_list.field_view_block
+    - field.field.paragraph.product_list.field_view_block_reference
     - paragraphs.paragraphs_type.product_list
+  module:
+    - viewsreference
 id: paragraph.product_list.default
 targetEntityType: paragraph
 bundle: product_list
 mode: default
 content:
-  field_product_count:
-    type: number
-    weight: 2
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
   field_section_title:
     type: string_textfield
     weight: 0
@@ -29,23 +21,9 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_show_filters:
-    type: boolean_checkbox
-    weight: 3
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  field_show_pagination:
-    type: boolean_checkbox
-    weight: 4
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  field_view_block:
-    type: entity_reference_autocomplete
-    weight: 1
+  field_view_block_reference:
+    type: viewsreference_autocomplete
+    weight: 5
     region: content
     settings:
       match_operator: CONTAINS
