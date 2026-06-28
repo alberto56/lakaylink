@@ -229,7 +229,7 @@ Required fields:
   (3) create or edit exist store tab in the google sheet, suppose your store is haiti usa then in google sheet edit
     haiti_usa tab.
 
-  (4) Remove all the products except headers. Fill the row. Add product , Each variant one row.
+  (4) Remove all the products except headers. Fill the row. Add product ( Each variant one row).
 
     ```
     product_id,product_name,category,brand,pack_type,variation_sku,variant_name,quantity,unit,price,currency,stock,weight,unit_type,origin,expiry_days,storage_type,image_url,status
