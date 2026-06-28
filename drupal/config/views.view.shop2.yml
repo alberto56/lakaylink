@@ -670,7 +670,7 @@ display:
           plugin_id: standard
           required: false
       css_class: shop-page-1
-      use_ajax: true
+      use_ajax: false
       header: {  }
       footer: {  }
       display_extenders: {  }
