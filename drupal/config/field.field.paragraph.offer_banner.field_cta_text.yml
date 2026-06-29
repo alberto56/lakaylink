@@ -1,0 +1,19 @@
+uuid: 7bff7199-fdc2-4b7a-8a62-ac09b5a82eea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cta_text
+    - paragraphs.paragraphs_type.offer_banner
+id: paragraph.offer_banner.field_cta_text
+field_name: field_cta_text
+entity_type: paragraph
+bundle: offer_banner
+label: 'CTA Text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

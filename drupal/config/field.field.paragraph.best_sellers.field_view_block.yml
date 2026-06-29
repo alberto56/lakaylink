@@ -1,0 +1,23 @@
+uuid: 2dcd8697-3357-4fc1-9b9f-806fa36939a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_view_block
+    - paragraphs.paragraphs_type.best_sellers
+id: paragraph.best_sellers.field_view_block
+field_name: field_view_block
+entity_type: paragraph
+bundle: best_sellers
+label: 'View Block'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:view'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+field_type: entity_reference

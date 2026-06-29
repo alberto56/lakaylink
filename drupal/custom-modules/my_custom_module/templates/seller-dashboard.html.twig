@@ -1,0 +1,41 @@
+<div class="container py-4">
+
+  <h1 class="mb-4">{{ 'My Stores'|t }}</h1>
+
+  {% if stores is not empty %}
+    <div class="row g-4">
+
+      {% for store in stores %}
+        <div class="col-md-6 col-lg-4">
+
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+              <h3 class="h5 mb-4">
+                {{ store.label() }}
+              </h3>
+
+              <a
+                href="{{ path(
+                  'my_custom_module.generate_code',
+                  {'commerce_store': store.id()}
+                ) }}"
+                class="btn btn-primary btn-lg w-100"
+              >
+                {{ "Generate Invitation Code"|t }}
+              </a>
+
+            </div>
+          </div>
+
+        </div>
+      {% endfor %}
+
+    </div>
+  {% else %}
+    <div class="alert alert-info">
+      {{ "You do not currently manage any stores."|t }}
+    </div>
+  {% endif %}
+
+</div>

@@ -1,0 +1,10 @@
+uuid: 3c65cc80-735d-41b8-8496-2b30ba585954
+langcode: en
+status: true
+dependencies: {  }
+id: offer_banner
+label: 'Offer Banner'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

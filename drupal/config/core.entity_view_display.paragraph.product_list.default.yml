@@ -1,0 +1,38 @@
+uuid: efa75a9f-8ad9-4d2b-81e9-78203be68a5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.product_list.field_section_title
+    - field.field.paragraph.product_list.field_view_block_reference
+    - paragraphs.paragraphs_type.product_list
+  module:
+    - viewsreference
+id: paragraph.product_list.default
+targetEntityType: paragraph
+bundle: product_list
+mode: default
+content:
+  field_section_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_view_block_reference:
+    type: viewsreference_formatter
+    label: hidden
+    settings:
+      plugin_types:
+        block: block
+        default: '0'
+        page: '0'
+        feed: '0'
+        embed: '0'
+    third_party_settings: {  }
+    weight: 5
+    region: content
+hidden:
+  search_api_excerpt: true

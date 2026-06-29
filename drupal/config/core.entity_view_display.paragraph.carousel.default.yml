@@ -1,0 +1,30 @@
+uuid: 4ad9fff9-1d34-4a17-b982-e7999565ff33
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.carousel.field_carousel_slides
+    - paragraphs.paragraphs_type.carousel
+    - swiper_formatter.swiper_formatter.home_slider_banner
+  module:
+    - swiper_formatter
+id: paragraph.carousel.default
+targetEntityType: paragraph
+bundle: carousel
+mode: default
+content:
+  field_carousel_slides:
+    type: swiper_formatter_paragraphs
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+      template: home_slider_banner
+      caption: null
+      destination: null
+      swiper_access: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+hidden:
+  search_api_excerpt: true

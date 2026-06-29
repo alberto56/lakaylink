@@ -10,6 +10,7 @@ dependencies:
     - address
     - commerce_store
     - image
+    - node
     - user
 id: store_selector
 label: 'Store selector'
@@ -195,6 +196,59 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
+        view_node_1:
+          id: view_node_1
+          table: node
+          field: view_node
+          relationship: reverse__node__field_store_reference
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: entity_link
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: view
+          output_url_as_text: true
+          absolute: true
         address__address_line1:
           id: address__address_line1
           table: commerce_store_field_data
@@ -887,7 +941,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<a href=\"{{ view_commerce_store_1 }}\">  \r\n<div class=\"card\">\r\n    <div class=\"bg-image hover-zoom ripple ripple-surface ripple-surface-light\" data-mdb-ripple-color=\"light\">      \r\n              <img src=\" {{ field_image }} \"\r\n              class=\"w-100\" />\r\n              <div class=\"hover-overlay\">\r\n                <div class=\"mask\" style=\"background-color: rgba(251, 251, 251, 0.15);\"></div>\r\n              </div>\r\n    </div>\r\n    <div class=\"card-body\">\r\n            <h5 class=\"card-title mb-3\">{{ name }} </h5>\r\n            <p> {{ address__address_line1 }}  {{ address__address_line2 }} {{ address__address_line3 }}</p> \r\n            <p>{{ address__administrative_area }} {{ address__dependent_locality }} {{ address__family_name }} {{ address__given_name }} {{ address__locality }} {{ address__organization }} {{ address__country_code }} {{ address__additional_name }} {{ address__postal_code }}  {{ address__sorting_code }}</p>\r\n          </div>\r\n  </div>\r\n</a>\r\n"
+            text: "<a href=\"{{ view_node_1 }}\">  \r\n<div class=\"card\">\r\n    <div class=\"bg-image hover-zoom ripple ripple-surface ripple-surface-light\" data-mdb-ripple-color=\"light\">      \r\n              <img src=\" {{ field_image }} \"\r\n              class=\"w-100\" />\r\n              <div class=\"hover-overlay\">\r\n                <div class=\"mask\" style=\"background-color: rgba(251, 251, 251, 0.15);\"></div>\r\n              </div>\r\n    </div>\r\n    <div class=\"card-body\">\r\n            <h5 class=\"card-title mb-3\">{{ name }} </h5>\r\n            <p> {{ address__address_line1 }}  {{ address__address_line2 }} {{ address__address_line3 }}</p> \r\n            <p>{{ address__administrative_area }} {{ address__dependent_locality }} {{ address__family_name }} {{ address__given_name }} {{ address__locality }} {{ address__organization }} {{ address__country_code }} {{ address__additional_name }} {{ address__postal_code }}  {{ address__sorting_code }}</p>\r\n          </div>\r\n  </div>\r\n</a>\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -1077,6 +1131,16 @@ display:
           group_type: group
           admin_label: 'field_allowed_stores: Store'
           plugin_id: standard
+          required: true
+        reverse__node__field_store_reference:
+          id: reverse__node__field_store_reference
+          table: commerce_store_field_data
+          field: reverse__node__field_store_reference
+          relationship: field_allowed_stores
+          group_type: group
+          admin_label: field_store_reference
+          entity_type: commerce_store
+          plugin_id: entity_reverse
           required: true
       header: {  }
       footer: {  }

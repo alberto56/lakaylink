@@ -105,6 +105,19 @@ blocks:
           format: full_html
 menus:
   -
+    menu_name: main
+    title: Shop
+    parent: null
+    uri: 'internal:/store/%/shop'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 82b1f79f-167c-44d3-8f5c-d958a6cc3e38
+    options: {  }
+  -
     menu_name: extras
     title: Brands
     parent: null
@@ -538,4 +551,4 @@ taxonomies:
         -
           value: Vegetables
   tags: {  }
-log: 1
+log: 0

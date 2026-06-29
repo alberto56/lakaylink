@@ -1,0 +1,10 @@
+uuid: 768a5670-cbec-42c6-aec8-49359576889f
+langcode: en
+status: true
+dependencies: {  }
+id: featured_categories
+label: 'Featured Categories'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

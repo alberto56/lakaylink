@@ -1,0 +1,30 @@
+uuid: 34e36ca2-d001-475c-86b0-ec0affd08aa8
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_container_width
+field_name: field_container_width
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: full_width
+      label: 'Full Width'
+    -
+      value: container
+      label: Container
+    -
+      value: container_fluid
+      label: 'Container Fluid'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

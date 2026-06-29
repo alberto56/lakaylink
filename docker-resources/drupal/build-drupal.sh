@@ -68,7 +68,13 @@ rm -rf modules/contrib
   drupal/structure_sync \
   drupal/commerce_product_review \
   drupal/lang_dropdown \
-  drupal/user_redirect
+  drupal/search_api \
+  drupal/better_exposed_filters \
+  drupal/facets_pretty_paths \
+  drupal/views_filters_summary \
+  drupal/search_api_autocomplete \
+  drupal/viewsreference \
+  drupal/swiper_formatter
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.

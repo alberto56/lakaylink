@@ -1,0 +1,19 @@
+uuid: d9c397c9-e11d-4081-bbca-2db3c94af24e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_section_title
+    - paragraphs.paragraphs_type.best_sellers
+id: paragraph.best_sellers.field_section_title
+field_name: field_section_title
+entity_type: paragraph
+bundle: best_sellers
+label: 'Section Title'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

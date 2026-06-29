@@ -597,3 +597,25 @@ function my_custom_module_theme($existing, $type, $theme, $path) {
 function my_custom_module_theme_registry_alter(&$theme_registry) {
   $theme_registry['commerce_cart_block']['variables']['cart_total'] = NULL;
 }
+
+function my_custom_module_preprocess_menu__main(&$variables) {
+  $store_id = \Drupal::service('my_custom_module.current_store')->getStoreId();
+  $store_slug = \Drupal::service('my_custom_module.current_store')->getStoreSlug();
+
+  if (!$store_id || !$store_slug) {
+    return;
+  }
+
+  foreach ($variables['items'] as &$item) {
+
+    // HOME
+    if ($item['title'] === 'Home') {
+      $item['url'] = Url::fromUserInput("/shop/$store_slug/$store_id");
+    }
+
+    // SHOP
+    if ($item['title'] === 'Shop') {
+      $item['url'] = Url::fromUserInput("/store/$store_id/shop");
+    }
+  }
+}

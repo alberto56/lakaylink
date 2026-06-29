@@ -1,0 +1,23 @@
+uuid: 706f79e1-0dcf-4d4e-afac-3273992f3d90
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_overlay_opacity
+    - paragraphs.paragraphs_type.hero_banner
+id: paragraph.hero_banner.field_overlay_opacity
+field_name: field_overlay_opacity
+entity_type: paragraph
+bundle: hero_banner
+label: 'Overlay Opacity'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

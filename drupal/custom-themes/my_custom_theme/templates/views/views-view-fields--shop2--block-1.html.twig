@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Theme override for a single product row in Views.
+ *
+ * Available fields:
+ * - fields.field_product_image.content
+ * - fields.title.content
+ * - fields.field_category.content
+ * - fields.field_old_price.content
+ * - fields.field_price.content
+ * - fields.view_node.content
+ */
+#}
+
+<div class="product-item rounded wow fadeInUp">
+
+      <div class="product-item-inner border rounded">
+
+          <div class="product-item-inner-item">
+
+              {{ fields.field_image.content }}
+
+              <div class="product-details">
+                  <a href="{{ fields.product_id.raw }}">
+                      <i class="fa fa-eye fa-1x"></i>
+                  </a>
+              </div>
+
+          </div>
+
+          <div class="text-center rounded-bottom p-4">
+
+              <div class="mb-2">
+                  {{ fields.product_id.content }}
+              </div>
+
+              <h4 class="mb-3">
+                  {{ fields.title.content }}
+              </h4>
+
+              <div class="price">
+                  <span class="text-primary fs-5">
+                      {{ fields.price__number.content }}
+                  </span>
+              </div>
+
+          </div>
+
+      </div>
+
+      <div class="product-item-add border border-top-0 rounded-bottom text-center p-4 pt-0">
+
+          {{ fields.variations_target_id.content }}
+
+      </div>
+</div>

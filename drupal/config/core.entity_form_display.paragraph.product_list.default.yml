@@ -1,0 +1,36 @@
+uuid: cbd1501d-7726-4553-b999-068476a1f905
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.product_list.field_section_title
+    - field.field.paragraph.product_list.field_view_block_reference
+    - paragraphs.paragraphs_type.product_list
+  module:
+    - viewsreference
+id: paragraph.product_list.default
+targetEntityType: paragraph
+bundle: product_list
+mode: default
+content:
+  field_section_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_view_block_reference:
+    type: viewsreference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

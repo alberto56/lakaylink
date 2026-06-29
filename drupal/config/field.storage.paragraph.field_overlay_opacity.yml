@@ -1,0 +1,20 @@
+uuid: 9db5aa29-15c4-4e80-8bc4-0b5b0d15b4bf
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_overlay_opacity
+field_name: field_overlay_opacity
+entity_type: paragraph
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,50 @@
+uuid: 34bcdc83-a29a-42e3-af13-47dd159d5b35
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.custom_html_block.field_block_title
+    - field.field.paragraph.custom_html_block.field_container_width
+    - field.field.paragraph.custom_html_block.field_content
+    - field.field.paragraph.custom_html_block.field_css_class
+    - paragraphs.paragraphs_type.custom_html_block
+  module:
+    - options
+    - text
+id: paragraph.custom_html_block.default
+targetEntityType: paragraph
+bundle: custom_html_block
+mode: default
+content:
+  field_block_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_container_width:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_content:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_css_class:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  search_api_excerpt: true

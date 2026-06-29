@@ -1,0 +1,93 @@
+{#
+/**
+ * @file
+ * Theme override to display a pager.
+ *
+ * Available variables:
+ * - heading_id: Pagination heading ID.
+ * - pagination_heading_level: The heading level to use for the pager.
+ * - items: List of pager items.
+ *   The list is keyed by the following elements:
+ *   - first: Item for the first page; not present on the first page of results.
+ *   - previous: Item for the previous page; not present on the first page
+ *     of results.
+ *   - next: Item for the next page; not present on the last page of results.
+ *   - last: Item for the last page; not present on the last page of results.
+ *   - pages: List of pages, keyed by page number.
+ *   Sub-sub elements:
+ *   items.first, items.previous, items.next, items.last, and each item inside
+ *   items.pages contain the following elements:
+ *   - href: URL with appropriate query parameters for the item.
+ *   - attributes: A keyed list of HTML attributes for the item.
+ *   - text: The visible text used for the item link, such as "‹ Previous"
+ *     or "Next ›".
+ * - current: The page number of the current page.
+ * - ellipses: If there are more pages than the quantity allows, then an
+ *   ellipsis before or after the listed pages may be present.
+ *   - previous: Present if the currently visible list of pages does not start
+ *     at the first page.
+ *   - next: Present if the visible list of pages ends before the last page.
+ *
+ * @see template_preprocess_pager()
+ */
+#}
+{% if items %}
+  <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
+    <nav class="pagination d-flex justify-content-center mt-5" aria-label="{{ heading_id }}">
+
+      <{{ pagination_heading_level }} id="{{ heading_id }}" class="visually-hidden">
+        {{ 'Pagination'|t }}
+      </{{ pagination_heading_level }}>
+
+      {# First page #}
+      {% if items.first %}
+        <a href="{{ items.first.href }}" class="rounded" title="{{ 'Go to first page'|t }}">
+          {{ items.first.text|default('«'|t) }}
+        </a>
+      {% endif %}
+
+      {# Previous page #}
+      {% if items.previous %}
+        <a href="{{ items.previous.href }}" class="rounded" rel="prev" title="{{ 'Go to previous page'|t }}">
+          {{ items.previous.text|default('‹'|t) }}
+        </a>
+      {% endif %}
+
+      {# Ellipsis before #}
+      {% if ellipses.previous %}
+        <span class="rounded">&hellip;</span>
+      {% endif %}
+
+      {# Page numbers #}
+      {% for key, item in items.pages %}
+        {% if current == key %}
+          <span class="active rounded">{{ key }}</span>
+        {% else %}
+          <a href="{{ item.href }}" class="rounded">
+            {{ key }}
+          </a>
+        {% endif %}
+      {% endfor %}
+
+      {# Ellipsis after #}
+      {% if ellipses.next %}
+        <span class="rounded">&hellip;</span>
+      {% endif %}
+
+      {# Next page #}
+      {% if items.next %}
+        <a href="{{ items.next.href }}" class="rounded" rel="next" title="{{ 'Go to next page'|t }}">
+          {{ items.next.text|default('›'|t) }}
+        </a>
+      {% endif %}
+
+      {# Last page #}
+      {% if items.last %}
+        <a href="{{ items.last.href }}" class="rounded" title="{{ 'Go to last page'|t }}">
+          {{ items.last.text|default('»'|t) }}
+        </a>
+      {% endif %}
+
+    </nav>
+  </div>
+{% endif %}

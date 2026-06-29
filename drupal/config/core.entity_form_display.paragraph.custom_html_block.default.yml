@@ -1,0 +1,50 @@
+uuid: 63ef64ee-4caa-4f35-8e7a-dfaca1abb986
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.custom_html_block.field_block_title
+    - field.field.paragraph.custom_html_block.field_container_width
+    - field.field.paragraph.custom_html_block.field_content
+    - field.field.paragraph.custom_html_block.field_css_class
+    - paragraphs.paragraphs_type.custom_html_block
+  module:
+    - text
+id: paragraph.custom_html_block.default
+targetEntityType: paragraph
+bundle: custom_html_block
+mode: default
+content:
+  field_block_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_container_width:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_content:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_css_class:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

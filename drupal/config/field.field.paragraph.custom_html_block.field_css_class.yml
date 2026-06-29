@@ -1,0 +1,19 @@
+uuid: 774e5d3e-0777-42bb-b33b-e8eb68cbe7df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_css_class
+    - paragraphs.paragraphs_type.custom_html_block
+id: paragraph.custom_html_block.field_css_class
+field_name: field_css_class
+entity_type: paragraph
+bundle: custom_html_block
+label: 'CSS Class'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

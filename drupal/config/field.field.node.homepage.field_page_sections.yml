@@ -1,0 +1,63 @@
+uuid: 9baacf60-324a-43d0-bac2-5ec2a2bfee4d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_sections
+    - node.type.homepage
+    - paragraphs.paragraphs_type.carousel
+    - paragraphs.paragraphs_type.product_list
+  module:
+    - entity_reference_revisions
+id: node.homepage.field_page_sections
+field_name: field_page_sections
+entity_type: node
+bundle: homepage
+label: 'Page Sections'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      carousel: carousel
+      product_list: product_list
+    negate: 0
+    target_bundles_drag_drop:
+      best_sellers:
+        weight: 11
+        enabled: false
+      carousel:
+        weight: 12
+        enabled: true
+      carousel_slide:
+        weight: 14
+        enabled: false
+      custom_html_block:
+        weight: 13
+        enabled: false
+      featured_categories:
+        weight: 14
+        enabled: false
+      featured_products:
+        weight: 15
+        enabled: false
+      hero_banner:
+        weight: 16
+        enabled: false
+      offer_banner:
+        weight: 17
+        enabled: false
+      product_banner:
+        weight: 18
+        enabled: false
+      product_list:
+        weight: 19
+        enabled: true
+      services:
+        weight: 20
+        enabled: false
+field_type: entity_reference_revisions

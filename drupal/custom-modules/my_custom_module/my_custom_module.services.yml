@@ -16,3 +16,21 @@ services:
   my_custom_module.buyer_store_resolver:
     class: Drupal\my_custom_module\BuyerStoreResolver
     arguments: ['@entity_type.manager']
+
+  my_custom_module.seller_access_subscriber:
+    class: Drupal\my_custom_module\EventSubscriber\SellerAccessSubscriber
+    arguments:
+      - '@current_user'
+      - '@current_route_match'
+    tags:
+      - { name: event_subscriber }
+
+  my_custom_module.current_store:
+    class: Drupal\my_custom_module\Service\CurrentStore
+    arguments: ['@request_stack']
+
+  my_custom_module.store_context_subscriber:
+    class: Drupal\my_custom_module\EventSubscriber\StoreContextSubscriber
+    arguments: ['@request_stack']
+    tags:
+      - { name: event_subscriber }

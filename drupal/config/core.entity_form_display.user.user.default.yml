@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.user.user.commerce_remote_id
     - field.field.user.user.field_allowed_stores
+    - field.field.user.user.field_verified
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -30,6 +31,13 @@ content:
       match_limit: 10
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_verified:
+    type: boolean_checkbox
+    weight: 32
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   language:
     weight: 0

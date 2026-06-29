@@ -1,0 +1,41 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+          <h2 class="card-title mb-4 text-center">
+            {{ "Buyer Verification"|t }}
+          </h2>
+
+          <div class="alert bg-light">
+            <p class="mb-2">
+              {{ "Contact us by WhatsApp at"|t }}
+              <strong>555-555-5555</strong>
+              {{ "to confirm that your family is within our service area."|t }}
+            </p>
+
+            <p class="mb-0">
+              {{ "We will provide a verification code."|t }}
+            </p>
+          </div>
+
+          <div class="mb-4">
+            {{ form.verification_code }}
+          </div>
+
+          <div class="d-grid">
+            {{ form.actions.submit }}
+          </div>
+
+          {{ form.form_build_id }}
+          {{ form.form_token }}
+          {{ form.form_id }}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

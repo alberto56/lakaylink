@@ -1,0 +1,29 @@
+uuid: fcbda0d4-d441-4fdf-bda8-a36335a8139e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_product_category
+    - paragraphs.paragraphs_type.product_banner
+    - taxonomy.vocabulary.category
+id: paragraph.product_banner.field_product_category
+field_name: field_product_category
+entity_type: paragraph
+bundle: product_banner
+label: 'Product Category'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      category: category
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

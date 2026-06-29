@@ -1,0 +1,23 @@
+uuid: f248fc19-f957-43f7-81d6-43cee7b599b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_product_limit
+    - paragraphs.paragraphs_type.featured_products
+id: paragraph.featured_products.field_product_limit
+field_name: field_product_limit
+entity_type: paragraph
+bundle: featured_products
+label: 'Product Limit'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

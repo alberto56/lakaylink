@@ -1,0 +1,52 @@
+uuid: 2d865687-e6ef-450c-b869-e2557aefd233
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.best_sellers.field_product_count
+    - field.field.paragraph.best_sellers.field_section_title
+    - field.field.paragraph.best_sellers.field_show_carousel
+    - field.field.paragraph.best_sellers.field_view_block
+    - paragraphs.paragraphs_type.best_sellers
+id: paragraph.best_sellers.default
+targetEntityType: paragraph
+bundle: best_sellers
+mode: default
+content:
+  field_product_count:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_section_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_show_carousel:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_view_block:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  search_api_excerpt: true

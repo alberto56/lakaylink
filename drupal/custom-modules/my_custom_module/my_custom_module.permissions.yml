@@ -4,3 +4,7 @@
 manage buyer store assignments:
   title: 'Manage buyer store assignments'
   description: 'Assign allowed stores to buyers.'
+
+update user verification:
+  title: 'Update user verification'
+  description: 'update user verification TRUE or FALSE.'
