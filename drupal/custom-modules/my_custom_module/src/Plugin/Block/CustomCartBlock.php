@@ -43,6 +43,7 @@ class CustomCartBlock extends CartBlock {
    * Gets the total price as a formatted string.
    *
    * @return mixed|null
+   *   returns rendarable element.
    */
   protected function getCartTotalText() {
     $element = [];

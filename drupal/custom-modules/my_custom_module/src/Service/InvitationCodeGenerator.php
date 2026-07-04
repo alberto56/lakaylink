@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains the InvitationCodeGenerator service.
- */
-
 namespace Drupal\my_custom_module\Service;
 
 use Drupal\Component\Datetime\TimeInterface;
@@ -69,8 +64,7 @@ class InvitationCodeGenerator {
   /**
    * Validates a signed invitation code.
    *
-   * The expected code format is:
-   * expiry/store_id/signature
+   * The expected code format is: expiry/store_id/signature.
    *
    * @param string $code
    *   The invitation code to validate.

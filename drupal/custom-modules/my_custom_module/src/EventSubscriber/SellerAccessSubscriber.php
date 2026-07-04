@@ -74,7 +74,7 @@ class SellerAccessSubscriber implements EventSubscriberInterface {
       'my_custom_module.seller_dashboard',
       'my_custom_module.generate_code',
       'user.logout',
-      'user.logout.confirm'
+      'user.logout.confirm',
     ];
 
     // Redirect to the seller dashboard if the route is not allowed.

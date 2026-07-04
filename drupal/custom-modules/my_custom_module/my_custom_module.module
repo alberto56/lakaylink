@@ -599,12 +599,12 @@ function my_custom_module_theme_registry_alter(&$theme_registry) {
 }
 
 function my_custom_module_preprocess_menu__main(&$variables) {
-  return App::instance()->hookPreprocessMenuMain($variables);
+  App::instance()->hookPreprocessMenuMain($variables);
 }
 
 /**
  * Implements hook_preprocess_commerce_store().
  */
 function my_custom_module_preprocess_commerce_store(array &$variables) {
-  return App::instance()->hookPreprocessCommerceStore($variables);
+  App::instance()->hookPreprocessCommerceStore($variables);
 }

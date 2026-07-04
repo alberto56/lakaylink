@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains the BuyerVerificationManager service.
- */
-
 namespace Drupal\my_custom_module\Service;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -12,8 +7,6 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\my_custom_module\BuyerStoreResolverInterface;
-use Drupal\my_custom_module\Service\BuyerVerificationResult;
-use Drupal\my_custom_module\Service\InvitationCodeGenerator;
 use Drupal\user\UserStorage;
 
 /**

@@ -1,28 +1,27 @@
 (function (Drupal, once) {
-
   Drupal.behaviors.copyCode = {
-    attach(context) {
+    attach: function (context) {
+      once('copy-code', '.copy-code', context).forEach(function (button) {
+        button.addEventListener('click', function () {
+          var text = document.getElementById(button.dataset.target).textContent;
 
-      once('copy-code', '.copy-code', context).forEach((button) => {
+          // Clipboard API (still async, but handled with Promise)
+          navigator.clipboard.writeText(text).then(function () {
 
-        button.addEventListener('click', async () => {
-          // copy token
-          const text = document.getElementById(button.dataset.target).textContent;
-          // copy token to clipboard
-          await navigator.clipboard.writeText(text);
+            var sendMessage = button.closest('.card').querySelector('.send-this-code');
+            if (sendMessage) {
+              sendMessage.classList.remove('hidden');
+            }
 
-          // Show the "Send this code" message.
-          const sendMessage = button.closest('.card').querySelector('.send-this-code');
-          if (sendMessage) {
-            sendMessage.classList.remove('hidden');
-          }
+            button.innerHTML = '<i class="bi bi-clipboard-check text-success"></i>';
 
-          button.innerHTML = '<i class="bi bi-clipboard-check text-success"></i>';
+            setTimeout(function () {
+              button.innerHTML = '<i class="bi bi-clipboard copy-code"></i>';
+            }, 1500);
 
-          setTimeout(() => {
-            button.innerHTML = '<i class="bi bi-clipboard copy-code"></i>';
-          }, 1500);
-
+          }).catch(function (err) {
+            console.error('Copy failed:', err);
+          });
         });
       });
     }

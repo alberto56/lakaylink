@@ -2,16 +2,13 @@
 
 namespace Drupal\my_custom_module\Form;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Site\Settings;
 use Drupal\my_custom_module\BuyerStoreResolverInterface;
 use Drupal\my_custom_module\Service\InvitationCodeGenerator;
 use Drupal\my_custom_module\Service\BuyerVerificationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Provides a buyer verification form.
@@ -146,9 +143,6 @@ class BuyerVerificationForm extends FormBase {
       $this->messenger()->addError($this->t('Invalid verification code.'));
       return;
     }
-
-    // Extract store ID from verification result (if needed later).
-    $store_id = $verification['store_id'];
 
     // Verifies the current user using an invitation code.
     $result = $this->buyerVerificationManager->verifyCurrentUser(

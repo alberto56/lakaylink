@@ -234,8 +234,15 @@ class App {
       ->accessCheck(FALSE)
       ->execute();
 
-    // Load the related nodes and expose them to the template.
-    $variables['related_nodes'] = Node::loadMultiple($nids);
+    $nodes = Node::loadMultiple($nids);
+
+    $aliasManager = $this->getService('path_alias.manager');
+
+    foreach ($nodes as $node) {
+      $node->alias = $aliasManager->getAliasByPath('/node/' . $node->id());
+    }
+
+    $variables['related_nodes'] = $nodes;
   }
 
 }

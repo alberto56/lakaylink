@@ -20,7 +20,7 @@ class CurrentStore {
    *   The request stack used to access the current HTTP request.
    */
   public function __construct(
-    private RequestStack $requestStack
+    private RequestStack $requestStack,
   ) {}
 
   /**

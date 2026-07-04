@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains the BuyerVerificationResult value object.
- */
-
 namespace Drupal\my_custom_module\Service;
 
 use Drupal\Core\Url;
@@ -30,10 +25,8 @@ final class BuyerVerificationResult {
   public function __construct(
     // Indicates whether the verification succeeded.
     public readonly bool $success,
-
     // Message describing the outcome of the verification.
     public readonly string $message,
-
     // Optional redirect destination after verification.
     public readonly ?Url $redirectUrl = NULL,
   ) {}

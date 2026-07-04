@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains the GenerateCodeController class.
- */
-
 namespace Drupal\my_custom_module\Controller;
 
 use Drupal\Core\Ajax\AjaxResponse;
