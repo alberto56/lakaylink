@@ -1,7 +1,7 @@
 lakaylink
 =====
 
-Marketplace Allows expat family members to purchase food items (for example rice 1kg, rice 2kg, oil 1 liter, oil 2 liters) and have it delivered to their family back home in Africa. 
+Marketplace Allows expat family members to purchase food items (for example rice 1kg, rice 2kg, oil 1 liter, oil 2 liters) and have it delivered to their family back home in Africa.
 
 
 ## contents
@@ -11,7 +11,7 @@ Marketplace Allows expat family members to purchase food items (for example rice
 - This project sets up a Drupal Commerce system with:
 
 * Role-based purchasing ("buyer" can only purchase)
-* Import products and variations from Google Sheet 
+* Import products and variations from Google Sheet
 * Google social login
 * Stripe integration
 * api setup
@@ -31,7 +31,7 @@ Step 1: update .env files
     STRIPE_SECRET_KEY=
     WEBHOOK_SIGNING_SECRET=
 
-    refer 
+    refer
     - [refer step0, step1 and step2 to get client id and client secret](readme/social-auth-google-configuration.md)
     - [refer stripe setup to get publishable key, secret key, webhook signing secret](readme/drupal-coomerce-stripe-connect.md)
 
@@ -46,44 +46,58 @@ Step 1: update .env files
 
 ### 1. Anonymous Access
 
-* Anonymous users only sees /custom-login page
+  * Anonymous users only sees /custom-login page
 
-* Anonymous users **cannot purchase products**
-* Cannot see Add to Cart button
+  * Anonymous users **cannot purchase products**
+  * Cannot see Add to Cart button
 
 ---
 
 ### 2. Seller
 
-Seller google sign into the system from /custom-login page.
-First he will be the unverified user hence he will see /account/buyer-verification form.
+  Seller google sign into the system from /custom-login page.
 
-administrator update seller from unverified to admin (remove unverified role and select admin)
- from seller account edit page.
+  First he will be the unverified user hence he will see , then this controller will display a list like Continue as buyer,
+  Continue as seller in /home page.
 
-Now seller has to logout and login to system again.
+  ( If the user has many roles, then this controller will display a list like Continue as buyer and continue as seller. )
 
-He will see the shops and generate code button respectively.
+  If user clicks on seller, It will take him to /home/seller page. If user role is still unverified then
+  he will see 'Ask an administrator to provide seller access and associate you with at least one store.'.
 
-*** Right now sellers sees all the stores. Currently Administrator is creating the store hence administrator is
-the owner of the store. ( we have to give permissions to seller to create their own stores then we can list
-seller specific stores).
+  administrator update seller from unverified to seller (kindly remove unverified role and select seller role)
+  from seller account edit page.
 
+  If seller is not associate with any store then he will see 'Ask an administrator to associate you with at least one store.'
 
-clik on generate code , you will get some thing like this.
+  administrator has to assign store to seller.
 
-1783501414/2/d67eae76e057b82ba7d6a2dfc07d84853faf924d3d8f6e20c7f910e848c9b698 
+  user with role seller only sees the stores assign to them. If not Ask admin to assign the store.
 
-*** code is not user specific any user with this code can now use it. ***
+  User with role seller sees only one page , list of store and generate invite code for easch store.
 
-Expiration time 2 minutes. If required we can chage it at drupal/custom-modules/my_custom_module/src/Controller/GenerateCodeController.php in in generate method.
+  Now seller has to logout and login to system again or simply refresh the page.
+
+  He will see the stores and generate code button respectively.
+
+  clik on generate code , you will get some thing like this.
+
+  1783501414/2/d67eae76e057b82ba7d6a2dfc07d84853faf924d3d8f6e20c7f910e848c9b698
+
+  *** code is not user specific any user with this code can now use it. ***
+
+  Expiration time 1 month. If required we can chage it at drupal/custom-modules/my_custom_module/src/Service/InvitationCodeGenerator.php in in generate method.
 
 
 ### 2. Buyer Role Permissions
 
   Buyer google sign into the system from /custom-login page.
 
-  - First he will be the unverified user hence he will see /account/buyer-verification form.
+  First he will be the unverified user hence he will see , then this controller will display a list like Continue as buyer,
+  Continue as seller in /home page.
+
+  If user clicks on buyer, If unverified user It will take him to buyer verification form
+  /account/buyer-verification.
 
     buyer-verification page that says:
 
@@ -106,27 +120,27 @@ Expiration time 2 minutes. If required we can chage it at drupal/custom-modules/
     if he has access to only one store then he will be redirected to that particular store page,
     If he has access to multiple pages then he will see the store list in select-store page.
 
-* Only users with **"buyer"** role can:
+  * Only users with **"buyer"** role can:
 
-  * Add products to cart
-  * Complete checkout
-  * Checkout flow validates role condition buyer
+    * Add products to cart
+    * Complete checkout
+    * Checkout flow validates role condition buyer
 
 ---
 
 ### 3. Google Login
 
-* Enabled redirect module
-  Added redirects:
-  /user/login → /user/login/google
-  /user/password → /user/login/google
+  * Enabled redirect module
+    Added redirects:
+    /user/login → /user/login/google
+    /user/password → /user/login/google
 
 
-* Enabled Drupal Social Auth Google module
-* Users can log in via Google
+  * Enabled Drupal Social Auth Google module
+  * Users can log in via Google
 
-* Requires Google API configuration
-  we have to pass GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to drupal server.
+  * Requires Google API configuration
+    we have to pass GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to drupal server.
 
 - [Follow Google social login configuration setup](readme/social-auth-google-configuration.md)
 
@@ -151,37 +165,37 @@ Expiration time 2 minutes. If required we can chage it at drupal/custom-modules/
 
 ### Google Sheet Setup
 
-* Create a google sheetedit?usp=sharing)
-* copy headers from ( https://docs.google.com/spreadsheets/d/12x-ANhpnkr_QO8QmXhWKdoCUA-qMRaxDh0wT-yLSqAI/ )
-* create tab for each store. Ex:- HAITI_USA, CAMEROON_USA, TOGO_USA ...... while importing each product
-  we are mapping tab name with store name, adding products to those stores.
+  * Create a google sheetedit?usp=sharing)
+  * copy headers from ( https://docs.google.com/spreadsheets/d/12x-ANhpnkr_QO8QmXhWKdoCUA-qMRaxDh0wT-yLSqAI/ )
+  * create tab for each store. Ex:- HAITI_USA, CAMEROON_USA, TOGO_USA ...... while importing each product
+    we are mapping tab name with store name, adding products to those stores.
 
-  ```
-  product_id,	product_description,	product_name,	lang,	category,	category_code,	sub_category,	sub_category_code,	brand,	brand_code,	pack_type,	variation_sku,	variant_name,	quantity,	unit,	price	currency,	stock,	weight,	unit_type,	origin,	expiry_days,	storage_type,	image_url,	status
-  P1,	,	Cumin2,		Spices,	Spices,	Spices,	Spices,	Tata,	Tata,	unpacked,	CUM-1,Cumin 2pcs,	2	pcs,475,USD,630,2	pcs,	India,	85,	cold,	https://<your image url>,	1
-  ```
+    ```
+    product_id,	product_description,	product_name,	lang,	category,	category_code,	sub_category,	sub_category_code,	brand,	brand_code,	pack_type,	variation_sku,	variant_name,	quantity,	unit,	price	currency,	stock,	weight,	unit_type,	origin,	expiry_days,	storage_type,	image_url,	status
+    P1,	,	Cumin2,		Spices,	Spices,	Spices,	Spices,	Tata,	Tata,	unpacked,	CUM-1,Cumin 2pcs,	2	pcs,475,USD,630,2	pcs,	India,	85,	cold,	https://<your image url>,	1
+    ```
 
-* Publish to web:
-  * File → Share → Publish to web -> select csv format . copy the url and add it to the store (refer Store Setup).
-  * Tab GID :- each tab has its gid. you can check in url google sheet query paramter.
+  * Publish to web:
+    * File → Share → Publish to web -> select csv format . copy the url and add it to the store (refer Store Setup).
+    * Tab GID :- each tab has its gid. you can check in url google sheet query paramter.
 
 ### Store Setup
 
-Create a store at:
+  Create a store at:
 
-```
-/store/add/online
-```
+  ```
+  /store/add/online
+  ```
 
-Required fields:
+  Required fields:
 
-* Store name
-* Email
-* Currency
-* Timezone
-* Address
-* Google Sheet URL (published)
-* Google Sheet Tab GID
+  * Store name
+  * Email
+  * Currency
+  * Timezone
+  * Address
+  * Google Sheet URL (published)
+  * Google Sheet Tab GID
 
 
 *** It is mandatory to create landing page for each store, otherwise buyer cannot see the stores. ***
@@ -201,7 +215,7 @@ Required fields:
   ** pathauto module has a issue, I have uninstalled it**
 
   We have to maintain url alias of a home page as mentioned above, otherwise product listing block cannot
-  list stores specific products in stores landing page. 
+  list stores specific products in stores landing page.
 
 ---
 
@@ -220,11 +234,11 @@ Required fields:
   ### Ex:- How to import an image for a product variant
   —---
 
-  For example, let’s say you have a product “Olive oil” with a 500ml variant and a 3 liter variant, and you have two pictures, oil500.jpg and oil3l.jpg, 
+  For example, let’s say you have a product “Olive oil” with a 500ml variant and a 3 liter variant, and you have two pictures, oil500.jpg and oil3l.jpg,
 
   (1) step 1, make sure the images are available online at http://example.com/whatever/oil500.jpg and http://example.com/whatever/oil3l.jpg
 
-  (2) make a copy of the sample google sheet https://docs.google.com/spreadsheets/d/12x-ANhpnkr_QO8QmXhWKdoCUA-qMRaxDh0wT-yLSqAI/ 
+  (2) make a copy of the sample google sheet https://docs.google.com/spreadsheets/d/12x-ANhpnkr_QO8QmXhWKdoCUA-qMRaxDh0wT-yLSqAI/
 
   (3) create or edit exist store tab in the google sheet, suppose your store is haiti usa then in google sheet edit
     haiti_usa tab.
@@ -262,4 +276,3 @@ Required fields:
   - If you have want to import any menu links, taxonomy terms, block content from local.
   - Go to /admin/structure/structure-sync/general , go to respective tab (menu links, taxonomy terms, custom block).
   - click on Select the vocabularies/custom block/ menus you would like to import
- 
