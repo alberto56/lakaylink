@@ -8,13 +8,13 @@ services:
   my_module.force_google_login_subscriber:
     class: Drupal\my_custom_module\EventSubscriber\ForceGoogleLoginSubscriber
     arguments:
-      - '@current_user'    
+      - '@current_user'
     tags:
       - { name: event_subscriber }
- 
+
   # Resolves the buyer's store based on the current context.
   my_custom_module.buyer_store_resolver:
-    class: Drupal\my_custom_module\BuyerStoreResolver
+    class: Drupal\my_custom_module\Service\BuyerStoreResolver
     arguments: ['@entity_type.manager']
 
   my_custom_module.seller_access_subscriber:
@@ -34,3 +34,23 @@ services:
     arguments: ['@request_stack']
     tags:
       - { name: event_subscriber }
+
+  # Generates and validates buyer invitation codes.
+  my_custom_module.invitation_code:
+    class: Drupal\my_custom_module\Service\InvitationCodeGenerator
+    arguments:
+      # Drupal time service.
+      - '@datetime.time'
+
+  # Handles buyer verification and store assignment logic.
+  my_custom_module.buyer_verification_manager:
+    class: Drupal\my_custom_module\Service\BuyerVerificationManager
+    arguments:
+      # Invitation code generator service.
+      - '@my_custom_module.invitation_code'
+
+      # Buyer store resolver service.
+      - '@my_custom_module.buyer_store_resolver'
+
+      # Entity type manager for loading and saving user entities.
+      - '@entity_type.manager'

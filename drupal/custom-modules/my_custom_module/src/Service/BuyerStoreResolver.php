@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Drupal\my_custom_module;
+namespace Drupal\my_custom_module\Service;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\my_custom_module\BuyerStoreResolverInterface;
 
 /**
- * Resolves store assignments for buyer accounts.
+ * Resolves store assignments for buyer or seller accounts.
  *
  * Reads the values stored in the field_allowed_stores user field and
  * returns the corresponding store IDs or loaded Commerce store entities.

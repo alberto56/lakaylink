@@ -112,7 +112,7 @@
 
 @media (max-width: 768px) {
     .topbar {
-        display: none;    
+        display: none;
     }
 }
 /*** Topbar End ***/
@@ -207,16 +207,16 @@
 }
 
 #allCat {
-    position: absolute; 
-    left: 0; 
-    right: 0; 
-    top: 51px; 
-    z-index: 999; 
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 51px;
+    z-index: 999;
     background: var(--bs-light);
 }
 
 .nav-bar .navbar-toggler {
-    border-radius: 5px !important; 
+    border-radius: 5px !important;
     box-shadow: none !important;
 }
 
@@ -259,7 +259,7 @@
 
 .carousel .carousel-banner-offer {
     position: absolute;
-    top: 20px; 
+    top: 20px;
     left: 20px;
     display: flex;
     align-items: center;
@@ -270,7 +270,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0; 
+    top: 0;
     left: 0;
     padding: 30px;
     display: flex;
@@ -337,14 +337,14 @@
 .product .product-item .product-item-inner .product-item-inner-item .product-new,
 .product .product-item .product-item-inner .product-item-inner-item .product-sale {
     position: absolute;
-    width: 60px; 
+    width: 60px;
     height: 60px;
-    border-radius: 60px; 
-    top: 20px; 
+    border-radius: 60px;
+    top: 20px;
     right: 20px;
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
 
 .product .product-item .product-item-inner .product-item-inner-item .product-new {
@@ -367,9 +367,9 @@
 
 .product .product-item .product-item-inner .product-item-inner-item .product-details {
     position: absolute;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
+    width: 100%;
+    height: 100%;
+    top: 0;
     left: 0;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -382,7 +382,7 @@
 }
 
 .product .product-item .product-item-inner .product-item-inner-item .product-details a i {
-    width: 50px; 
+    width: 50px;
     height: 50px;
     border-radius: 50px;
     display: flex;
@@ -522,11 +522,11 @@
 
 .products .products-mini .products-mini-item .products-mini-img .products-mini-icon {
     position: absolute;
-    width: 50px; 
-    height: 50px; 
-    top: 50%; 
+    width: 50px;
+    height: 50px;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -568,7 +568,7 @@
 .pagination {
     display: inline-block;
 }
-  
+
 .pagination a {
     color: var(--bs-dark);
     padding: 10px 16px;
@@ -577,13 +577,13 @@
     border: 1px solid var(--bs-secondary);
     margin: 0 4px;
 }
-  
+
 .pagination a.active {
     background-color: var(--bs-primary);
     color: var(--bs-light);
     border: 1px solid var(--bs-secondary);
 }
-  
+
 .pagination a:hover:not(.active) {background-color: var(--bs-primary)}
 
 .nav.nav-tabs .nav-link.active {
@@ -747,14 +747,14 @@
 .related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-new,
 .related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-sale {
     position: absolute;
-    width: 60px; 
+    width: 60px;
     height: 60px;
-    border-radius: 60px; 
-    top: 20px; 
+    border-radius: 60px;
+    top: 20px;
     right: 20px;
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     z-index: 5;
 }
 
@@ -778,9 +778,9 @@
 
 .related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-details {
     position: absolute;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
+    width: 100%;
+    height: 100%;
+    top: 0;
     left: 0;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -793,7 +793,7 @@
 }
 
 .related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-details a i {
-    width: 50px; 
+    width: 50px;
     height: 50px;
     border-radius: 50px;
     display: flex;
@@ -1000,4 +1000,72 @@
 .shop-page-1 .product .product-item:hover .product-item-add,
 .shop-block-1 .product .product-item:hover .product-item-add {
   margin-bottom: -95px;
+}
+
+.copy-code {
+  color: var(--text-secondary);
+  border-radius: var(--radius-lg);
+  background-color : #0000;
+  border-color: var(--border-light,currentColor);
+  border: 0 solid;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/* Center the logout confirmation */
+.user-logout-confirm {
+  max-width: 420px;
+  margin: 80px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+/* Button wrapper */
+.user-logout-confirm .form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Logout button */
+.user-logout-confirm input[type="submit"] {
+  width: auto;
+  padding: 10px 30px;
+  border-radius: 6px;
+  background: #dc3545;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  transition: all .3s ease;
+}
+
+.user-logout-confirm input[type="submit"]:hover {
+  background: #bb2d3b;
+  transform: translateY(-2px);
+}
+
+/* Cancel button */
+.user-logout-confirm .dialog-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  border-radius: 6px;
+  text-decoration: none;
+  background: #6c757d;
+  color: #fff;
+  transition: all .3s ease;
+}
+
+.user-logout-confirm .dialog-cancel:hover {
+  background: #5c636a;
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-2px);
 }

@@ -156,4 +156,14 @@ trait Environment {
     return \Drupal::service($serviceName);
   }
 
+  /**
+   * Gets the current route match service.
+   *
+   * @return \Drupal\Core\Routing\RouteMatchInterface
+   *   The current route match.
+   */
+  public function getRouteMatch() {
+    return \Drupal::routeMatch();
+  }
+
 }

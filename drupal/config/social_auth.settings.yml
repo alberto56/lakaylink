@@ -1,7 +1,7 @@
 _core:
   default_config_hash: 0E8z47ONguVcapiw1PGWDRs6g0NRDCzrym4mP_jcELU
 auth: {  }
-post_login: /buyer-login-redirect
+post_login: /user-login-redirect
 user_allowed: register
 redirect_user_form: false
 disable_admin_login: true
@@ -9,5 +9,5 @@ disabled_roles:
   content_editor: content_editor
   administrator: administrator
   buyer: '0'
-  admin: '0'
+  seller: '0'
   unverified: '0'

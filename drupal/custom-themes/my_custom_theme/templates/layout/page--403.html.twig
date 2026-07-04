@@ -138,38 +138,44 @@
 {% if page.topbar_left or page.topbar_center or page.topbar_right %}
 <div{{ topbar_attributes.addClass(
   container_topbar ? 'container-fluid' : '',
-  'px-5',
-  'd-none',
+  'px-3',
+  'px-lg-5',
   'border-bottom',
-  'd-lg-block'
+  'py-2'
 ) }}>
 
-  <div class="row gx-0 align-items-center">
+  <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
 
-    {# ---- Left: utility links ---- #}
-    <div class="col-lg-4 text-center text-lg-start mb-lg-0">
-      <div class="d-inline-flex align-items-center" style="height: 45px;">
-          {{ page.topbar_left }}
+    {# Left #}
+    {% if page.topbar_left %}
+    <div class="mb-2 mb-lg-0 text-center text-lg-start">
+      <div class="d-flex flex-wrap justify-content-center justify-content-lg-start align-items-center gap-2">
+        {{ page.topbar_left }}
       </div>
     </div>
+    {% endif %}
 
-    {# ---- Center: phone number ---- #}
-    <div class="col-lg-4 text-center d-flex align-items-center justify-content-center">
-          {{ page.topbar_center }}
+    {# Center #}
+    {% if page.topbar_center %}
+    <div class="mb-2 mb-lg-0 text-center">
+      {{ page.topbar_center }}
     </div>
+    {% endif %}
 
-    {# ---- Right: currency / language / my-dashboard dropdowns ---- #}
-    <div class="col-lg-4 text-center text-lg-end">
-      <div class="d-inline-flex align-items-center" style="height: 45px;">
-          {{ page.topbar_right }}
+    {# Right #}
+    {% if page.topbar_right %}
+    <div class="text-center text-lg-end">
+      <div class="d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center gap-2">
+        {{ page.topbar_right }}
       </div>
     </div>
+    {% endif %}
+
   </div>
+
 </div>
 {% endif %}
 {% endblock %}
-
-
 
 
 
@@ -222,7 +228,7 @@
 <div class="container-fluid nav-bar p-0">
   <div class="row gx-0 bg-primary px-5 align-items-center">
 
-    {# ---- All Categories sidebar toggle (desktop) ---- #}    
+    {# ---- All Categories sidebar toggle (desktop) ---- #}
         <div class="col-lg-3 d-none d-lg-block">
           {% if page.nav_categories %}
             {{ page.nav_categories }}
@@ -244,47 +250,54 @@
 
 
 {% if not is_front %}
+  {% block breadcrumb %}
+  <div class="container-fluid page-header py-5">
 
-<div class="container-fluid page-header py-5">
+    {{ title }}
 
-  {{ title }}
+    <div class="wow fadeInUp"
+        data-wow-delay="0.3s">
+      {{ page.breadcrumb }}
+    </div>
 
-  <div class="wow fadeInUp"
-       data-wow-delay="0.3s">
-    {{ page.breadcrumb }}
   </div>
-
-</div>
-
+  {% endblock %}
 {% endif %}
 
 {# ========================================================
    MESSAGES  (Drupal status / warning / error messages)
    ======================================================== #}
-{% if page.highlighted %}
-  <div class="container-fluid px-5 py-2">
-    {{ page.highlighted }}
-  </div>
-{% endif %}
+{% block highlighted %}
+  {% if page.highlighted %}
+    <div class="container-fluid px-5 py-2">
+      {{ page.highlighted }}
+    </div>
+  {% endif %}
+{% endblock %}
+
 
 {# ========================================================
    HELP TEXT  (shown on admin pages)
    ======================================================== #}
-{% if page.help %}
-  <div class="container-fluid px-5 py-2">
-    {{ page.help }}
-  </div>
-{% endif %}
+{% block help %}
+  {% if page.help %}
+    <div class="container-fluid px-5 py-2">
+      {{ page.help }}
+    </div>
+  {% endif %}
+{% endblock %}
 
 
 {# ========================================================
    hero
    ======================================================== #}
-{% if page.hero %}
-  <div class="container-fluid px-5 pt-3">
-    {{ page.hero }}
-  </div>
-{% endif %}
+{% block hero %}
+  {% if page.hero %}
+    <div class="container-fluid px-5 pt-3">
+      {{ page.hero }}
+    </div>
+  {% endif %}
+{% endblock %}
 
 
 {# ========================================================
@@ -357,7 +370,7 @@
 
       {# Information links #}
       {% if page.footer_col3 %}
-        <div class="col-md-6 col-lg-6 col-xl-3">        
+        <div class="col-md-6 col-lg-6 col-xl-3">
             {{ page.footer_col3 }}
         </div>
       {% endif %}
@@ -365,7 +378,7 @@
       {# Extras links #}
       {% if page.footer_col4 %}
         <div class="col-md-6 col-lg-6 col-xl-3">
-          {{ page.footer_col4 }}  
+          {{ page.footer_col4 }}
       </div>
       {% endif %}
 
