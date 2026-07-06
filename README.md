@@ -57,24 +57,24 @@ Step 1: update .env files
 
   Seller google sign into the system from /custom-login page.
 
-  First he will be the unverified user hence he will see /home page, then this controller will display a list like Continue as buyer,
+  First he will be the unverified user hence he will see /home page, which will display a list like Continue as buyer,
   Continue as seller in /home page.
 
-  ( If the user has many roles, then this controller will display a list like Continue as buyer and continue as seller. )
+  ( If user has both seler and buyer roles, then also he will land in /home page which display a list like Continue as buyer and continue as seller. )
 
   If user clicks on seller, It will take him to /home/seller page. If user role is still unverified then
   he will see 'Ask an administrator to provide seller access and associate you with at least one store.'.
 
   administrator update seller from unverified to seller (kindly remove unverified role and select seller role)
-  from seller account edit page.
+  from user account edit page.
 
   If seller is not associate with any store then he will see 'Ask an administrator to associate you with at least one store.'
 
-  administrator has to assign store to seller.
+  administrator has to assign store to seller. Asign store in allowed store field in user account edit page.
 
   user with role seller only sees the stores assign to them. If not Ask admin to assign the store.
 
-  User with role seller sees only one page , list of store and generate invite code for easch store.
+  User with role seller sees only one page , list of store and generate invite code for each store.
 
   Now seller has to logout and login to system again or simply refresh the page.
 
@@ -93,7 +93,7 @@ Step 1: update .env files
 
   Buyer google sign into the system from /custom-login page.
 
-  First he will be the unverified user hence he will see /home page, then this controller will display a list like Continue as buyer,
+  First he will be the unverified user hence he will see /home page, which display a list like Continue as buyer,
   Continue as seller in /home page.
 
   If user clicks on buyer, If unverified user It will take him to buyer verification form
@@ -114,7 +114,7 @@ Step 1: update .env files
     he will be allowed to access the store.
 
     If buyer wants to access someother store then go to /account/buyer-verification  form
-    and add confirmation code and submit.
+    and add confirmation code of new store and submit.
 
   - Next time when buyer logs in If he dont have access to any store then he will see 403 page,
     if he has access to only one store then he will be redirected to that particular store page,
