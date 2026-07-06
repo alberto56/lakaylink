@@ -57,7 +57,7 @@ Step 1: update .env files
 
   Seller google sign into the system from /custom-login page.
 
-  First he will be the unverified user hence he will see , then this controller will display a list like Continue as buyer,
+  First he will be the unverified user hence he will see /home page, then this controller will display a list like Continue as buyer,
   Continue as seller in /home page.
 
   ( If the user has many roles, then this controller will display a list like Continue as buyer and continue as seller. )
@@ -93,7 +93,7 @@ Step 1: update .env files
 
   Buyer google sign into the system from /custom-login page.
 
-  First he will be the unverified user hence he will see , then this controller will display a list like Continue as buyer,
+  First he will be the unverified user hence he will see /home page, then this controller will display a list like Continue as buyer,
   Continue as seller in /home page.
 
   If user clicks on buyer, If unverified user It will take him to buyer verification form
