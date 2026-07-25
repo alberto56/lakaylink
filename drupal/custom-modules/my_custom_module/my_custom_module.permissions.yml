@@ -1,10 +1,16 @@
-# Allows administrators to manage store access for buyer accounts.
+# Allows administrators to manage store assignments for buyer accounts.
 # Users with this permission can assign and update the stores that
-# a buyer is permitted to access.
+# buyers are permitted to access.
 manage buyer store assignments:
   title: 'Manage buyer store assignments'
-  description: 'Assign allowed stores to buyers.'
+  description: 'Assign and update allowed stores for buyer accounts.'
 
+# Allows updating a user's verification status.
 update user verification:
   title: 'Update user verification'
-  description: 'update user verification TRUE or FALSE.'
+  description: 'Update a user verification status.'
+
+# Allows users to access the seller dashboard.
+access seller dashboard:
+  title: 'Access seller dashboard'
+  description: 'View the seller dashboard.'

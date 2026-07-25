@@ -20,6 +20,7 @@
  */
 #}
 
+{{ dump(related_nodes) }}
 
 {% set is_admin = user.hasPermission('administer commerce_store') %}
 
@@ -43,11 +44,27 @@
 
       <div class="card shadow-sm">
         <div class="card-body">
+          <div class="row align-items-start">
 
-          <h2 class="card-title mb-4">
-            {{ store.label }}
-          </h2>
+            <!-- Left column -->
+            <div class="col-md-6">
+              <h2 class="card-title mb-4">
+                {{ store.name }}
+              </h2>
+            </div>
 
+            <!-- Right column -->
+            <div class="col-md-6 text-md-end">
+              {% if related_nodes %}
+                {% for node in related_nodes %}
+                  <a class="btn btn-lg btn-primary" href="{{ node.alias }}">
+                    {{ "Go to Store Home Page"|t }}
+                  </a>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+          </div>
           {# ADDRESS #}
           {% if store.address %}
             <div class="mb-3 border-bottom pb-3">

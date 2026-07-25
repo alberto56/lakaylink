@@ -32,8 +32,8 @@ visibility:
     context_mapping:
       user: '@user.current_user_context:current_user'
     roles:
-      authenticated: authenticated
+      buyer: buyer
   request_path:
     id: request_path
     negate: true
-    pages: /store-selector
+    pages: "/store-selector\r\n/home/seller"

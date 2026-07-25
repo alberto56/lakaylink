@@ -27,7 +27,7 @@ class CustomCartBlock extends CartBlock {
    */
   public function build() {
     $build = parent::build();
-  
+
     foreach ($this->cartProvider->getCarts() as $cart) {
       if ($cart->hasItems() && $cart->cart->value) {
         $this->cartTotal = $cart->getTotalPrice();
@@ -43,6 +43,7 @@ class CustomCartBlock extends CartBlock {
    * Gets the total price as a formatted string.
    *
    * @return mixed|null
+   *   returns rendarable element.
    */
   protected function getCartTotalText() {
     $element = [];
@@ -50,7 +51,7 @@ class CustomCartBlock extends CartBlock {
       '#type' => 'inline_template',
       '#template' => '{{ price|commerce_price_format }}',
       '#context' => [
-        'price' =>  $this->cartTotal,
+        'price' => $this->cartTotal,
       ],
     ];
 

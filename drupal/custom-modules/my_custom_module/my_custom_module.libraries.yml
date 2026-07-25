@@ -1,7 +1,24 @@
+# Global assets loaded across the module.
 all:
   css:
     theme:
+      # Main stylesheet.
       css/css.css: {}
   js:
+    # General JavaScript functionality.
     js/js.js: {}
+
+    # Starter kit JavaScript behaviors.
     js/DcycleDrupalStarterkit.js: {}
+
+# Assets required for the invitation code functionality.
+invitation_code:
+  js:
+    # Handles invitation code validation and interactions.
+    js/invitation-code.js: {}
+  dependencies:
+    # Drupal JavaScript API.
+    - core/drupal
+
+    # Ensures behaviors are attached only once.
+    - core/once

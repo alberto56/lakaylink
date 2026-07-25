@@ -135,41 +135,47 @@
 
 {# ---------------- TOPBAR ---------------- #}
 {% block topbar %}
-{% if page.topbar_left or page.topbar_center or page.topbar_right %}
-<div{{ topbar_attributes.addClass(
-  container_topbar ? 'container-fluid' : '',
-  'px-5',
-  'd-none',
-  'border-bottom',
-  'd-lg-block'
-) }}>
+  {% if page.topbar_left or page.topbar_center or page.topbar_right %}
+  <div{{ topbar_attributes.addClass(
+    container_topbar ? 'container-fluid' : '',
+    'px-3',
+    'px-lg-5',
+    'border-bottom',
+    'py-2'
+  ) }}>
 
-  <div class="row gx-0 align-items-center">
+    <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
 
-    {# ---- Left: utility links ---- #}
-    <div class="col-lg-4 text-center text-lg-start mb-lg-0">
-      <div class="d-inline-flex align-items-center" style="height: 45px;">
+      {# Left #}
+      {% if page.topbar_left %}
+      <div class="mb-2 mb-lg-0 text-center text-lg-start">
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start align-items-center gap-2">
           {{ page.topbar_left }}
+        </div>
       </div>
-    </div>
+      {% endif %}
 
-    {# ---- Center: phone number ---- #}
-    <div class="col-lg-4 text-center d-flex align-items-center justify-content-center">
-          {{ page.topbar_center }}
-    </div>
+      {# Center #}
+      {% if page.topbar_center %}
+      <div class="mb-2 mb-lg-0 text-center">
+        {{ page.topbar_center }}
+      </div>
+      {% endif %}
 
-    {# ---- Right: currency / language / my-dashboard dropdowns ---- #}
-    <div class="col-lg-4 text-center text-lg-end">
-      <div class="d-inline-flex align-items-center" style="height: 45px;">
+      {# Right #}
+      {% if page.topbar_right %}
+      <div class="text-center text-lg-end">
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center gap-2">
           {{ page.topbar_right }}
+        </div>
       </div>
+      {% endif %}
+
     </div>
+
   </div>
-</div>
-{% endif %}
+  {% endif %}
 {% endblock %}
-
-
 
 
 
@@ -177,40 +183,40 @@
    LOGO + SEARCH BAR  (desktop only)
    ======================================================== #}
 {% block header %}
-<div class="container-fluid px-5 py-4 d-none d-lg-block">
-  <div class="row gx-0 align-items-center text-center">
+  <div class="container-fluid px-5 py-4 d-none d-lg-block">
+    <div class="row gx-0 align-items-center text-center">
 
-    {# ---- Logo ---- #}
-    {% if page.header_branding %}
-    <div class="col-md-4 col-lg-3 text-center text-lg-start">
-      <div class="d-inline-flex align-items-center">
-        {{   page.header_branding  }}
-      </div>
-    </div>
-    {% endif %}
-
-
-    {# ---- Search bar ---- #}
-
-    <div class="col-md-4 col-lg-6 text-center">
-      <div class="position-relative ps-4">
-        {% if page.header_search %}
-          {{ page.header_search }}
-        {% endif %}
-      </div>
-    </div>
-
-
-    {# ---- Cart / Wishlist / Compare icons ---- #}
-      <div class="col-md-4 col-lg-3 text-center text-lg-end">
+      {# ---- Logo ---- #}
+      {% if page.header_branding %}
+      <div class="col-md-4 col-lg-3 text-center text-lg-start">
         <div class="d-inline-flex align-items-center">
-          {% if page.header_actions %}
-            {{ page.header_actions }}
+          {{   page.header_branding  }}
+        </div>
+      </div>
+      {% endif %}
+
+
+      {# ---- Search bar ---- #}
+
+      <div class="col-md-4 col-lg-6 text-center">
+        <div class="position-relative ps-4">
+          {% if page.header_search %}
+            {{ page.header_search }}
           {% endif %}
         </div>
       </div>
+
+
+      {# ---- Cart / Wishlist / Compare icons ---- #}
+        <div class="col-md-4 col-lg-3 text-center text-lg-end">
+          <div class="d-inline-flex align-items-center">
+            {% if page.header_actions %}
+              {{ page.header_actions }}
+            {% endif %}
+          </div>
+        </div>
+    </div>
   </div>
-</div>
 {% endblock %}
 
 
@@ -219,73 +225,77 @@
    NAVBAR  (primary navigation + all-categories mega menu)
    ======================================================== #}
 {% block navbar %}
-<div class="container-fluid nav-bar p-0">
-  <div class="row gx-0 bg-primary px-5 align-items-center">
+  <div class="container-fluid nav-bar p-0">
+    <div class="row gx-0 bg-primary px-5 align-items-center">
 
-    {# ---- All Categories sidebar toggle (desktop) ---- #}    
-        <div class="col-lg-3 d-none d-lg-block">
-          {% if page.nav_categories %}
-            {{ page.nav_categories }}
+      {# ---- All Categories sidebar toggle (desktop) ---- #}
+          <div class="col-lg-3 d-none d-lg-block">
+            {% if page.nav_categories %}
+              {{ page.nav_categories }}
+            {% endif %}
+          </div>
+
+
+
+      {# ---- Main navigation ---- #}
+      <div class="col-12 col-lg-9">
+          {# Render the main menu #}
+          {% if page.primary_menu %}
+            {{ page.primary_menu }}
           {% endif %}
-        </div>
-
-
-
-    {# ---- Main navigation ---- #}
-    <div class="col-12 col-lg-9">
-        {# Render the main menu #}
-        {% if page.primary_menu %}
-          {{ page.primary_menu }}
-        {% endif %}
+      </div>
     </div>
   </div>
-</div>
 {% endblock %}
 
 
 {% if not is_front %}
+  {% block breadcrumb %}
+    <div class="container-fluid page-header py-5">
 
-<div class="container-fluid page-header py-5">
+      {{ title }}
 
-  {{ title }}
+      <div class="wow fadeInUp"
+          data-wow-delay="0.3s">
+        {{ page.breadcrumb }}
+      </div>
 
-  <div class="wow fadeInUp"
-       data-wow-delay="0.3s">
-    {{ page.breadcrumb }}
-  </div>
-
-</div>
-
+    </div>
+  {% endblock %}
 {% endif %}
 
 {# ========================================================
    MESSAGES  (Drupal status / warning / error messages)
    ======================================================== #}
-{% if page.highlighted %}
-  <div class="container-fluid px-5 py-2">
-    {{ page.highlighted }}
-  </div>
-{% endif %}
+{% block highlighted %}
+  {% if page.highlighted %}
+    <div class="container-fluid px-5 py-2">
+      {{ page.highlighted }}
+    </div>
+  {% endif %}
+{% endblock %}
 
 {# ========================================================
    HELP TEXT  (shown on admin pages)
    ======================================================== #}
-{% if page.help %}
-  <div class="container-fluid px-5 py-2">
-    {{ page.help }}
-  </div>
-{% endif %}
-
+{% block help %}
+  {% if page.help %}
+    <div class="container-fluid px-5 py-2">
+      {{ page.help }}
+    </div>
+  {% endif %}
+{% endblock %}
 
 {# ========================================================
    hero
    ======================================================== #}
-{% if page.hero %}
-  <div class="container-fluid px-5 pt-3">
-    {{ page.hero }}
-  </div>
-{% endif %}
-
+{% block hero %}
+  {% if page.hero %}
+    <div class="container-fluid px-5 pt-3">
+      {{ page.hero }}
+    </div>
+  {% endif %}
+{% endblock %}
 
 {# ========================================================
    MAIN CONTENT AREA
@@ -357,7 +367,7 @@
 
       {# Information links #}
       {% if page.footer_col3 %}
-        <div class="col-md-6 col-lg-6 col-xl-3">        
+        <div class="col-md-6 col-lg-6 col-xl-3">
             {{ page.footer_col3 }}
         </div>
       {% endif %}
@@ -365,7 +375,7 @@
       {# Extras links #}
       {% if page.footer_col4 %}
         <div class="col-md-6 col-lg-6 col-xl-3">
-          {{ page.footer_col4 }}  
+          {{ page.footer_col4 }}
       </div>
       {% endif %}
 

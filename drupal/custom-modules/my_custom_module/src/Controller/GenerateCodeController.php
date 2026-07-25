@@ -2,117 +2,69 @@
 
 namespace Drupal\my_custom_module\Controller;
 
-use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Component\Serialization\Json;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Site\Settings;
 use Drupal\commerce_store\Entity\StoreInterface;
+use Drupal\my_custom_module\Service\InvitationCodeGenerator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Controller responsible for generating time-limited signed store codes.
- *
- * This controller creates a secure code containing:
- * - Expiry timestamp
- * - Commerce store ID
- * - Cryptographic signature (SHA-256)
- *
- * The code can be shared with buyers and validated later.
+ * Handles AJAX generation of invitation codes for commerce stores.
  */
 class GenerateCodeController extends ControllerBase {
 
   /**
-   * Constructs the controller.
+   * Constructs a GenerateCodeController object.
    *
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   Drupal time service for request-aware timestamps.
+   * @param \Drupal\my_custom_module\Service\InvitationCodeGenerator $codeGenerator
+   *   The invitation code generator service.
    */
   public function __construct(
-    protected TimeInterface $time,
+    protected InvitationCodeGenerator $codeGenerator,
   ) {}
 
   /**
-   * Dependency injection factory method.
-   *
-   * This is required for controllers in Drupal to access services.
+   * Creates a new controller instance.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   The service container.
    *
    * @return static
-   *   A new instance of this controller.
+   *   A new GenerateCodeController instance.
    */
   public static function create(ContainerInterface $container): static {
     return new static(
-      // Inject Drupal's time service.
-      $container->get('datetime.time')
+      $container->get('my_custom_module.invitation_code'),
     );
   }
 
   /**
-   * Generates a secure time-limited code for a commerce store.
+   * Generates an invitation code via AJAX and injects it into the page.
    *
    * @param \Drupal\commerce_store\Entity\StoreInterface $commerce_store
-   *   The store entity for which the code is generated.
+   *   The commerce store entity.
    *
-   * @return array
-   *   A render array containing the store label and generated code.
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The AJAX response containing the generated code.
    */
-  public function generate(StoreInterface $commerce_store): array {
+  public function generate(StoreInterface $commerce_store): AjaxResponse {
 
-    // Get current request time (Drupal-aware instead of PHP time()).
-    $current_time = $this->time->getRequestTime();
+    // Generate a signed invitation code for the given store.
+    $code = $this->codeGenerator->generate($commerce_store);
 
-    // Set expiry time to 2 minutes (120 seconds) from now.
-    $expiry = $current_time + 120;
+    // Prepare AJAX response.
+    $response = new AjaxResponse();
 
-    // Build a secure signature using expiry, store ID, and site hash salt.
-    $signature = hash(
-      'sha256',
-      // Encode data in a consistent format before hashing.
-      Json::encode([
-        $expiry,
-        $commerce_store->id(),
-        Settings::get('hash_salt'),
-      ])
+    // Replace the target HTML element with the generated code.
+    $response->addCommand(
+      new HtmlCommand(
+        '#invitation-code-' . $commerce_store->id(),
+        $code,
+      )
     );
 
-    // Combine expiry, store ID, and signature into a single transferable code.
-    $code = implode('/', [
-      $expiry,
-      $commerce_store->id(),
-      $signature,
-    ]);
-
-    // Return render array for Drupal page output.
-    return [
-      '#cache' => [
-        'max-age' => 0,
-      ],
-    
-      // Store title heading.
-      'title' => [
-        '#markup' => '<h2>' . $commerce_store->label() . '</h2>',
-      ],
-
-      // Instruction text.
-      'instructions' => [
-        '#markup' => '<p>Send this code to the buyer.</p>',
-      ],
-
-      // Generated code field (read-only for copying).
-      'code' => [
-        '#type' => 'textfield',
-
-        // Pre-filled generated secure code.
-        '#value' => $code,
-
-        // Prevent user editing.
-        '#attributes' => [
-          'readonly' => 'readonly',
-        ],
-      ],
-    ];
+    return $response;
   }
 
 }

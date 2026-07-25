@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  *
  * After authentication, this controller determines the appropriate
  * destination based on the user's role and assigned stores:
- * - Anonymous users are redirected to the custom login page.
+ * - Unverified users are redirected to the buyer verification form page.
  * - Buyers with a single assigned store are redirected directly to it.
  * - Buyers with multiple assigned stores are redirected to the store
  *   selection page.
@@ -60,16 +60,10 @@ class BuyerLoginRedirectController extends ControllerBase {
    *   Thrown when a buyer has not been assigned any stores.
    */
   public function landing(): RedirectResponse {
-
-    // Redirect anonymous users to the custom login page.
-    if ($this->currentUser()->isAnonymous()) {
-      return new RedirectResponse(
-        Url::fromRoute('my_custom_module.custom_login')->toString()
-      );
-    }
+    $user = $this->currentUser();
 
     // Handle buyer-specific redirection logic.
-    if ($this->currentUser->hasRole('unverified')) {
+    if ($user->hasRole('unverified')) {
       // Redirect to the store selection page when multiple stores exist.
       return new RedirectResponse(
         Url::fromRoute('my_custom_module.buyer_verification')->toString()
@@ -77,15 +71,7 @@ class BuyerLoginRedirectController extends ControllerBase {
     }
 
     // Handle buyer-specific redirection logic.
-    if ($this->currentUser->hasRole('admin')) {
-      // Redirect to the store selection page when multiple stores exist.
-      return new RedirectResponse(
-        Url::fromRoute('my_custom_module.seller_dashboard')->toString()
-      );
-    }
-
-    // Handle buyer-specific redirection logic.
-    if ($this->currentUser->hasRole('buyer')) {
+    if ($user->hasRole('buyer')) {
 
       $stores = $this->buyerStoreResolver
         ->getAllowedStores($this->currentUser);
@@ -114,8 +100,6 @@ class BuyerLoginRedirectController extends ControllerBase {
       );
     }
 
-    // Redirect all other authenticated users to the admin dashboard.
-    return new RedirectResponse('/admin');
   }
 
 }

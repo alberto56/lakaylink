@@ -2,48 +2,69 @@
 
 namespace Drupal\my_custom_module\Form;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Site\Settings;
 use Drupal\my_custom_module\BuyerStoreResolverInterface;
+use Drupal\my_custom_module\Service\InvitationCodeGenerator;
+use Drupal\my_custom_module\Service\BuyerVerificationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
- * Provides the buyer verification form.
+ * Provides a buyer verification form.
  *
- * Allows users to verify their account using a verification code
- * generated for a specific store assignment.
+ * This form allows users to submit a verification code,
+ * validates it, and then marks the current user as verified
+ * for a specific store context.
  */
 class BuyerVerificationForm extends FormBase {
 
   /**
-   * Constructs a BuyerVerificationForm object.
+   * Constructs a new BuyerVerificationForm instance.
    *
    * @param \Drupal\my_custom_module\BuyerStoreResolverInterface $buyerStoreResolver
-   *   Resolves stores available to a buyer.
+   *   Service used to resolve store context for the buyer.
    * @param \Drupal\Core\Entity\EntityStorageInterface $userStorage
-   *   The user entity storage.
+   *   User entity storage handler.
+   * @param \Drupal\my_custom_module\Service\InvitationCodeGenerator $verificationService
+   *   Service responsible for validating verification codes.
+   * @param \Drupal\my_custom_module\Service\BuyerVerificationManager $buyerVerificationManager
+   *   Service responsible for applying buyer verification logic.
    */
   public function __construct(
     private readonly BuyerStoreResolverInterface $buyerStoreResolver,
     private readonly EntityStorageInterface $userStorage,
+    private readonly InvitationCodeGenerator $verificationService,
+    private readonly BuyerVerificationManager $buyerVerificationManager,
   ) {}
 
   /**
    * {@inheritdoc}
+   *
+   * Factory method for dependency injection via the service container.
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The service container.
+   *
+   * @return static
+   *   A new instance of this form class.
    */
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('my_custom_module.buyer_store_resolver'),
       $container->get('entity_type.manager')->getStorage('user'),
+      $container->get('my_custom_module.invitation_code'),
+      $container->get('my_custom_module.buyer_verification_manager'),
     );
   }
 
   /**
    * {@inheritdoc}
+   *
+   * Returns the unique form ID used by Drupal Form API.
+   *
+   * @return string
+   *   The form ID.
    */
   public function getFormId(): string {
     return 'buyer_verification_form';
@@ -51,13 +72,27 @@ class BuyerVerificationForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * Builds the buyer verification form.
+   *
+   * The form contains:
+   * - A verification code text field
+   * - A submit button
+   *
+   * @param array $form
+   *   The form render array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return array
+   *   The rendered form structure.
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    // Use a custom Twig template for rendering the form.
+    // Attach custom Twig template for theming this form.
     $form['#theme'] = 'buyer_verification_form';
 
-    // Verification code field.
+    // Verification code input field.
     $form['verification_code'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Verification code'),
@@ -65,7 +100,7 @@ class BuyerVerificationForm extends FormBase {
       '#description' => $this->t('Paste the verification code exactly as provided.'),
     ];
 
-    // Form actions container.
+    // Form action container.
     $form['actions'] = [
       '#type' => 'actions',
     ];
@@ -81,123 +116,48 @@ class BuyerVerificationForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * Handles form submission and verifies the user using the provided code.
+   *
+   * Steps:
+   * 1. Retrieve submitted verification code
+   * 2. Validate code via InvitationCodeGenerator service
+   * 3. Verify current user via BuyerVerificationManager
+   * 4. Display success or error messages
+   * 5. Redirect user on success
+   *
+   * @param array $form
+   *   The form structure.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
 
-    // Get and normalize the submitted verification code.
+    // Get and normalize submitted verification code.
     $code = trim($form_state->getValue('verification_code'));
 
-    // Expected format:
-    // expiry/store_id/signature.
-    $parts = explode('/', $code);
+    // Validate verification code.
+    $verification = $this->verificationService->validate($code);
 
-    // Ensure the code contains exactly three segments.
-    if (count($parts) !== 3) {
-      $this->messenger()->addError(
-        $this->t('Invalid verification code.')
-      );
+    if (!$verification) {
+      $this->messenger()->addError($this->t('Invalid verification code.'));
       return;
     }
 
-    // Extract the code components.
-    [$expiry, $store_id, $signature] = $parts;
-
-    // Validate numeric values.
-    if (!ctype_digit($expiry) || !ctype_digit($store_id)) {
-      $this->messenger()->addError(
-        $this->t('Invalid verification code.')
-      );
-      return;
-    }
-
-    // Ensure the verification code has not expired.
-    if ((int) $expiry < time()) {
-      $this->messenger()->addError(
-        $this->t('Verification code has expired.')
-      );
-      return;
-    }
-
-    // Generate the expected signature.
-    $expected = hash(
-      'sha256',
-      Json::encode([
-        (int) $expiry,
-        $store_id,
-        Settings::get('hash_salt'),
-      ])
+    // Verifies the current user using an invitation code.
+    $result = $this->buyerVerificationManager->verifyCurrentUser(
+      $this->currentUser(),
+      $code,
     );
 
-    // Verify the submitted signature.
-    if (!hash_equals($expected, $signature)) {
-      $this->messenger()->addError(
-        $this->t('Invalid verification code.')
-      );
+    if (!$result->success) {
+      $this->messenger()->addError($result->message);
       return;
     }
 
-    // Load the current user account.
-    $user = $this->userStorage->load(
-      $this->currentUser()->id()
-    );
-
-    if (!$user) {
-      $this->messenger()->addError(
-        $this->t('Unable to load account.')
-      );
-      return;
-    }
-
-    // Associate the verified store with the user account.
-    if ($user->hasField('field_allowed_stores')) {
-      // For a multi-value field, append instead of replacing.
-      $user->get('field_allowed_stores')->appendItem($store_id);
-    }
-
-    // Update user roles after successful verification.
-    if ($user->hasRole('unverified')) {
-      $user->removeRole('unverified');
-    }
-
-    if (!$user->hasRole('buyer')) {
-      $user->addRole('buyer');
-    }
-
-    // Save account changes.
-    $user->save();
-
-    // Display success message.
-    $this->messenger()->addStatus(
-      $this->t('Your account has been verified.')
-    );
-
-    // Determine which stores the buyer can access.
-    $stores = $this->buyerStoreResolver
-      ->getAllowedStores($this->currentUser());
-
-    $count = count($stores);
-
-    // Buyers must have at least one assigned store.
-    if ($count === 0) {
-      throw new AccessDeniedHttpException(
-        'No stores have been assigned to your account.'
-      );
-    }
-
-    // Redirect directly when only one store is available.
-    if ($count === 1) {
-      $store = reset($stores);
-
-      $form_state->setRedirectUrl(
-        $store->toUrl()
-      );
-      return;
-    }
-
-    // Redirect to the store selector when multiple stores exist.
-    $form_state->setRedirect(
-      'view.store_selector.page_1'
-    );
+    // Success message and redirect.
+    $this->messenger()->addStatus($result->message);
+    $form_state->setRedirectUrl($result->redirectUrl);
   }
 
 }

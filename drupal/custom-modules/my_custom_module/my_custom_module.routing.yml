@@ -17,11 +17,22 @@ my_custom_module.custom_login:
     _access: 'TRUE'
 
 # Landing page used after authentication to determine the
+# appropriate user destination and perform any required redirects.
+my_custom_module.user_login_redirect:
+  path: '/user-login-redirect'
+  defaults:
+    _controller: '\Drupal\my_custom_module\Controller\UserLoginRedirectController::landing'
+    _title: 'User Login Redirect'
+  requirements:
+    _access: 'TRUE'
+
+# Landing page used after authentication to determine the
 # appropriate buyer destination and perform any required redirects.
 my_custom_module.buyer_login_redirect:
   path: '/buyer-login-redirect'
   defaults:
     _controller: '\Drupal\my_custom_module\Controller\BuyerLoginRedirectController::landing'
+    _title: 'Buyer Login Redirect'
   requirements:
     _access: 'TRUE'
 
@@ -36,22 +47,34 @@ my_custom_module.buyer_verification:
     _role: 'unverified+buyer'
 
 # Seller dashboard route.
-# Accessible only to users with the admin role.
 my_custom_module.seller_dashboard:
-  path: '/seller'
+  path: '/home/seller'
   defaults:
     _controller: '\Drupal\my_custom_module\Controller\SellerDashboardController::dashboard'
     _title: 'Seller Dashboard'
   requirements:
-    _role: 'admin'
+    _permission: 'access seller dashboard'
 
-# Route for generating invitation codes for a specific store.
-# The {commerce_store} parameter identifies the target store.
-# Accessible only to users with the admin role.
+# Route for generating an invitation code for a commerce store.
 my_custom_module.generate_code:
   path: '/seller/store/{commerce_store}/generate-code'
   defaults:
     _controller: '\Drupal\my_custom_module\Controller\GenerateCodeController::generate'
-    _title: 'Invitation Code'
   requirements:
-    _role: 'admin'
+    # Restrict access to users with the seller role.
+    _role: 'seller'
+  options:
+    parameters:
+      # Automatically upcast the route parameter to a commerce store entity.
+      commerce_store:
+        type: entity:commerce_store
+
+# Displays the role selection page for authenticated users.
+my_custom_module.home:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\my_custom_module\Controller\HomeController::home'
+    _title: 'Home'
+  requirements:
+    # Only authenticated users can access this route.
+    _user_is_logged_in: 'TRUE'

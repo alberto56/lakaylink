@@ -3,16 +3,16 @@
 namespace Drupal\my_custom_module;
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\commerce_store\Entity\Store;
 use Drupal\my_custom_module\traits\Environment;
 use Drupal\my_custom_module\traits\Singleton;
-
 
 /**
  * Module-wide functionality.
@@ -118,18 +118,18 @@ class App {
     if ($operation !== 'edit') {
       return AccessResult::neutral();
     }
-  
+
     $field_permissions = [
       'field_allowed_stores' => 'manage buyer store assignments',
       'field_verified' => 'update user verification',
     ];
-  
+
     $field_name = $field_definition->getName();
-  
+
     if (!isset($field_permissions[$field_name])) {
       return AccessResult::neutral();
     }
-  
+
     return $account->hasPermission($field_permissions[$field_name])
       ? AccessResult::allowed()
       : AccessResult::forbidden();
@@ -166,7 +166,83 @@ class App {
         ],
         'template' => 'seller-dashboard',
       ],
+      'home_role_selector' => [
+        'variables' => [
+          'links' => [],
+        ],
+        'template' => 'home-role-selector',
+      ],
     ];
+  }
+
+  /**
+   * Preprocesses variables for the main menu.
+   *
+   * Updates the Home and Shop menu links to use the current store context.
+   *
+   * @param array $variables
+   *   The variables passed to the menu template.
+   */
+  public function hookPreprocessMenuMain(array &$variables) {
+    // Get the current store information.
+    $store_id = $this->getService('my_custom_module.current_store')->getStoreId();
+    $store_slug = $this->getService('my_custom_module.current_store')->getStoreSlug();
+
+    // Stop processing if no active store is available.
+    if (!$store_id || !$store_slug) {
+      return;
+    }
+
+    // Update menu links with store-specific URLs.
+    foreach ($variables['items'] as &$item) {
+
+      // Update the Home menu link.
+      if ($item['title'] === 'Home') {
+        $item['url'] = Url::fromUserInput("/shop/$store_slug/$store_id");
+      }
+
+      // Update the Shop menu link.
+      if ($item['title'] === 'Shop') {
+        $item['url'] = Url::fromUserInput("/store/$store_id/shop");
+      }
+    }
+  }
+
+  /**
+   * Preprocesses variables for the commerce store template.
+   *
+   * Loads nodes related to the current store and exposes them to the template.
+   *
+   * @param array $variables
+   *   The template variables.
+   */
+  public function hookPreprocessCommerceStore(array &$variables) {
+    // Get the current commerce store from the route.
+    $store = $this->getRouteMatch()->getParameter('commerce_store');
+
+    // Continue only if a valid store entity exists.
+    if (!$store instanceof Store) {
+      return;
+    }
+
+    // Get the node storage handler.
+    $nodeStorage = $this->getEntityTypeManager('node');
+
+    // Find nodes referencing the current store.
+    $nids = $nodeStorage->getQuery()
+      ->condition('field_store_reference.target_id', $store->id())
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $nodes = Node::loadMultiple($nids);
+
+    $aliasManager = $this->getService('path_alias.manager');
+
+    foreach ($nodes as $node) {
+      $node->alias = $aliasManager->getAliasByPath('/node/' . $node->id());
+    }
+
+    $variables['related_nodes'] = $nodes;
   }
 
 }
