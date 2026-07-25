@@ -1,8 +1,9 @@
 lakaylink
 =====
 
-Marketplace Allows expat family members to purchase food items (for example rice 1kg, rice 2kg, oil 1 liter, oil 2 liters) and have it delivered to their family back home in Africa.
+Marketplace Allows expat family members to purchase food items (for example rice 1kg, rice 2kg, oil 1 liter, oil 2 liters) and have it delivered to their family back home in Africa or elsewhere.
 
+This is the backend site. The frontend site is at <https://github.com/alberto56/lakaylink-front> and you can find usage scenarios there.
 
 ## contents
 
