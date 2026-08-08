@@ -54,3 +54,12 @@ services:
 
       # Entity type manager for loading and saving user entities.
       - '@entity_type.manager'
+
+  my_custom_module.grocery_import:
+    class: Drupal\my_custom_module\Service\GroceryImportService
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.factory'
+      - '@http_client'
+      - '@file.repository'
+      - '@language_manager'
