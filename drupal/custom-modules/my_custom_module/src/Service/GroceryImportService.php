@@ -13,7 +13,7 @@ use Drupal\taxonomy\Entity\Term;
 use GuzzleHttp\ClientInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
-use Drupal\Core\Datetime\TimeInterface;
+use Drupal\Component\Datetime\TimeInterface;
 
 /**
  * Handles grocery store imports.
@@ -108,7 +108,7 @@ class GroceryImportService {
    * Used to retrieve the current request time without using
    * Drupal's static service locator.
    *
-   * @var \Drupal\Core\Datetime\TimeInterface
+   * @var \Drupal\Component\Datetime\TimeInterface
    */
   protected TimeInterface $time;
 
