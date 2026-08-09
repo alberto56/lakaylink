@@ -24,25 +24,37 @@ class App {
 
   /**
    * Testable implementation of hook_cron().
+   *
+   * Queues a grocery import job for each Commerce store so that
+   * the imports can be processed asynchronously by the queue worker.
    */
   public function hookCron() {
-    // Just an example of where you'd implement testable hooks.
+
+    // Get the Commerce Store entity storage handler.
     $storage = $this->getEntityTypeManager('commerce_store');
 
+    // Retrieve the IDs of all Commerce stores.
+    // Access checks are disabled because the cron process should
+    // process imports for all stores regardless of the current user.
     $store_ids = $storage->getQuery()
       ->accessCheck(FALSE)
       ->execute();
 
+    // Stop processing if there are no stores to import.
     if (empty($store_ids)) {
       return;
     }
 
+    // Get the queue responsible for processing grocery imports.
     $queue = $this->getQueue('my_custom_module_import_queue');
 
+    // Add one queue item for each Commerce store.
+    // The store ID is passed to the queue worker for processing.
     foreach ($store_ids as $store_id) {
       $queue->createItem($store_id);
     }
 
+    // Log the number of store imports that were added to the queue.
     $this->getLogger('my_custom_module')->notice('Queued store imports: @count', [
       '@count' => count($store_ids),
     ]);

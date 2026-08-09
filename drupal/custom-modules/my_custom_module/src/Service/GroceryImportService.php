@@ -7,14 +7,13 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\FileRepositoryInterface;
-use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\taxonomy\Entity\Term;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\Datetime\TimeInterface;
 
 /**
  * Handles grocery store imports.
@@ -63,13 +62,55 @@ class GroceryImportService {
    */
   protected array $imageCache = [];
 
+  /**
+   * The database connection.
+   *
+   * Used to read and write custom grocery import status information
+   * stored in the module's database tables.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
   protected Connection $database;
 
+  /**
+   * The Drupal file system service.
+   *
+   * Used for creating directories, managing file paths, and performing
+   * file-system operations during image imports.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
   protected FileSystemInterface $fileSystem;
 
+  /**
+   * The cache backend for image validation results.
+   *
+   * Used to cache image validation results and avoid repeatedly
+   * validating the same image.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
+   */
   protected CacheBackendInterface $imageValidationCache;
 
+  /**
+   * The key-value store factory.
+   *
+   * Used to access persistent key-value storage for import-related
+   * configuration or state data.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
   protected KeyValueFactoryInterface $keyValueFactory;
+
+  /**
+   * The Drupal time service.
+   *
+   * Used to retrieve the current request time without using
+   * Drupal's static service locator.
+   *
+   * @var \Drupal\Core\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
 
   /**
    * Constructs the grocery import service.
@@ -83,7 +124,8 @@ class GroceryImportService {
     Connection $database,
     FileSystemInterface $file_system,
     CacheBackendInterface $image_validation_cache,
-    KeyValueFactoryInterface $keyValueFactory
+    KeyValueFactoryInterface $keyValueFactory,
+    TimeInterface $time,
   ) {
     $this->entityTypeManager = $entityTypeManager;
     $this->loggerFactory = $loggerFactory;
@@ -94,6 +136,7 @@ class GroceryImportService {
     $this->fileSystem = $file_system;
     $this->imageValidationCache = $image_validation_cache;
     $this->keyValueFactory = $keyValueFactory;
+    $this->time = $time;
   }
 
   /**
@@ -132,11 +175,6 @@ class GroceryImportService {
     $store = $this->loadStore($store_id);
 
     try {
-      // if (!$this->hasValidValidation($store_id)) {
-      //   throw new \RuntimeException(
-      //     'Import blocked because the latest sheet validation did not pass.'
-      //   );
-      // }
 
       /*
        * Build/validate the Google Sheet URL.
@@ -440,36 +478,60 @@ class GroceryImportService {
     }
   }
 
+  /**
+   * Builds a CSV export URL for a store's Google Sheet.
+   *
+   * Reads the Google Sheet URL and optional tab GID from the Commerce Store
+   * fields and converts the URL into a CSV export URL. If the provided URL
+   * is already configured to return CSV output, it is returned unchanged.
+   *
+   * @param \Drupal\commerce_store\Entity\Store $store
+   *   The Commerce Store containing the Google Sheet URL and tab GID.
+   *
+   * @return string
+   *   The Google Sheet CSV export URL.
+   *
+   * @throws \Exception
+   *   Thrown when the Google Sheet URL is missing or invalid.
+   */
   public function buildGoogleSheetCsvUrl($store): string {
+    // Get and clean the Google Sheet URL from the store.
     $url = trim(
       $store->get('field_google_sheet_url')->uri ?? ''
     );
 
+    // Get and clean the optional Google Sheet tab GID.
     $gid = trim(
       $store->get('field_google_sheet_tab_gid')->value ?? ''
     );
 
+    // Ensure that a Google Sheet URL has been configured.
     if ($url === '') {
       throw new \Exception(
         "Google Sheet URL is missing for store {$store->id()}."
       );
     }
 
+    // Validate that the configured value is a valid URL.
     if (!filter_var($url, FILTER_VALIDATE_URL)) {
       throw new \Exception(
         "Invalid Google Sheet URL: {$url}"
       );
     }
 
+    // Parse the URL into its individual components.
     $parts = parse_url($url);
 
+    // Parse the existing query parameters so they can be preserved
+    // when building the CSV export URL.
     parse_str(
       $parts['query'] ?? '',
       $query
     );
 
     /*
-     * If this is already a CSV URL, preserve it.
+     * If the URL is already configured to return CSV output
+     * return it without modifying the URL.
      */
     if (
       isset($query['output']) &&
@@ -479,21 +541,25 @@ class GroceryImportService {
     }
 
     /*
-     * Otherwise this should be a Google export URL.
+     * Configure the Google Sheet export format as CSV.
      */
     $query['format'] = 'csv';
 
+    // Add the configured tab GID when one is available.
     if ($gid !== '') {
       $query['gid'] = $gid;
     }
 
+    // Rebuild the query string with the updated parameters.
     $parts['query'] = http_build_query($query);
 
+    // Reconstruct the URL from the parsed components.
     $result =
       ($parts['scheme'] ?? 'https') . '://' .
       ($parts['host'] ?? '') .
       ($parts['path'] ?? '');
 
+    // Append the query string when parameters are present.
     if (!empty($parts['query'])) {
       $result .= '?' . $parts['query'];
     }
@@ -582,20 +648,6 @@ class GroceryImportService {
     // Validate columns BEFORE processing any row.
     $this->verifyRequiredFields($header);
 
-    // $required = [
-    //   'product_id',
-    //   'product_name',
-    //   'variation_sku',
-    // ];
-
-    // foreach ($required as $column) {
-    //   if (!in_array($column, $header, TRUE)) {
-    //     throw new \Exception(
-    //       "Missing required column: $column"
-    //     );
-    //   }
-    // }
-
     $parsed = [];
 
     foreach ($rows as $index => $row) {
@@ -627,6 +679,24 @@ class GroceryImportService {
     return $parsed;
   }
 
+  /**
+   * Fetches CSV data from a remote URL.
+   *
+   * Sends an HTTP GET request to the provided URL and returns the response
+   * body when the request is successful. HTTP redirects are followed and
+   * HTTP errors are handled manually so that a consistent exception can
+   * be thrown for unsuccessful responses.
+   *
+   * @param string $url
+   *   The URL from which the CSV data should be fetched.
+   *
+   * @return string
+   *   The CSV data returned by the remote server.
+   *
+   * @throws \Exception
+   *   Thrown when the remote server returns a non-2xx response, the CSV
+   *   response is empty, or the URL cannot be accessed.
+   */
   public function fetchCsvFromUrl(string $url): string {
     try {
       $response = $this->httpClient->request('GET', $url, [
@@ -670,10 +740,7 @@ class GroceryImportService {
    * IMPORTANT:
    * This method does not save products or variations.
    */
-  protected function validateAllImages(
-    array $rows,
-    int $store_id
-  ): array {
+  protected function validateAllImages(array $rows, int $store_id): array {
     $checked = [];
 
     foreach ($rows as $index => $row) {
@@ -737,9 +804,42 @@ class GroceryImportService {
     ];
   }
 
+  /**
+   * Checks whether an image URL is downloadable and returns validation details.
+   *
+   * The URL is first checked against the image validation cache. Cached
+   * validation results are reused for 24 hours.
+   *
+   * If the URL is not cached, this method:
+   * - Validates the URL syntax.
+   * - Performs an HTTP GET request to the URL.
+   * - Follows up to 5 HTTP/HTTPS redirects.
+   * - Forces IPv4 connections for environments without IPv6 support.
+   * - Verifies that the HTTP response has a successful 2xx status.
+   * - Verifies that the response Content-Type starts with "image/".
+   * - Reads a small portion of the response body to ensure it is not empty.
+   *
+   * Deterministic validation failures, such as invalid URLs, HTTP errors,
+   * invalid Content-Type values, and empty responses, are cached for 24 hours.
+   * Network-related failures are not cached so that subsequent imports can
+   * retry the request.
+   *
+   * @param string $url
+   *   The image URL to validate.
+   *
+   * @return array
+   *   {
+   *     valid: bool,
+   *     reason: string|null,
+   *     cached: bool
+   *   }
+   *   An associative array containing:
+   *   - valid: Whether the URL appears to point to a downloadable image.
+   *   - reason: A human-readable reason when validation fails, or NULL when
+   *     validation succeeds.
+   *   - cached: Whether the result was retrieved from the validation cache.
+   */
   protected function checkImageDownloadable(string $url): array {
-    // $this->clearImageValidationCache();
-
     $cid = 'image:' . hash('sha256', $url);
 
     /*
@@ -955,7 +1055,7 @@ class GroceryImportService {
       ->fields([
         'store_id' => $store_id,
         'status' => 'running',
-        'started' => \Drupal::time()->getRequestTime(),
+        'started' => $this->time->getRequestTime(),
         'finished' => NULL,
         'products_imported' => 0,
         'failure_reason' => NULL,
@@ -963,7 +1063,6 @@ class GroceryImportService {
       ])
       ->execute();
   }
-
 
   /**
    * Mark an import as successfully completed.
@@ -975,20 +1074,19 @@ class GroceryImportService {
    */
   protected function completeImportStatus(
     int $import_id,
-    int $products_imported
+    int $products_imported,
   ): void {
     $this->database
       ->update('my_custom_module_products_import_status')
       ->fields([
         'status' => 'completed',
-        'finished' => \Drupal::time()->getRequestTime(),
+        'finished' => $this->time->getRequestTime(),
         'products_imported' => $products_imported,
         'failure_reason' => NULL,
       ])
       ->condition('id', $import_id)
       ->execute();
   }
-
 
   /**
    * Mark an import as failed.
@@ -1000,19 +1098,18 @@ class GroceryImportService {
    */
   protected function failImportStatus(
     int $import_id,
-    string $reason
+    string $reason,
   ): void {
     $this->database
       ->update('my_custom_module_products_import_status')
       ->fields([
         'status' => 'failed',
-        'finished' => \Drupal::time()->getRequestTime(),
+        'finished' => $this->time->getRequestTime(),
         'failure_reason' => $reason,
       ])
       ->condition('id', $import_id)
       ->execute();
   }
-
 
   /**
    * Get the latest import status for a store.
@@ -1035,7 +1132,6 @@ class GroceryImportService {
 
     return $result ?: NULL;
   }
-
 
   /**
    * Get all import attempts for a store.
@@ -1091,7 +1187,6 @@ class GroceryImportService {
     return 'my_custom_module.import_status.' . $store_id;
   }
 
-
   /**
    * Verify that every image can be downloaded.
    *
@@ -1106,86 +1201,99 @@ class GroceryImportService {
    *   If any image cannot be downloaded.
    */
   public function verifyImagesDownloadable(
-      array $rows,
-      int $store_id
-    ): void {
+    array $rows,
+    int $store_id,
+  ): void {
+    $logger = $this->loggerFactory->get('grocery_import');
 
-      $logger = $this->loggerFactory->get('grocery_import');
+    /*
+     * URL => CSV line numbers.
+     *
+     * This also prevents downloading/checking the same URL more than once.
+     */
+    $images = [];
 
-      /*
-      * URL => CSV line numbers.
-      *
-      * This also prevents downloading/checking the same URL more than once.
-      */
-      $images = [];
+    foreach ($rows as $index => $row) {
+      $image_url = trim($row['image_url'] ?? '');
 
-      foreach ($rows as $index => $row) {
-        $image_url = trim($row['image_url'] ?? '');
-
-        if ($image_url === '') {
-          continue;
-        }
-
-        /*
-        * Adjust this if parseCsv() already stores the real CSV line.
-        */
-        $line = $row['_line'] ?? ($index + 2);
-
-        $images[$image_url][] = $line;
+      if ($image_url === '') {
+        continue;
       }
 
-      if (empty($images)) {
-        $logger->notice(
-          'Image pre-flight validation passed for store @store. No images found.',
+      /*
+       * Adjust this if parseCsv() already stores the real CSV line.
+       */
+      $line = $row['_line'] ?? ($index + 2);
+
+      $images[$image_url][] = $line;
+    }
+
+    if (empty($images)) {
+      $logger->notice(
+        'Image pre-flight validation passed for store @store. No images found.',
+        [
+          '@store' => $store_id,
+        ]
+      );
+
+      return;
+    }
+
+    /*
+     * Check every unique image.
+     */
+    foreach ($images as $image_url => $lines) {
+      $result = $this->checkImageDownloadable($image_url);
+
+      if (!$result['valid']) {
+        $line_list = implode(', ', $lines);
+
+        $reason = sprintf(
+          'Image is not downloadable. CSV line(s): %s. URL: %s. Reason: %s',
+          $line_list,
+          $image_url,
+          $result['reason']
+        );
+
+        /*
+         * Log BEFORE throwing.
+         */
+        $logger->error(
+          'Store @store image pre-flight failed: @reason',
           [
             '@store' => $store_id,
+            '@reason' => $reason,
           ]
         );
 
-        return;
+        throw new \RuntimeException($reason);
       }
-
-      /*
-      * Check every unique image.
-      */
-      foreach ($images as $image_url => $lines) {
-        $result = $this->checkImageDownloadable($image_url);
-
-        if (!$result['valid']) {
-          $line_list = implode(', ', $lines);
-
-          $reason = sprintf(
-            'Image is not downloadable. CSV line(s): %s. URL: %s. Reason: %s',
-            $line_list,
-            $image_url,
-            $result['reason']
-          );
-
-          /*
-          * Log BEFORE throwing.
-          */
-          $logger->error(
-            'Store @store image pre-flight failed: @reason',
-            [
-              '@store' => $store_id,
-              '@reason' => $reason,
-            ]
-          );
-
-          throw new \RuntimeException($reason);
-        }
-      }
-
-      $logger->notice(
-        'Image pre-flight validation passed for store @store. @count unique images checked.',
-        [
-          '@store' => $store_id,
-          '@count' => count($images),
-        ]
-      );
     }
 
+    $logger->notice(
+      'Image pre-flight validation passed for store @store. @count unique images checked.',
+      [
+        '@store' => $store_id,
+        '@count' => count($images),
+      ]
+    );
+  }
 
+  /**
+   * Processes imported CSV rows for a store.
+   *
+   * Validates each imported row and creates or updates the corresponding
+   * product and product variation. Rows with validation errors, missing
+   * variation SKUs, or unsupported languages are skipped.
+   *
+   * @param array $rows
+   *   The imported CSV rows containing product data.
+   * @param int $store_id
+   *   The Commerce Store ID associated with the import.
+   *
+   * @return int
+   *   The number of products successfully processed.
+   */
   public function processRows(array $rows, int $store_id): int {
     $products_imported = 0;
 
@@ -1257,10 +1365,29 @@ class GroceryImportService {
     return $products_imported;
   }
 
+  /**
+   * Validates a single CSV import row.
+   *
+   * Performs validation for the fields required to import a grocery product,
+   * including required fields, price formatting, and image URL syntax.
+   *
+   * Image existence or accessibility is not checked here. That validation
+   * is handled separately when the image is processed.
+   *
+   * @param array $row
+   *   The CSV row containing the product data.
+   * @param int $line
+   *   The CSV line number being validated.
+   *
+   * @return array
+   *   An array of validation error messages. Returns an empty array when
+   *   the row passes all validations.
+   */
   public function validateRow(
     array $row,
-    int $line
+    int $line,
   ): array {
+    // Store all validation errors found for this row.
     $errors = [];
 
     /*
@@ -1303,139 +1430,6 @@ class GroceryImportService {
     return $errors;
   }
 
-  public function validateSheet(
-    string $csv,
-    int $store_id
-  ): array {
-    $errors = [];
-
-    /*
-     * Parse CSV.
-     */
-    $rows = $this->parseCsv($csv);
-
-    /*
-     * Validate required columns.
-     */
-    $required_columns = [
-      'product_name',
-      'price',
-      'image_url',
-    ];
-
-    if (empty($rows)) {
-      return [
-        'valid' => FALSE,
-        'errors' => [
-          'Google Sheet contains no product rows.',
-        ],
-        'rows_checked' => 0,
-        'images_checked' => 0,
-        'images_cached' => 0,
-      ];
-    }
-
-    $first_row = $rows[array_key_first($rows)];
-
-    foreach ($required_columns as $column) {
-      if (!array_key_exists($column, $first_row)) {
-        $errors[] = sprintf(
-          'Required CSV column "%s" is missing.',
-          $column
-        );
-      }
-    }
-
-    /*
-     * If the CSV structure itself is wrong, stop here.
-     */
-    if (!empty($errors)) {
-      return [
-        'valid' => FALSE,
-        'errors' => $errors,
-        'rows_checked' => 0,
-        'images_checked' => 0,
-        'images_cached' => 0,
-      ];
-    }
-
-    /*
-     * Track unique images.
-     *
-     * URL => lines where it occurs.
-     */
-    $images = [];
-
-    foreach ($rows as $index => $row) {
-      $line = $row['_line'] ?? ($index + 2);
-
-      /*
-       * Validate ordinary fields.
-       */
-      $row_errors = $this->validateRow(
-        $row,
-        $line
-      );
-
-      $errors = array_merge(
-        $errors,
-        $row_errors
-      );
-
-      /*
-       * Collect images.
-       */
-      $image_url = trim(
-        (string) ($row['image_url'] ?? '')
-      );
-
-      if ($image_url !== '') {
-        $images[$image_url][] = $line;
-      }
-    }
-
-    /*
-     * Validate unique images.
-     */
-    $images_checked = 0;
-    $images_cached = 0;
-
-    foreach ($images as $image_url => $lines) {
-      $result = $this->checkImageDownloadable(
-        $image_url
-      );
-
-      $images_checked++;
-
-      if ($result['cached']) {
-        $images_cached++;
-      }
-
-      if (!$result['valid']) {
-        $line_numbers = implode(
-          ', ',
-          $lines
-        );
-
-        $errors[] = sprintf(
-          'Line(s) %s: Image %s does not exist or is not downloadable. %s',
-          $line_numbers,
-          $image_url,
-          $result['reason']
-        );
-      }
-    }
-
-    return [
-      'valid' => empty($errors),
-      'errors' => $errors,
-      'rows_checked' => count($rows),
-      'images_checked' => $images_checked,
-      'images_cached' => $images_cached,
-    ];
-  }
-
-
   /**
    * Reload variation by SKU.
    *
@@ -1462,7 +1456,7 @@ class GroceryImportService {
   public function loadOrCreateProduct(
     array $data,
     $store_id,
-    $langcode = 'en'
+    $langcode = 'en',
   ) {
     $storage = $this->entityTypeManager
       ->getStorage('commerce_product');
@@ -1502,7 +1496,7 @@ class GroceryImportService {
     $product,
     array $data,
     $context,
-    $langcode = 'en'
+    $langcode = 'en',
   ): void {
     if ($product->hasTranslation($langcode)) {
       $translated = $product->getTranslation($langcode);
@@ -1565,7 +1559,7 @@ class GroceryImportService {
    */
   public function loadOrCreateVariation(
     array $data,
-    $langcode = 'en'
+    $langcode = 'en',
   ) {
     $storage = $this->entityTypeManager
       ->getStorage('commerce_product_variation');
@@ -1601,7 +1595,7 @@ class GroceryImportService {
     $variation,
     array $data,
     $langcode = 'en',
-    $context = []
+    $context = [],
   ): void {
     if ($variation->hasTranslation($langcode)) {
       $translated = $variation->getTranslation($langcode);
@@ -1665,22 +1659,20 @@ class GroceryImportService {
       );
 
       $this->loggerFactory
-      ->get('grocery_import')
-      ->notice(
-        'Updating variation @variation_id SKU @sku with image file @file_id',
-        [
-          '@variation_id' => $variation->id(),
-          '@sku' => $data['variation_sku'],
-          '@file_id' => $file ? $file->id() : 'none',
-        ]
-      );
-
+        ->get('grocery_import')
+        ->notice(
+          'Updating variation @variation_id SKU @sku with image file @file_id',
+          [
+            '@variation_id' => $variation->id(),
+            '@sku' => $data['variation_sku'],
+            '@file_id' => $file ? $file->id() : 'none',
+          ]
+        );
 
       if ($file) {
         $variation->set('field_image', [
           'target_id' => $file->id(),
-          'alt' => $data['variant_name']
-            ?? $data['product_name'],
+          'alt' => $data['variant_name'] ?? $data['product_name'],
         ]);
       }
       else {
@@ -1705,7 +1697,7 @@ class GroceryImportService {
    */
   public function attachVariationToProduct(
     $product,
-    $variation
+    $variation,
   ): void {
     foreach ($product->getVariations() as $existing) {
       if ($existing->id() == $variation->id()) {
@@ -1732,7 +1724,7 @@ class GroceryImportService {
    */
   public function downloadImage(
     string $url,
-    array $context = []
+    array $context = [],
   ) {
     $logger = $this->loggerFactory->get('grocery_import');
 
@@ -1894,7 +1886,7 @@ class GroceryImportService {
     $vocab,
     $name,
     $code,
-    $langcode = 'en'
+    $langcode = 'en',
   ) {
     $storage = $this->entityTypeManager
       ->getStorage('taxonomy_term');
@@ -1969,9 +1961,33 @@ class GroceryImportService {
     }
   }
 
+  /**
+   * Validates that a Google Sheet is accessible and returns CSV data.
+   *
+   * Validates the supplied URL, ensures that it belongs to a supported
+   * Google Sheets domain, converts it to a CSV export URL, and attempts
+   * to fetch the CSV content.
+   *
+   * The method also detects common cases where Google returns an HTML
+   * login or access page instead of the expected CSV response.
+   *
+   * @param string $url
+   *   The Google Sheet URL to validate.
+   * @param string|null $gid
+   *   The optional Google Sheet tab GID used to select a specific sheet tab.
+   *
+   * @return array
+   *   An array containing:
+   *   - valid: TRUE if the Google Sheet is accessible and valid,
+   *     FALSE otherwise.
+   *   - errors: An array of validation or access error messages.
+   *   - csv_url: The generated CSV export URL, or NULL when the URL itself
+   *     is invalid.
+   *   - csv: The CSV content returned by Google, or an empty string on failure.
+   */
   public function validateGoogleSheet(
     string $url,
-    ?string $gid = NULL
+    ?string $gid = NULL,
   ): array {
     $errors = [];
 
@@ -2080,23 +2096,44 @@ class GroceryImportService {
     ];
   }
 
+  /**
+   * Validates that all required import fields are present.
+   *
+   * Checks the current CSV row for the fields required to create or
+   * update a grocery product. An error message is returned for each
+   * missing or empty field.
+   *
+   * @param array $row
+   *   The imported CSV row containing product data.
+   * @param int $line
+   *   The CSV line number being validated.
+   *
+   * @return array
+   *   An array of validation error messages. Returns an empty array
+   *   when all required fields are present.
+   */
   protected function validateRequiredFields(
     array $row,
-    int $line
+    int $line,
   ): array {
+    // Store validation errors found in the current row.
     $errors = [];
 
+    // Define the required CSV fields and their human-readable labels.
     $required = [
       'product_name' => 'Product name',
       'price' => 'Price',
       'image_url' => 'Image URL',
     ];
 
+    // Check each required field for a missing or empty value.
     foreach ($required as $key => $label) {
       if (
         !isset($row[$key]) ||
         trim((string) $row[$key]) === ''
       ) {
+        // Add a descriptive error containing the CSV line number
+        // and the name of the missing field.
         $errors[] = sprintf(
           'Line %d: %s is required.',
           $line,
@@ -2105,15 +2142,33 @@ class GroceryImportService {
       }
     }
 
+    // Return all validation errors found for this row.
     return $errors;
   }
 
+  /**
+   * Validates a product price from the import data.
+   *
+   * Ensures that the price is provided and contains only a valid numeric
+   * value with an optional decimal portion of up to two digits.
+   *
+   * @param mixed $price
+   *   The price value to validate.
+   * @param int $line
+   *   The CSV line number where the price was found.
+   *
+   * @return array
+   *   An array of validation error messages. Returns an empty array when
+   *   the price is valid.
+   */
   protected function validatePrice(
     mixed $price,
-    int $line
+    int $line,
   ): array {
+    // Convert the price to a string and remove surrounding whitespace.
     $price = trim((string) $price);
 
+    // Ensure that a price value has been provided.
     if ($price === '') {
       return [
         sprintf(
@@ -2124,12 +2179,13 @@ class GroceryImportService {
     }
 
     /*
-     * Accept:
+     * Accept valid numeric prices such as:
      * 10
      * 10.5
      * 10.50
      *
-     * Reject:
+     * Reject values containing currency symbols, units, commas,
+     * or more than two decimal places, such as:
      * ₹10
      * 10/kg
      * 1,000
@@ -2144,6 +2200,11 @@ class GroceryImportService {
       ];
     }
 
+    // Prevent negative prices.
+    //
+    // Note: The regular expression above already rejects negative values,
+    // so this check is currently defensive and may be useful if the
+    // validation rule is changed in the future.
     if ((float) $price < 0) {
       return [
         sprintf(
@@ -2153,10 +2214,18 @@ class GroceryImportService {
       ];
     }
 
+    // Return an empty array when the price passes all validations.
     return [];
   }
 
+  /**
+   * Clears all cached image validation results.
+   *
+   * Removes all entries from the image validation cache so that images
+   * will be validated again the next time they are processed.
+   */
   public function clearImageValidationCache(): void {
+    // Delete all entries from the image validation cache.
     $this->imageValidationCache->deleteAll();
   }
 
