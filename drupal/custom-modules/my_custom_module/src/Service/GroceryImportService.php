@@ -1793,7 +1793,7 @@ class GroceryImportService {
      *    Drupal file entity doesn't.
      * ------------------------------------------------------------
      */
-    if ($this->fileSystem->getFileExists($destination)) {
+    if (file_exists($this->fileSystem->realpath($destination))) {
       $logger->warning(
         'Image file exists without a Drupal file entity. Re-downloading: @destination',
         [
