@@ -1,0 +1,5 @@
+my_custom_module.import_status:
+  route_name: my_custom_module.import_status
+  title: 'Import status'
+  base_route: entity.commerce_store.canonical
+  weight: 100

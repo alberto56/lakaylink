@@ -63,21 +63,28 @@ class StoreImportQueue extends QueueWorkerBase implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    */
-  public function processItem($store_id): void {
+  public function processItem($store_id) {
+    $store_id = (int) $store_id;
+
     try {
-      $this->importService->import($store_id);
+      $this->importService->import((int) $store_id);
+      \Drupal::logger('my_custom_module')->notice(
+        'Store @store import completed.',
+        ['@store' => $store_id]
+      );
     }
     catch (\Throwable $e) {
       \Drupal::logger('my_custom_module')->error(
-        'Store import failed for store @id: @msg',
+        'Store @store import failed: @message',
         [
-          '@id' => $store_id,
-          '@msg' => $e->getMessage(),
+          '@store' => $store_id,
+          '@message' => $e->getMessage(),
         ]
       );
 
-      // Re-throw so the queue considers the item failed.
-      throw $e;
+      // Do not allow a permanent validation failure
+      // to endlessly retry.
+      return;
     }
   }
 

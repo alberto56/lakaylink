@@ -63,3 +63,11 @@ services:
       - '@http_client'
       - '@file.repository'
       - '@language_manager'
+      - '@database'
+      - '@file_system'
+      - '@cache.my_custom_module_image_validation'
+
+  cache.my_custom_module_image_validation:
+    class: Drupal\Core\Cache\DatabaseBackend
+    factory: ['@cache_factory', 'get']
+    arguments: ['my_custom_module_image_validation']

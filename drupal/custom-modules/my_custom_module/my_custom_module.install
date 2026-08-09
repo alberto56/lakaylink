@@ -1,0 +1,148 @@
+<?php
+
+/**
+ * Create import status table.
+ */
+function my_custom_module_update_10001() {
+
+  $schema = \Drupal::database()->schema();
+
+  if (!$schema->tableExists('my_custom_module_products_import_status')) {
+
+    $schema->createTable(
+      'my_custom_module_products_import_status',
+      [
+        'description' => 'Stores grocery import status for each store/import run.',
+        'fields' => [
+          'id' => [
+            'type' => 'serial',
+            'not null' => TRUE,
+            'unsigned' => TRUE,
+          ],
+          'store_id' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'unsigned' => TRUE,
+          ],
+          'status' => [
+            'type' => 'varchar',
+            'length' => 32,
+            'not null' => TRUE,
+            'default' => 'never',
+          ],
+          'started' => [
+            'type' => 'int',
+            'not null' => FALSE,
+          ],
+          'finished' => [
+            'type' => 'int',
+            'not null' => FALSE,
+          ],
+          'products_imported' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'default' => 0,
+          ],
+          'failure_reason' => [
+            'type' => 'text',
+            'size' => 'big',
+            'not null' => FALSE,
+          ],
+          'url' => [
+            'type' => 'text',
+            'size' => 'big',
+            'not null' => FALSE,
+          ],
+        ],
+        'primary key' => ['id'],
+        'indexes' => [
+          'store_id' => ['store_id'],
+          'status' => ['status'],
+          'started' => ['started'],
+        ],
+      ]
+    );
+
+  }
+
+  if (!$schema->tableExists('my_custom_module_validation')) {
+
+    $schema->createTable(
+      'my_custom_module_validation',
+      [
+        'description' => 'Google Sheet validation runs.',
+        'fields' => [
+          'id' => [
+            'type' => 'serial',
+            'not null' => TRUE,
+            'unsigned' => TRUE,
+          ],
+
+          'store_id' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'unsigned' => TRUE,
+          ],
+
+          'status' => [
+            'type' => 'varchar',
+            'length' => 32,
+            'not null' => TRUE,
+            'default' => 'running',
+          ],
+
+          'started' => [
+            'type' => 'int',
+            'not null' => FALSE,
+          ],
+
+          'finished' => [
+            'type' => 'int',
+            'not null' => FALSE,
+          ],
+
+          'rows_checked' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'default' => 0,
+          ],
+
+          'images_checked' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'default' => 0,
+          ],
+
+          'images_cached' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'default' => 0,
+          ],
+
+          'errors' => [
+            'type' => 'text',
+            'size' => 'big',
+            'not null' => FALSE,
+          ],
+
+          'url' => [
+            'type' => 'text',
+            'size' => 'big',
+            'not null' => FALSE,
+          ],
+        ],
+
+        'primary key' => ['id'],
+
+        'indexes' => [
+          'store_id' => ['store_id'],
+          'status' => ['status'],
+          'started' => ['started'],
+        ],
+
+      ]
+    );
+
+  }
+
+}

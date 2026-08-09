@@ -78,3 +78,15 @@ my_custom_module.home:
   requirements:
     # Only authenticated users can access this route.
     _user_is_logged_in: 'TRUE'
+
+my_custom_module.import_status:
+  path: '/store/{commerce_store}/products-import-status'
+  defaults:
+    _controller: '\Drupal\my_custom_module\Controller\ImportStatusController::status'
+    _title: 'Import status'
+  requirements:
+      _permission: 'administer commerce stores'
+  options:
+    parameters:
+      commerce_store:
+        type: entity:commerce_store
