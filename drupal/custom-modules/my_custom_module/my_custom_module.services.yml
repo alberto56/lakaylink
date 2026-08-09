@@ -66,6 +66,7 @@ services:
       - '@database'
       - '@file_system'
       - '@cache.my_custom_module_image_validation'
+      - '@keyvalue'
 
   cache.my_custom_module_image_validation:
     class: Drupal\Core\Cache\DatabaseBackend

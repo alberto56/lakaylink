@@ -14,6 +14,7 @@ use Drupal\taxonomy\Entity\Term;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
 
 /**
  * Handles grocery store imports.
@@ -68,6 +69,8 @@ class GroceryImportService {
 
   protected CacheBackendInterface $imageValidationCache;
 
+  protected KeyValueFactoryInterface $keyValueFactory;
+
   /**
    * Constructs the grocery import service.
    */
@@ -79,7 +82,8 @@ class GroceryImportService {
     LanguageManagerInterface $languageManager,
     Connection $database,
     FileSystemInterface $file_system,
-    CacheBackendInterface $image_validation_cache
+    CacheBackendInterface $image_validation_cache,
+    KeyValueFactoryInterface $keyValueFactory
   ) {
     $this->entityTypeManager = $entityTypeManager;
     $this->loggerFactory = $loggerFactory;
@@ -89,6 +93,7 @@ class GroceryImportService {
     $this->database = $database;
     $this->fileSystem = $file_system;
     $this->imageValidationCache = $image_validation_cache;
+    $this->keyValueFactory = $keyValueFactory;
   }
 
   /**
@@ -1104,7 +1109,6 @@ class GroceryImportService {
       array $rows,
       int $store_id
     ): void {
-      print(" | 00000 9999 | ");
 
       $logger = $this->loggerFactory->get('grocery_import');
 
@@ -1188,7 +1192,13 @@ class GroceryImportService {
     foreach ($rows as $index => $data) {
       $line = $index + 2;
 
-      if (!$this->validateRow($data, $line, $store_id)) {
+      $errors = $this->validateRow($data, $line);
+
+      if (!empty($errors)) {
+        foreach ($errors as $error) {
+          $this->logger()->warning($error);
+        }
+
         continue;
       }
 
@@ -1654,6 +1664,18 @@ class GroceryImportService {
         $context
       );
 
+      $this->loggerFactory
+      ->get('grocery_import')
+      ->notice(
+        'Updating variation @variation_id SKU @sku with image file @file_id',
+        [
+          '@variation_id' => $variation->id(),
+          '@sku' => $data['variation_sku'],
+          '@file_id' => $file ? $file->id() : 'none',
+        ]
+      );
+
+
       if ($file) {
         $variation->set('field_image', [
           'target_id' => $file->id(),
@@ -1717,23 +1739,13 @@ class GroceryImportService {
     $store_id = $context['store_id'] ?? 0;
     $line = $context['line'] ?? 0;
 
-    /*
-     * Create a deterministic filename from the URL.
-     *
-     * Example:
-     * SHA256(URL) + extension
-     */
     $hash = hash('sha256', $url);
 
-    /*
-     * Try to determine extension from URL first.
-     */
     $path = parse_url($url, PHP_URL_PATH);
-    $extension = strtolower(pathinfo($path ?? '', PATHINFO_EXTENSION));
+    $extension = strtolower(
+      pathinfo($path ?? '', PATHINFO_EXTENSION)
+    );
 
-    /*
-     * Only allow sensible image extensions.
-     */
     $allowed_extensions = [
       'jpg',
       'jpeg',
@@ -1749,9 +1761,6 @@ class GroceryImportService {
 
     $directory = 'public://grocery_import_images';
 
-    /*
-     * Ensure cache directory exists.
-     */
     $this->fileSystem->prepareDirectory(
       $directory,
       FileSystemInterface::CREATE_DIRECTORY |
@@ -1761,38 +1770,50 @@ class GroceryImportService {
     $destination = $directory . '/' . $hash . '.' . $extension;
 
     /*
-     * CACHE HIT.
-     *
-     * If the image was already downloaded, don't make another HTTP
-     * request.
+     * ------------------------------------------------------------
+     * 1. Check whether Drupal already has the file entity.
+     * ------------------------------------------------------------
      */
-    if ($this->fileSystem->exists($destination)) {
-      $files = $this->entityTypeManager
-        ->getStorage('file')
-        ->loadByProperties([
-          'uri' => $destination,
-        ]);
+    $files = $this->entityTypeManager
+      ->getStorage('file')
+      ->loadByProperties([
+        'uri' => $destination,
+      ]);
 
-      if (!empty($files)) {
-        $file = reset($files);
+    if (!empty($files)) {
+      $file = reset($files);
 
-        $logger->debug(
-          'Using cached image for store @store, line @line: @url',
-          [
-            '@store' => $store_id,
-            '@line' => $line,
-            '@url' => $url,
-          ]
-        );
+      $logger->debug(
+        'Reusing existing image for store @store, line @line: @url',
+        [
+          '@store' => $store_id,
+          '@line' => $line,
+          '@url' => $url,
+        ]
+      );
 
-        return $file;
-      }
+      return $file;
     }
 
     /*
-     * CACHE MISS.
-     *
-     * Download the image.
+     * ------------------------------------------------------------
+     * 2. Check whether the physical file exists but the
+     *    Drupal file entity doesn't.
+     * ------------------------------------------------------------
+     */
+    if ($this->fileSystem->getFileExists($destination)) {
+      $logger->warning(
+        'Image file exists without a Drupal file entity. Re-downloading: @destination',
+        [
+          '@destination' => $destination,
+        ]
+      );
+    }
+
+    /*
+     * ------------------------------------------------------------
+     * 3. Download only if it isn't already cached.
+     * ------------------------------------------------------------
      */
     try {
       $response = $this->httpClient->request(
@@ -1802,6 +1823,7 @@ class GroceryImportService {
           'timeout' => 30,
           'connect_timeout' => 10,
           'http_errors' => FALSE,
+          'allow_redirects' => TRUE,
           'headers' => [
             'User-Agent' => 'Drupal Grocery Import',
             'Accept' => 'image/*,*/*',
@@ -1817,7 +1839,9 @@ class GroceryImportService {
         );
       }
 
-      $data = $response->getBody()->getContents();
+      $data = $response
+        ->getBody()
+        ->getContents();
 
       if ($data === '') {
         throw new \RuntimeException(
@@ -1831,8 +1855,14 @@ class GroceryImportService {
         FileSystemInterface::EXISTS_REPLACE
       );
 
+      /*
+       * Make the file permanent.
+       */
+      $file->setPermanent();
+      $file->save();
+
       $logger->debug(
-        'Downloaded and cached image for store @store, line @line: @url',
+        'Downloaded image for store @store, line @line: @url',
         [
           '@store' => $store_id,
           '@line' => $line,
