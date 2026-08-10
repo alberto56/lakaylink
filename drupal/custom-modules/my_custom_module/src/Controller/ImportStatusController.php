@@ -115,6 +115,10 @@ class ImportStatusController extends ControllerBase {
         $this->t('Failure reason'),
         $status->failure_reason ?: $this->t('None'),
       ],
+      [
+        $this->t('Import command'),
+       'drush php:eval \'\\Drupal::service("my_custom_module.grocery_import")->import(' . $commerce_store->id() . ');\'',
+      ],
     ];
 
     // Add the source URL to the table when one is available.
