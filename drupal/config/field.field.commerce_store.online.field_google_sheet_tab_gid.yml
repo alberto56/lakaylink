@@ -11,7 +11,7 @@ entity_type: commerce_store
 bundle: online
 label: 'Google Sheet Tab GID'
 description: ''
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''

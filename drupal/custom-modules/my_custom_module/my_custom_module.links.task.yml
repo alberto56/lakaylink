@@ -1,5 +1,16 @@
+# Adds an "Import status" tab to the Commerce Store page.
 my_custom_module.import_status:
+
+  # Route that should be opened when the tab is clicked.
   route_name: my_custom_module.import_status
+
+  # Label displayed for the local task/tab.
   title: 'Import status'
+
+  # Places this tab alongside the canonical Commerce Store tabs.
+  # This makes it available on the Commerce Store entity page.
   base_route: entity.commerce_store.canonical
+
+  # Controls the position of the tab relative to other local tasks.
+  # Higher values generally place the tab later in the list.
   weight: 100
