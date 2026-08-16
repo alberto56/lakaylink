@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\my_custom_module\EventSubscriber;
 
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -15,34 +19,20 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 class SellerAccessSubscriber implements EventSubscriberInterface {
 
   /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected AccountProxyInterface $currentUser;
-
-  /**
-   * The route match service.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected RouteMatchInterface $routeMatch;
-
-  /**
    * Constructs a SellerAccessSubscriber object.
    *
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The current user service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
    *   The route match service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   The language manager.
    */
   public function __construct(
-    AccountProxyInterface $currentUser,
-    RouteMatchInterface $routeMatch,
-  ) {
-    $this->currentUser = $currentUser;
-    $this->routeMatch = $routeMatch;
-  }
+    protected AccountProxyInterface $currentUser,
+    protected RouteMatchInterface $routeMatch,
+    protected LanguageManagerInterface $languageManager,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -60,7 +50,6 @@ class SellerAccessSubscriber implements EventSubscriberInterface {
    *   The request event.
    */
   public function onRequest(RequestEvent $event): void {
-
     // Apply restrictions only to seller users.
     if (!$this->currentUser->hasRole('seller')) {
       return;
@@ -77,12 +66,27 @@ class SellerAccessSubscriber implements EventSubscriberInterface {
       'user.logout.confirm',
     ];
 
-    // Redirect to the seller dashboard if the route is not allowed.
-    if (!in_array($route_name, $allowed, TRUE)) {
-      $event->setResponse(
-        new RedirectResponse(Url::fromRoute('my_custom_module.seller_dashboard')->toString())
-      );
+    // Allow the seller to access allowed routes.
+    if (in_array($route_name, $allowed, TRUE)) {
+      return;
     }
+
+    // Get the language associated with the current request.
+    $language = $this->languageManager->getCurrentLanguage();
+
+    // Generate the seller dashboard URL using the current language.
+    $seller_dashboard_url = Url::fromRoute(
+      'my_custom_module.seller_dashboard',
+      [],
+      [
+        'language' => $language,
+      ]
+    )->toString();
+
+    // Redirect to the localized seller dashboard.
+    $event->setResponse(
+      new RedirectResponse($seller_dashboard_url)
+    );
   }
 
 }

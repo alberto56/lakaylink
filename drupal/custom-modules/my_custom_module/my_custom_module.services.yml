@@ -9,6 +9,7 @@ services:
     class: Drupal\my_custom_module\EventSubscriber\ForceGoogleLoginSubscriber
     arguments:
       - '@current_user'
+      - '@language_manager'
     tags:
       - { name: event_subscriber }
 
@@ -22,6 +23,7 @@ services:
     arguments:
       - '@current_user'
       - '@current_route_match'
+      - '@language_manager'
     tags:
       - { name: event_subscriber }
 
@@ -54,6 +56,9 @@ services:
 
       # Entity type manager for loading and saving user entities.
       - '@entity_type.manager'
+
+      # The language manager to get the language associated with the request.
+      - '@language_manager'
 
   # Service responsible for importing product data.
   # Injects Drupal core services required for entity management,
