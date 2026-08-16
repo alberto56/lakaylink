@@ -54,3 +54,29 @@ services:
 
       # Entity type manager for loading and saving user entities.
       - '@entity_type.manager'
+
+  # Service responsible for importing product data.
+  # Injects Drupal core services required for entity management,
+  # logging, HTTP requests, file handling, language management,
+  # database access, file system operations, image validation caching,
+  # and key-value storage.
+  my_custom_module.grocery_import:
+    class: Drupal\my_custom_module\Service\GroceryImportService
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.factory'
+      - '@http_client'
+      - '@file.repository'
+      - '@language_manager'
+      - '@database'
+      - '@file_system'
+      - '@cache.my_custom_module_image_validation'
+      - '@keyvalue'
+      - '@datetime.time'
+
+  # Cache backend used to store image validation results for the
+  # my_custom_module grocery import service.
+  cache.my_custom_module_image_validation:
+    class: Drupal\Core\Cache\DatabaseBackend
+    factory: ['@cache_factory', 'get']
+    arguments: ['my_custom_module_image_validation']

@@ -1,0 +1,98 @@
+Here’s the same update hook with clear comments added without changing the logic:
+<?php
+
+/**
+ * Create the product import status table.
+ *
+ * Stores the status and details of grocery product import runs
+ * for each Commerce store.
+ */
+function my_custom_module_update_10001() {
+
+  // Get Drupal's database schema service.
+  $schema = \Drupal::database()->schema();
+
+  // Create the table only if it does not already exist.
+  if (!$schema->tableExists('my_custom_module_products_import_status')) {
+
+    $schema->createTable(
+      'my_custom_module_products_import_status',
+      [
+        // Description of the table's purpose.
+        'description' => 'Stores grocery import status for each store/import run.',
+
+        // Define the table columns.
+        'fields' => [
+          // Unique auto-incrementing ID for each import record.
+          'id' => [
+            'type' => 'serial',
+            'not null' => TRUE,
+            'unsigned' => TRUE,
+          ],
+
+          // ID of the Commerce store associated with the import.
+          'store_id' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'unsigned' => TRUE,
+          ],
+
+          // Current status of the import.
+          // Defaults to "never" when an import has not been run.
+          'status' => [
+            'type' => 'varchar',
+            'length' => 32,
+            'not null' => TRUE,
+            'default' => 'never',
+          ],
+
+          // Unix timestamp indicating when the import started.
+          'started' => [
+            'type' => 'int',
+            'not null' => FALSE,
+          ],
+
+          // Unix timestamp indicating when the import finished.
+          'finished' => [
+            'type' => 'int',
+            'not null' => FALSE,
+          ],
+
+          // Number of products successfully imported.
+          'products_imported' => [
+            'type' => 'int',
+            'not null' => TRUE,
+            'default' => 0,
+          ],
+
+          // Stores the reason when an import fails.
+          'failure_reason' => [
+            'type' => 'text',
+            'size' => 'big',
+            'not null' => FALSE,
+          ],
+
+          // URL associated with the import source.
+          'url' => [
+            'type' => 'text',
+            'size' => 'big',
+            'not null' => FALSE,
+          ],
+        ],
+
+        // Use the auto-incrementing ID as the primary key.
+        'primary key' => ['id'],
+
+        // Add indexes to improve queries filtering by store,
+        // import status, or start time.
+        'indexes' => [
+          'store_id' => ['store_id'],
+          'status' => ['status'],
+          'started' => ['started'],
+        ],
+      ]
+    );
+
+  }
+
+}

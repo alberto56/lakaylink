@@ -78,3 +78,27 @@ my_custom_module.home:
   requirements:
     # Only authenticated users can access this route.
     _user_is_logged_in: 'TRUE'
+
+# Displays the product import status for a specific Commerce store.
+my_custom_module.import_status:
+  # URL path containing the Commerce store ID as a dynamic parameter.
+  path: '/store/{commerce_store}/products-import-status'
+
+  defaults:
+    # Controller method responsible for displaying the import status.
+    _controller: '\Drupal\my_custom_module\Controller\ImportStatusController::status'
+
+    # Page title displayed in the Drupal UI.
+    _title: 'Import status'
+
+  requirements:
+    # Only users with permission to administer Commerce stores
+    # can access this route.
+    _permission: 'administer commerce stores'
+
+  options:
+    parameters:
+      # Automatically converts the {commerce_store} route parameter
+      # into a Commerce Store entity using Drupal's entity type system.
+      commerce_store:
+        type: entity:commerce_store

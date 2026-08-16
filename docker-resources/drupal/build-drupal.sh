@@ -23,6 +23,7 @@ composer config --no-plugins allow-plugins.composer/installers true
 composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
 composer config --no-plugins allow-plugins.drupal/* true
 composer config --no-plugins allow-plugins.tbachert/spi true
+composer config --no-interaction allow-plugins.symfony/runtime true
 
 # Download contrib modules
 # stage_file_proxy: During local development, fetch files from the stage site
@@ -74,7 +75,8 @@ rm -rf modules/contrib
   drupal/views_filters_summary \
   drupal/search_api_autocomplete \
   drupal/viewsreference \
-  drupal/swiper_formatter
+  drupal/swiper_formatter \
+  drupal/masquerade
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.
