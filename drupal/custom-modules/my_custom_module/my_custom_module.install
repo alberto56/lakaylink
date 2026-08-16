@@ -1,4 +1,3 @@
-Here’s the same update hook with clear comments added without changing the logic:
 <?php
 
 /**
