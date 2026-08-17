@@ -74,6 +74,10 @@ class BuyerVerificationManager {
   /**
    * Verifies the current user using an invitation code.
    *
+   * Validates the supplied verification code, assigns the verified store to the
+   * user, updates the user's roles, and determines the appropriate redirect
+   * destination based on the number of assigned stores.
+   *
    * @param \Drupal\Core\Session\AccountProxyInterface $account
    *   The currently authenticated user account.
    * @param string $code

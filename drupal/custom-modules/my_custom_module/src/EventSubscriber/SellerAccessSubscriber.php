@@ -66,11 +66,6 @@ class SellerAccessSubscriber implements EventSubscriberInterface {
       'user.logout.confirm',
     ];
 
-    // Allow the seller to access allowed routes.
-    if (in_array($route_name, $allowed, TRUE)) {
-      return;
-    }
-
     // Get the language associated with the current request.
     $language = $this->languageManager->getCurrentLanguage();
 
@@ -83,10 +78,13 @@ class SellerAccessSubscriber implements EventSubscriberInterface {
       ]
     )->toString();
 
-    // Redirect to the localized seller dashboard.
-    $event->setResponse(
-      new RedirectResponse($seller_dashboard_url)
-    );
+    // Redirect to the seller dashboard if the route is not allowed.
+    if (!in_array($route_name, $allowed, TRUE)) {
+      // Redirect to the localized seller dashboard.
+      $event->setResponse(
+        new RedirectResponse($seller_dashboard_url)
+      );
+    }
   }
 
 }

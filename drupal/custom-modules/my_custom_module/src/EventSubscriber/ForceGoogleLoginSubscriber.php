@@ -14,6 +14,16 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Redirects anonymous users to the custom Google login page.
+ *
+ * This subscriber intercepts incoming requests before controller execution
+ * and ensures that anonymous users are redirected to the custom login page.
+ *
+ * The following paths are excluded from the redirect:
+ * - Custom login page.
+ * - Google OAuth authentication routes.
+ * - Logout route.
+ * - Password reset login links.
+ * - API endpoints.
  */
 class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
 
@@ -41,18 +51,24 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
 
   /**
    * Handles the kernel request event.
+   *
+   * Redirects anonymous users to the custom login page unless the request
+   * targets an excluded path.
+   *
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+   *   The request event.
    */
   public function onRequest(RequestEvent $event): void {
     $request = $event->getRequest();
 
-    // Allow authenticated users.
+    // Skip processing for authenticated users.
     if ($this->currentUser->isAuthenticated()) {
       return;
     }
 
     $path = $request->getPathInfo();
 
-    // Allow API endpoints.
+    // Allow API endpoints to bypass authentication redirects.
     if (str_starts_with($path, '/api/')) {
       return;
     }
@@ -102,6 +118,8 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     }
 
     /**
+     * Routes that should remain accessible to anonymous users.
+     *
      * Redirect to the custom login page using the language
      * associated with the current URL.
      */

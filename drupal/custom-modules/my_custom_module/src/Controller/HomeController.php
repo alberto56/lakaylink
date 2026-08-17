@@ -42,6 +42,19 @@ class HomeController extends ControllerBase {
   /**
    * Builds the home page with buyer and seller navigation options.
    *
+   * Creates a list of links that allow users to continue as either a buyer
+   * or a seller. The links are rendered using the
+   * 'home_role_selector' theme hook.
+   *
+   * Here we are handling two cases.
+   *
+   * 1. when user registered or logged in first time, we are not sure
+   *   whether user is a seller or buyer.
+   * 2. If User has both the roles seller and buyer.
+   *
+   * We are listing links /home/seller and /buyer-login-redirect.
+   * User can navigate to seller or buyer screens by clicking on those.
+   *
    * @return array
    *   A render array for the role selection page.
    */
