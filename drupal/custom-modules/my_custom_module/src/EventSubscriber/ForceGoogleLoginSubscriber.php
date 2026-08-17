@@ -73,22 +73,16 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    /**
-     * Determine the language from the URL path.
-     *
-     * Example:
-     * /fr/products  -> fr
-     * /de/products  -> de
-     * /products     -> default language.
-     */
+    // Determine the language from the URL path.
+    // Example:
+    // /fr/products  -> fr
+    // /de/products  -> de
+    // /products     -> default language.
     $language = $this->getLanguageFromPath($path);
 
-    /**
-     * Remove the language prefix before checking allowed paths.
-     *
-     * /fr/custom-login -> /custom-login
-     * /de/user/login/google -> /user/login/google
-     */
+    // Remove the language prefix before checking allowed paths.
+    // /fr/custom-login -> /custom-login.
+    // /de/user/login/google -> /user/login/google.
     $path_without_language = $this->removeLanguagePrefix($path, $language);
 
     // Public routes.
@@ -117,11 +111,11 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
       }
     }
 
-    /**
+    /*
      * Routes that should remain accessible to anonymous users.
      *
      * Redirect to the custom login page using the language
-     * associated with the current URL.
+     *  associated with the current URL.
      */
     $login_url = Url::fromRoute(
       'my_custom_module.custom_login',
@@ -160,12 +154,12 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
 
       $language_prefix = '/' . $prefix;
 
-      // Exact language path: /fr
+      // Exact language path: /fr.
       if ($path === $language_prefix) {
         return $language;
       }
 
-      // Language-prefixed path: /fr/anything
+      // Language-prefixed path: /fr/anything.
       if (str_starts_with($path, $language_prefix . '/')) {
         return $language;
       }
