@@ -17,11 +17,11 @@ class HomeController extends ControllerBase {
   /**
    * Constructs a HomeController object.
    *
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   * @param \Drupal\Core\Language\LanguageManagerInterface $moduleLanguageManager
    *   The language manager.
    */
   public function __construct(
-    private readonly LanguageManagerInterface $languageManager,
+    private readonly LanguageManagerInterface $moduleLanguageManager,
   ) {}
 
   /**
@@ -47,7 +47,7 @@ class HomeController extends ControllerBase {
    */
   public function home(): array {
     // Get the language associated with the current request.
-    $language = $this->languageManager->getCurrentLanguage();
+    $language = $this->moduleLanguageManager->getCurrentLanguage();
 
     // Initialize the links array.
     $links = [];

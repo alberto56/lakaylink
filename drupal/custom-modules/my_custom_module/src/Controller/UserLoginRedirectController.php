@@ -27,12 +27,12 @@ class UserLoginRedirectController extends ControllerBase {
    *
    * @param \Drupal\my_custom_module\BuyerStoreResolverInterface $buyerStoreResolver
    *   The buyer store resolver service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   * @param \Drupal\Core\Language\LanguageManagerInterface $moduleLanguageManager
    *   The language manager.
    */
   public function __construct(
     private readonly BuyerStoreResolverInterface $buyerStoreResolver,
-    private readonly LanguageManagerInterface $languageManager,
+    private readonly LanguageManagerInterface $moduleLanguageManager,
   ) {}
 
   /**
@@ -70,7 +70,7 @@ class UserLoginRedirectController extends ControllerBase {
     $user = $this->currentUser();
 
     // Get the language associated with the current request.
-    $language = $this->languageManager->getCurrentLanguage();
+    $language = $this->moduleLanguageManager->getCurrentLanguage();
 
     // Redirect anonymous users to the localized custom login page.
     if ($user->isAnonymous()) {
