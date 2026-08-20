@@ -848,10 +848,9 @@ class GroceryImportService {
     $cached = $this->imageValidationCache->get($cid);
 
     if ($cached) {
-      return [
-        ...$cached->data,
-        'cached' => TRUE,
-      ];
+      $data = $cached->data;
+      $data['cached'] = TRUE;
+      return $data;
     }
 
     /*

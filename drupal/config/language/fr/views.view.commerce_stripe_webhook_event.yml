@@ -8,7 +8,7 @@ display:
         type:
           label: Type
         status:
-          label: État
+          label: Statut
         processed:
           label: Traité
         received:
@@ -37,6 +37,6 @@ display:
             label: Type
         status:
           expose:
-            label: État
+            label: Statut
   page:
     display_title: Page

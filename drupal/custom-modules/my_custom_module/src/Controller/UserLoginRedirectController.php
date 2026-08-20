@@ -10,11 +10,13 @@ declare(strict_types=1);
 namespace Drupal\my_custom_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
 use Drupal\my_custom_module\BuyerStoreResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Handles user login redirection based on assigned roles.
@@ -26,9 +28,15 @@ class UserLoginRedirectController extends ControllerBase {
    *
    * @param \Drupal\my_custom_module\BuyerStoreResolverInterface $buyerStoreResolver
    *   The buyer store resolver service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $moduleLanguageManager
+   *   The language manager.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The Request Stack.
    */
   public function __construct(
     private readonly BuyerStoreResolverInterface $buyerStoreResolver,
+    private readonly LanguageManagerInterface $moduleLanguageManager,
+    private readonly RequestStack $requestStack,
   ) {}
 
   /**
@@ -42,7 +50,9 @@ class UserLoginRedirectController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): self {
     return new self(
-      $container->get('my_custom_module.buyer_store_resolver')
+      $container->get('my_custom_module.buyer_store_resolver'),
+      $container->get('language_manager'),
+      $container->get('request_stack'),
     );
   }
 
@@ -64,10 +74,35 @@ class UserLoginRedirectController extends ControllerBase {
     // Get the currently logged-in user.
     $user = $this->currentUser();
 
-    // Redirect anonymous users to the custom login page.
+    $request = $this->requestStack->getCurrentRequest();
+
+    // Prefer the language passed through the OAuth flow.
+    $language_code = $request?->query->get('language');
+
+    if ($language_code) {
+      $language = $this->moduleLanguageManager->getLanguage($language_code);
+
+      // If an invalid language was supplied, fall back to Drupal's
+      // current request language.
+      if (!$language) {
+        $language = $this->moduleLanguageManager->getCurrentLanguage();
+      }
+    }
+    else {
+      // Get the language associated with the current request.
+      $language = $this->moduleLanguageManager->getCurrentLanguage();
+    }
+
+    // Redirect anonymous users to the localized custom login page.
     if ($user->isAnonymous()) {
       return new RedirectResponse(
-        Url::fromRoute('my_custom_module.custom_login')->toString()
+        Url::fromRoute(
+          'my_custom_module.custom_login',
+          [],
+          [
+            'language' => $language,
+          ]
+        )->toString()
       );
     }
 
@@ -75,7 +110,7 @@ class UserLoginRedirectController extends ControllerBase {
     $roles = array_diff($user->getRoles(), ['authenticated']);
 
     // Redirect users who are only unverified or who have both buyer and
-    // seller roles to the role selection page.
+    // seller roles to the localized role selection page.
     if (
       ($user->hasRole('unverified') && count($roles) === 1) ||
       (
@@ -84,14 +119,26 @@ class UserLoginRedirectController extends ControllerBase {
       )
     ) {
       return new RedirectResponse(
-        Url::fromRoute('my_custom_module.home')->toString()
+        Url::fromRoute(
+          'my_custom_module.home',
+          [],
+          [
+            'language' => $language,
+          ]
+        )->toString()
       );
     }
 
-    // Redirect sellers to the seller dashboard.
+    // Redirect sellers to the localized seller dashboard.
     if ($this->currentUser->hasRole('seller')) {
       return new RedirectResponse(
-        Url::fromRoute('my_custom_module.seller_dashboard')->toString()
+        Url::fromRoute(
+          'my_custom_module.seller_dashboard',
+          [],
+          [
+            'language' => $language,
+          ]
+        )->toString()
       );
     }
 
@@ -116,18 +163,38 @@ class UserLoginRedirectController extends ControllerBase {
         $store = reset($stores);
 
         return new RedirectResponse(
-          $store->toUrl()->toString()
+          $store->toUrl(
+            'canonical',
+            [
+              'language' => $language,
+            ]
+          )->toString()
         );
       }
 
-      // Redirect buyers to the store selector when multiple stores exist.
+      // Redirect buyers to the localized store selector when
+      // multiple stores exist.
       return new RedirectResponse(
-        Url::fromRoute('view.store_selector.page_1')->toString()
+        Url::fromRoute(
+          'view.store_selector.page_1',
+          [],
+          [
+            'language' => $language,
+          ]
+        )->toString()
       );
     }
 
-    // Redirect all remaining authenticated users to the admin dashboard.
-    return new RedirectResponse('/admin');
+    // Redirect all remaining authenticated users to the localized
+    // administration dashboard.
+    return new RedirectResponse(
+      Url::fromUri(
+        'internal:/admin',
+        [
+          'language' => $language,
+        ]
+      )->toString()
+    );
   }
 
 }
