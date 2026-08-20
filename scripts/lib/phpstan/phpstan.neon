@@ -3,5 +3,7 @@ parameters:
   excludePaths:
   - */tests/*
   - */test/*
+  bootstrapFiles:
+    - /phpstan-drupal/cart-block-mock-class.php
 includes:
   - /var/www/html/phpstan.neon
