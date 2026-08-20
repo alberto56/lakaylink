@@ -57,9 +57,6 @@ services:
       # Entity type manager for loading and saving user entities.
       - '@entity_type.manager'
 
-      # The language manager to get the language associated with the request.
-      - '@language_manager'
-
   # Service responsible for importing product data.
   # Injects Drupal core services required for entity management,
   # logging, HTTP requests, file handling, language management,
