@@ -117,7 +117,7 @@ class ImportStatusController extends ControllerBase {
       ],
       [
         $this->t('Import command'),
-       'drush php:eval \'\\Drupal::service("my_custom_module.grocery_import")->import(' . $commerce_store->id() . ');\'',
+        'drush php:eval \'\\Drupal::service("my_custom_module.grocery_import")->import(' . $commerce_store->id() . ');\'',
       ],
     ];
 
