@@ -95,7 +95,7 @@ class App {
       }
       else {
         $user = User::load($currentuser->id());
-        if ($user && $user->hasRole('buyer')) {
+        if ($user && !$user->hasRole('buyer')) {
           $form["#access"] = FALSE;
         }
       }
