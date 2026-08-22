@@ -6,6 +6,7 @@ namespace Drupal\my_custom_module\Service;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\commerce_store\Entity\StoreInterface;
 use Drupal\my_custom_module\BuyerStoreResolverInterface;
 
 /**
@@ -59,9 +60,19 @@ final class BuyerStoreResolver implements BuyerStoreResolverInterface {
       return [];
     }
 
-    return $this->entityTypeManager
+    $entities = $this->entityTypeManager
       ->getStorage('commerce_store')
       ->loadMultiple($ids);
+
+    $stores = [];
+
+    foreach ($entities as $entity) {
+      if ($entity instanceof StoreInterface) {
+        $stores[] = $entity;
+      }
+    }
+
+    return $stores;
   }
 
 }
