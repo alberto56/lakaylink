@@ -21,8 +21,8 @@ jobs:
       - name: Run tests
         run: ./scripts/end-to-end-tests.sh
 
-      - name: Make test script executable
+      - name: Make ci script executable
         run: chmod +x ./scripts/ci.sh
 
-      - name: Run tests
+      - name: Run ci
         run: ./scripts/ci.sh
