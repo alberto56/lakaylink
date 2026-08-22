@@ -34,9 +34,9 @@ class GenerateCodeController extends ControllerBase {
    *   A new GenerateCodeController instance.
    */
   public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('my_custom_module.invitation_code'),
-    );
+    $instance = parent::create($container);
+    $instance->invitationCode = $container->get('my_custom_module.invitation_code');
+    return $instance;
   }
 
   /**

@@ -5,5 +5,9 @@ parameters:
   - */test/*
   bootstrapFiles:
     - /phpstan-drupal/cart-block-mock-class.php
+    - /phpstan-drupal/store-interface-mock.php
+    - /phpstan-drupal/entity-interface-mock.php
+    - /phpstan-drupal/product-interface-mock.php
+    - /phpstan-drupal/product-variation-mock.php
 includes:
   - /var/www/html/phpstan.neon

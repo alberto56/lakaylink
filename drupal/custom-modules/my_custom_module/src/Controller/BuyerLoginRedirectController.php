@@ -44,10 +44,10 @@ class BuyerLoginRedirectController extends ControllerBase {
    * @return static
    *   A new controller instance.
    */
-  public static function create(ContainerInterface $container): self {
-    return new self(
-      $container->get('my_custom_module.buyer_store_resolver')
-    );
+  public static function create(ContainerInterface $container) {
+    $instance = parent::create($container);
+    $instance->buyerStoreResolver = $container->get('my_custom_module.buyer_store_resolver');
+    return $instance;
   }
 
   /**
@@ -60,7 +60,14 @@ class BuyerLoginRedirectController extends ControllerBase {
    *   Thrown when a buyer has not been assigned any stores.
    */
   public function landing(): RedirectResponse {
-    $user = $this->currentUser();
+    $currentUser = $this->currentUser();
+    $user = $this->entityTypeManager()
+      ->getStorage('user')
+      ->load($currentUser->id());
+
+    if ($user === NULL) {
+      throw new AccessDeniedHttpException();
+    }
 
     // Handle buyer-specific redirection logic.
     if ($user->hasRole('unverified')) {
@@ -100,6 +107,10 @@ class BuyerLoginRedirectController extends ControllerBase {
       );
     }
 
+    // Everyone else gets 403.
+    throw new AccessDeniedHttpException(
+      'You do not have permission to access this page.'
+    );
   }
 
 }

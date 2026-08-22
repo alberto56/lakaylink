@@ -2,7 +2,6 @@
 
 namespace Drupal\my_custom_module\Service;
 
-use Drupal\commerce_product\Entity\ProductVariation;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
@@ -10,6 +9,9 @@ use Drupal\file\FileRepositoryInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\commerce_product\Entity\ProductInterface;
+use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\commerce_product\Entity\ProductVariationInterface;
 use GuzzleHttp\ClientInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
@@ -44,7 +46,7 @@ class GroceryImportService {
   /**
    * The file repository.
    *
-   * @var \Drupal\Core\File\FileRepositoryInterface
+   * @var \Drupal\file\FileRepositoryInterface
    */
   protected FileRepositoryInterface $fileRepository;
 
@@ -308,177 +310,6 @@ class GroceryImportService {
   }
 
   /**
-   * Validate Google Sheet configuration.
-   *
-   * The configured URL must be a publicly accessible CSV URL.
-   *
-   * We do NOT blindly append:
-   *
-   *   &gid=XXXX
-   *
-   * to the URL.
-   *
-   * The URL itself should point to the required sheet/tab CSV.
-   */
-  protected function validateGoogleSheetConfiguration($store): array {
-    $url = trim(
-      $store->get('field_google_sheet_url')->uri ?? ''
-    );
-
-    $gid = trim(
-      $store->get('field_google_sheet_tab_gid')->value ?? ''
-    );
-
-    if ($url === '') {
-      return [
-        'valid' => FALSE,
-        'url' => NULL,
-        'reason' => sprintf(
-          'Google Sheet CSV URL is missing for store %d.',
-          $store->id()
-        ),
-      ];
-    }
-
-    if (!filter_var($url, FILTER_VALIDATE_URL)) {
-      return [
-        'valid' => FALSE,
-        'url' => NULL,
-        'reason' => sprintf(
-          'Google Sheet CSV URL is invalid: %s',
-          $url
-        ),
-      ];
-    }
-
-    $parts = parse_url($url);
-
-    if (
-      empty($parts['scheme']) ||
-      !in_array(
-        strtolower($parts['scheme']),
-        ['http', 'https'],
-        TRUE
-      )
-    ) {
-      return [
-        'valid' => FALSE,
-        'url' => NULL,
-        'reason' => sprintf(
-          'Google Sheet URL must use HTTP or HTTPS: %s',
-          $url
-        ),
-      ];
-    }
-
-    if (empty($parts['host']) ||
-      !str_contains(
-        strtolower($parts['host']),
-        'google.com'
-      )
-    ) {
-      return [
-        'valid' => FALSE,
-        'url' => NULL,
-        'reason' => sprintf(
-          'The configured URL is not a Google Sheets URL: %s',
-          $url
-        ),
-      ];
-    }
-
-    /*
-     * GID is useful for configuration validation/display.
-     *
-     * But we don't append it blindly because the URL may already
-     * contain the correct gid or may be a published CSV URL.
-     */
-    if ($gid !== '' && !ctype_digit($gid)) {
-      return [
-        'valid' => FALSE,
-        'url' => NULL,
-        'reason' => sprintf(
-          'Google Sheet Tab GID must contain only digits. Given: %s',
-          $gid
-        ),
-      ];
-    }
-
-    /*
-     * Validate that the URL can actually return the public CSV.
-     *
-     * This is more important than simply validating its syntax.
-     */
-    try {
-      $response = $this->httpClient->request(
-        'GET',
-        $url,
-        [
-          'timeout' => 30,
-          'connect_timeout' => 10,
-          'http_errors' => FALSE,
-          'headers' => [
-            'Accept' => 'text/csv,text/plain,*/*',
-            'User-Agent' => 'Drupal Grocery Import',
-          ],
-        ]
-      );
-
-      $status = $response->getStatusCode();
-
-      if ($status < 200 || $status >= 300) {
-        return [
-          'valid' => FALSE,
-          'url' => $url,
-          'reason' => sprintf(
-            'Google Sheet URL returned HTTP %d. The sheet may not be public or the CSV URL may be incorrect.',
-            $status
-          ),
-        ];
-      }
-
-      $body = trim(
-        $response->getBody()->getContents()
-      );
-
-      if ($body === '') {
-        return [
-          'valid' => FALSE,
-          'url' => $url,
-          'reason' => 'Google Sheet CSV response is empty.',
-        ];
-      }
-
-      /*
-       * Store useful validation information.
-       */
-      $this->logger()->notice(
-        'Google Sheet URL is valid for store @store_id: @url',
-        [
-          '@store_id' => $store->id(),
-          '@url' => $url,
-        ]
-      );
-
-      return [
-        'valid' => TRUE,
-        'url' => $url,
-        'reason' => NULL,
-      ];
-    }
-    catch (\Throwable $e) {
-      return [
-        'valid' => FALSE,
-        'url' => $url,
-        'reason' => sprintf(
-          'Unable to access Google Sheet CSV: %s',
-          $e->getMessage()
-        ),
-      ];
-    }
-  }
-
-  /**
    * Builds a CSV export URL for a store's Google Sheet.
    *
    * Reads the Google Sheet URL and optional tab GID from the Commerce Store
@@ -497,12 +328,12 @@ class GroceryImportService {
   public function buildGoogleSheetCsvUrl($store): string {
     // Get and clean the Google Sheet URL from the store.
     $url = trim(
-      $store->get('field_google_sheet_url')->uri ?? ''
+      $store->field_google_sheet_url->uri ?? ''
     );
 
     // Get and clean the optional Google Sheet tab GID.
     $gid = trim(
-      $store->get('field_google_sheet_tab_gid')->value ?? ''
+      $store->field_google_sheet_tab_gid->value ?? ''
     );
 
     // Ensure that a Google Sheet URL has been configured.
@@ -568,52 +399,6 @@ class GroceryImportService {
   }
 
   /**
-   * Fetch and parse CSV data.
-   *
-   * Kept for compatibility with the original implementation.
-   *
-   * @param string $url
-   *   The URL.
-   *
-   * @return array
-   *   Parsed CSV rows.
-   *
-   * @throws \Exception
-   *   If the CSV cannot be fetched.
-   */
-  public function fetchAndParseCsv($url): array {
-    $csv_data = file_get_contents($url);
-
-    if (!$csv_data) {
-      throw new \Exception(
-        'Cannot fetch CSV from Google Sheets.'
-      );
-    }
-
-    $csv_data = str_replace(["\r\n", "\r"], "\n", $csv_data);
-    $lines = array_filter(explode("\n", $csv_data));
-
-    $rows = array_map('str_getcsv', $lines);
-
-    $header = array_map('trim', array_shift($rows));
-
-    $parsed = [];
-
-    foreach ($rows as $row) {
-      if (count($row) !== count($header)) {
-        continue;
-      }
-
-      $parsed[] = array_combine(
-        $header,
-        array_map('trim', $row)
-      );
-    }
-
-    return $parsed;
-  }
-
-  /**
    * Parse CSV data safely.
    *
    * @param string $csv_data
@@ -639,11 +424,6 @@ class GroceryImportService {
 
     $header = array_map('trim', array_shift($rows));
 
-    if (empty($header)) {
-      throw new \Exception(
-        'CSV header row is empty or malformed.'
-      );
-    }
     // IMPORTANT:
     // Validate columns BEFORE processing any row.
     $this->verifyRequiredFields($header);
@@ -732,76 +512,6 @@ class GroceryImportService {
         $e
       );
     }
-  }
-
-  /**
-   * Validate every image before importing any product.
-   *
-   * IMPORTANT:
-   * This method does not save products or variations.
-   */
-  protected function validateAllImages(array $rows, int $store_id): array {
-    $checked = [];
-
-    foreach ($rows as $index => $row) {
-      $line = $index + 2;
-
-      $image_url = trim(
-        $row['image_url'] ?? ''
-      );
-
-      /*
-       * No image URL means there is nothing to validate.
-       */
-      if ($image_url === '') {
-        continue;
-      }
-
-      /*
-       * Avoid checking the same image multiple times.
-       */
-      if (isset($checked[$image_url])) {
-        continue;
-      }
-
-      $checked[$image_url] = TRUE;
-
-      $result = $this->checkImageDownloadable(
-        $image_url
-      );
-
-      if (!$result['valid']) {
-        $reason = sprintf(
-          'Image pre-flight validation failed. Line %d, store %d, URL: %s. Reason: %s',
-          $line,
-          $store_id,
-          $image_url,
-          $result['reason']
-        );
-
-        $this->logger()->error(
-          $reason
-        );
-
-        return [
-          'valid' => FALSE,
-          'reason' => $reason,
-        ];
-      }
-    }
-
-    $this->logger()->notice(
-      'Image pre-flight validation passed for store @store_id. @count unique images checked.',
-      [
-        '@store_id' => $store_id,
-        '@count' => count($checked),
-      ]
-    );
-
-    return [
-      'valid' => TRUE,
-      'reason' => NULL,
-    ];
   }
 
   /**
@@ -1084,7 +794,7 @@ class GroceryImportService {
         'products_imported' => $products_imported,
         'failure_reason' => NULL,
       ])
-      ->condition('id', $import_id)
+      ->condition('id', (string) $import_id)
       ->execute();
   }
 
@@ -1107,7 +817,7 @@ class GroceryImportService {
         'finished' => $this->time->getRequestTime(),
         'failure_reason' => $reason,
       ])
-      ->condition('id', $import_id)
+      ->condition('id', (string) $import_id)
       ->execute();
   }
 
@@ -1124,67 +834,13 @@ class GroceryImportService {
     $query = $this->database
       ->select('my_custom_module_products_import_status', 's')
       ->fields('s')
-      ->condition('store_id', $store_id)
+      ->condition('store_id', (string) $store_id)
       ->orderBy('id', 'DESC')
       ->range(0, 1);
 
     $result = $query->execute()->fetchObject();
 
     return $result ?: NULL;
-  }
-
-  /**
-   * Get all import attempts for a store.
-   *
-   * @param int $store_id
-   *   Store ID.
-   *
-   * @return array
-   *   Import records.
-   */
-  public function getImportStatuses(int $store_id): array {
-    return $this->database
-      ->select('my_custom_module_products_import_status', 's')
-      ->fields('s')
-      ->condition('store_id', $store_id)
-      ->orderBy('id', 'DESC')
-      ->execute()
-      ->fetchAll();
-  }
-
-  /**
-   * Get import status for a store.
-   *
-   * @param int $store_id
-   *   Store ID.
-   *
-   * @return array
-   *   Import status.
-   */
-  public function getImportStatus(int $store_id): array {
-    $storage = $this->getImportStatusStorage();
-
-    $status = $storage->get((string) $store_id);
-
-    if (!$status) {
-      return [
-        'status' => 'never',
-        'started' => NULL,
-        'finished' => NULL,
-        'products_imported' => 0,
-        'failure_reason' => '',
-        'url' => '',
-      ];
-    }
-
-    return $status;
-  }
-
-  /**
-   * Get state key for a store.
-   */
-  protected function getStatusKey(int $store_id): string {
-    return 'my_custom_module.import_status.' . $store_id;
   }
 
   /**
@@ -1431,26 +1087,6 @@ class GroceryImportService {
   }
 
   /**
-   * Reload variation by SKU.
-   *
-   * @param string $sku
-   *   SKU.
-   *
-   * @return \Drupal\commerce_product\Entity\ProductVariationInterface|null
-   *   Variation or NULL.
-   */
-  public function reloadVariationBySku($sku) {
-    $storage = $this->entityTypeManager
-      ->getStorage('commerce_product_variation');
-
-    $variations = $storage->loadByProperties([
-      'sku' => $sku,
-    ]);
-
-    return $variations ? reset($variations) : NULL;
-  }
-
-  /**
    * Load or create a product.
    */
   public function loadOrCreateProduct(
@@ -1467,9 +1103,11 @@ class GroceryImportService {
       'stores' => [$store_id],
     ]);
 
+    /** @var \Drupal\commerce_product\Entity\ProductInterface|null $product */
     $product = reset($existing);
 
     if (!$product) {
+      /** @var \Drupal\commerce_product\Entity\ProductInterface $product */
       $product = $storage->create([
         'type' => 'grocery_product',
         'title' => $data['product_name'],
@@ -1478,7 +1116,13 @@ class GroceryImportService {
         'langcode' => $langcode,
       ]);
     }
-    elseif ($product->language()->getId() !== $langcode) {
+    elseif (!$product instanceof ProductInterface) {
+      throw new \UnexpectedValueException(
+        'Expected a commerce product entity.'
+      );
+    }
+
+    if ($product->language()->getId() !== $langcode) {
       if ($product->hasTranslation($langcode)) {
         return $product->getTranslation($langcode);
       }
@@ -1559,8 +1203,8 @@ class GroceryImportService {
    */
   public function loadOrCreateVariation(
     array $data,
-    $langcode = 'en',
-  ) {
+    string $langcode = 'en',
+  ): ?ProductVariationInterface {
     $storage = $this->entityTypeManager
       ->getStorage('commerce_product_variation');
 
@@ -1568,9 +1212,11 @@ class GroceryImportService {
       'sku' => $data['variation_sku'],
     ]);
 
+    /** @var \Drupal\commerce_product\Entity\ProductVariationInterface|null $variation */
     $variation = reset($existing);
 
     if (!$variation) {
+      /** @var \Drupal\commerce_product\Entity\ProductVariationInterface $variation */
       $variation = ProductVariation::create([
         'type' => 'grocery_variation',
         'sku' => $data['variation_sku'],
@@ -1959,141 +1605,6 @@ class GroceryImportService {
         'CSV is missing required columns: ' . implode(', ', $missing)
       );
     }
-  }
-
-  /**
-   * Validates that a Google Sheet is accessible and returns CSV data.
-   *
-   * Validates the supplied URL, ensures that it belongs to a supported
-   * Google Sheets domain, converts it to a CSV export URL, and attempts
-   * to fetch the CSV content.
-   *
-   * The method also detects common cases where Google returns an HTML
-   * login or access page instead of the expected CSV response.
-   *
-   * @param string $url
-   *   The Google Sheet URL to validate.
-   * @param string|null $gid
-   *   The optional Google Sheet tab GID used to select a specific sheet tab.
-   *
-   * @return array
-   *   An array containing:
-   *   - valid: TRUE if the Google Sheet is accessible and valid,
-   *     FALSE otherwise.
-   *   - errors: An array of validation or access error messages.
-   *   - csv_url: The generated CSV export URL, or NULL when the URL itself
-   *     is invalid.
-   *   - csv: The CSV content returned by Google, or an empty string on failure.
-   */
-  public function validateGoogleSheet(
-    string $url,
-    ?string $gid = NULL,
-  ): array {
-    $errors = [];
-
-    if (!filter_var($url, FILTER_VALIDATE_URL)) {
-      return [
-        'valid' => FALSE,
-        'errors' => [
-          'Google Sheet URL is not a valid URL.',
-        ],
-        'csv_url' => NULL,
-      ];
-    }
-
-    $parts = parse_url($url);
-
-    if (
-      empty($parts['host']) ||
-      !in_array(
-        strtolower($parts['host']),
-        [
-          'docs.google.com',
-          'docs.googleusercontent.com',
-        ],
-        TRUE
-      )
-    ) {
-      return [
-        'valid' => FALSE,
-        'errors' => [
-          'URL is not a Google Sheets URL.',
-        ],
-        'csv_url' => NULL,
-      ];
-    }
-
-    /*
-     * Convert the supplied Google Sheet URL to a public CSV URL.
-     */
-    $csv_url = $this->buildGoogleSheetCsvUrlFromInput(
-      $url,
-      $gid
-    );
-
-    try {
-      $response = $this->httpClient->request(
-        'GET',
-        $csv_url,
-        [
-          'timeout' => 20,
-          'connect_timeout' => 10,
-          'http_errors' => FALSE,
-          'allow_redirects' => TRUE,
-          'headers' => [
-            'User-Agent' => 'Drupal Grocery Import Validator/1.0',
-            'Accept' => 'text/csv,text/plain,*/*',
-          ],
-        ]
-      );
-
-      $status = $response->getStatusCode();
-
-      if ($status < 200 || $status >= 300) {
-        $errors[] = sprintf(
-          'Google Sheet returned HTTP %d.',
-          $status
-        );
-      }
-
-      $csv = (string) $response->getBody();
-
-      if (trim($csv) === '') {
-        $errors[] = 'Google Sheet returned an empty CSV.';
-      }
-
-      /*
-       * If Google responds with HTML/login page instead of CSV,
-       * this is not a publicly accessible sheet.
-       */
-      $content_type = strtolower(
-        $response->getHeaderLine('Content-Type')
-      );
-
-      if (
-        str_contains($content_type, 'text/html') &&
-        !str_contains($csv, ',')
-      ) {
-        $errors[] =
-          'Google Sheet did not return CSV data. ' .
-          'Make sure the sheet is publicly accessible.';
-      }
-    }
-    catch (\Throwable $e) {
-      $errors[] = sprintf(
-        'Unable to access Google Sheet: %s',
-        $e->getMessage()
-      );
-
-      $csv = '';
-    }
-
-    return [
-      'valid' => empty($errors),
-      'errors' => $errors,
-      'csv_url' => $csv_url,
-      'csv' => $csv ?? '',
-    ];
   }
 
   /**

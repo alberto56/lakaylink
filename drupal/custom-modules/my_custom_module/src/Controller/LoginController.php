@@ -31,9 +31,10 @@ final class LoginController extends ControllerBase {
    * Dependency injection.
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('plugin.manager.block')
-    );
+    $instance = parent::create($container);
+    $instance->blockManager = $container->get('plugin.manager.block');
+
+    return $instance;
   }
 
   /**

@@ -2,10 +2,9 @@
 
 namespace Drupal\my_custom_module\Form;
 
-use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\my_custom_module\BuyerStoreResolverInterface;
 use Drupal\my_custom_module\Service\InvitationCodeGenerator;
 use Drupal\my_custom_module\Service\BuyerVerificationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,25 +21,20 @@ class BuyerVerificationForm extends FormBase {
   /**
    * Constructs a new BuyerVerificationForm instance.
    *
-   * @param \Drupal\my_custom_module\BuyerStoreResolverInterface $buyerStoreResolver
-   *   Service used to resolve store context for the buyer.
-   * @param \Drupal\Core\Entity\EntityStorageInterface $userStorage
-   *   User entity storage handler.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   Currently logged in user.
    * @param \Drupal\my_custom_module\Service\InvitationCodeGenerator $verificationService
    *   Service responsible for validating verification codes.
    * @param \Drupal\my_custom_module\Service\BuyerVerificationManager $buyerVerificationManager
    *   Service responsible for applying buyer verification logic.
    */
   public function __construct(
-    private readonly BuyerStoreResolverInterface $buyerStoreResolver,
-    private readonly EntityStorageInterface $userStorage,
+    private readonly AccountProxyInterface $currentUser,
     private readonly InvitationCodeGenerator $verificationService,
     private readonly BuyerVerificationManager $buyerVerificationManager,
   ) {}
 
   /**
-   * {@inheritdoc}
-   *
    * Factory method for dependency injection via the service container.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
@@ -50,16 +44,16 @@ class BuyerVerificationForm extends FormBase {
    *   A new instance of this form class.
    */
   public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('my_custom_module.buyer_store_resolver'),
-      $container->get('entity_type.manager')->getStorage('user'),
-      $container->get('my_custom_module.invitation_code'),
-      $container->get('my_custom_module.buyer_verification_manager'),
-    );
+    $instance = parent::create($container);
+
+    $instance->currentUser = $container->get('current_user');
+    $instance->verificationService = $container->get('my_custom_module.invitation_code');
+    $instance->buyerVerificationManager = $container->get('my_custom_module.buyer_verification_manager');
+
+    return $instance;
   }
 
   /**
-   * {@inheritdoc}
    *
    * Returns the unique form ID used by Drupal Form API.
    *
@@ -71,7 +65,6 @@ class BuyerVerificationForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
    *
    * Builds the buyer verification form.
    *
@@ -88,7 +81,6 @@ class BuyerVerificationForm extends FormBase {
    *   The rendered form structure.
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-
     // Attach custom Twig template for theming this form.
     $form['#theme'] = 'buyer_verification_form';
 
@@ -115,7 +107,6 @@ class BuyerVerificationForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
    *
    * Handles form submission and verifies the user using the provided code.
    *
@@ -132,7 +123,6 @@ class BuyerVerificationForm extends FormBase {
    *   The current form state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-
     // Get and normalize submitted verification code.
     $code = trim($form_state->getValue('verification_code'));
 
@@ -146,7 +136,7 @@ class BuyerVerificationForm extends FormBase {
 
     // Verifies the current user using an invitation code.
     $result = $this->buyerVerificationManager->verifyCurrentUser(
-      $this->currentUser(),
+      $this->currentUser,
       $code,
     );
 
