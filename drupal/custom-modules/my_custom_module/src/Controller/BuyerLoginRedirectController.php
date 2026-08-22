@@ -23,7 +23,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  * - Buyers without assigned stores are denied access.
  * - Other authenticated users are redirected to the administration area.
  */
-class BuyerLoginRedirectController extends ControllerBase {
+final class BuyerLoginRedirectController extends ControllerBase {
 
   /**
    * Constructs a BuyerLoginRedirectController object.
@@ -45,9 +45,9 @@ class BuyerLoginRedirectController extends ControllerBase {
    *   A new controller instance.
    */
   public static function create(ContainerInterface $container) {
-    $instance = parent::create($container);
-    $instance->buyerStoreResolver = $container->get('my_custom_module.buyer_store_resolver');
-    return $instance;
+    return new static(
+      $container->get('my_custom_module.buyer_store_resolver')
+    );
   }
 
   /**

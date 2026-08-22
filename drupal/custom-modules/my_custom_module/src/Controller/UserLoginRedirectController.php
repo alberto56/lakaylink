@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * Handles user login redirection based on assigned roles.
  */
-class UserLoginRedirectController extends ControllerBase {
+final class UserLoginRedirectController extends ControllerBase {
 
   /**
    * Constructs a UserLoginRedirectController object.
@@ -40,11 +40,10 @@ class UserLoginRedirectController extends ControllerBase {
    * @return static
    *   A new controller instance.
    */
-  public static function create(ContainerInterface $container): self {
-    $instance = parent::create($container);
-    $instance->buyerStoreResolver = $container->get('my_custom_module.buyer_store_resolver');
-
-    return $instance;
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('my_custom_module.buyer_store_resolver')
+    );
   }
 
   /**

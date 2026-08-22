@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * Provides the seller dashboard page and store listing.
  */
-class SellerDashboardController extends ControllerBase {
+final class SellerDashboardController extends ControllerBase {
 
   /**
    * The buyer store resolver service.
@@ -51,13 +51,12 @@ class SellerDashboardController extends ControllerBase {
    * @return static
    *   A new controller instance.
    */
-  public static function create(ContainerInterface $container): self {
-    $instance = parent::create($container);
-    $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->currentUser = $container->get('current_user');
-    $instance->buyerStoreResolver = $container->get('my_custom_module.buyer_store_resolver');
-
-    return $instance;
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.manager'),
+      $container->get('current_user'),
+      $container->get('my_custom_module.buyer_store_resolver'),
+    );
   }
 
   /**
