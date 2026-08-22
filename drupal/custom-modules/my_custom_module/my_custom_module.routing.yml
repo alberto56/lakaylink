@@ -102,3 +102,11 @@ my_custom_module.import_status:
       # into a Commerce Store entity using Drupal's entity type system.
       commerce_store:
         type: entity:commerce_store
+
+my_custom_module.test_login:
+  path: '/my-custom-module/test-login'
+  defaults:
+    _title: 'Test Login'
+    _controller: '\Drupal\my_custom_module\Controller\TestLoginController'
+  requirements:
+    _permission: 'access content'
