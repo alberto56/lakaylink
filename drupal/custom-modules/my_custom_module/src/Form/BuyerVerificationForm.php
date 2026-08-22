@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * validates it, and then marks the current user as verified
  * for a specific store context.
  */
-class BuyerVerificationForm extends FormBase {
+final class BuyerVerificationForm extends FormBase {
 
   /**
    * Constructs a new BuyerVerificationForm instance.
@@ -44,13 +44,11 @@ class BuyerVerificationForm extends FormBase {
    *   A new instance of this form class.
    */
   public static function create(ContainerInterface $container): static {
-    $instance = parent::create($container);
-
-    $instance->currentUser = $container->get('current_user');
-    $instance->verificationService = $container->get('my_custom_module.invitation_code');
-    $instance->buyerVerificationManager = $container->get('my_custom_module.buyer_verification_manager');
-
-    return $instance;
+    return new static(
+      $container->get('current_user'),
+      $container->get('my_custom_module.invitation_code'),
+      $container->get('my_custom_module.buyer_verification_manager'),
+    );
   }
 
   /**
