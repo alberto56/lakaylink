@@ -54,7 +54,6 @@ class BuyerVerificationForm extends FormBase {
   }
 
   /**
-   *
    * Returns the unique form ID used by Drupal Form API.
    *
    * @return string
@@ -65,12 +64,11 @@ class BuyerVerificationForm extends FormBase {
   }
 
   /**
-   *
    * Builds the buyer verification form.
    *
    * The form contains:
-   * - A verification code text field
-   * - A submit button
+   * - A verification code text field.
+   * - A submit button.
    *
    * @param array $form
    *   The form render array.
@@ -107,15 +105,14 @@ class BuyerVerificationForm extends FormBase {
   }
 
   /**
-   *
    * Handles form submission and verifies the user using the provided code.
    *
    * Steps:
-   * 1. Retrieve submitted verification code
-   * 2. Validate code via InvitationCodeGenerator service
-   * 3. Verify current user via BuyerVerificationManager
-   * 4. Display success or error messages
-   * 5. Redirect user on success
+   * 1. Retrieve submitted verification code.
+   * 2. Validate code via InvitationCodeGenerator service.
+   * 3. Verify current user via BuyerVerificationManager.
+   * 4. Display success or error messages.
+   * 5. Redirect user on success.
    *
    * @param array $form
    *   The form structure.
