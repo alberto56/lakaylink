@@ -15,18 +15,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # - name: Make deploy script executable
-      #   run: chmod +x ./scripts/deploy.sh
-
-      # - name: Run deploy
-      #   run: ./scripts/deploy.sh
-
-      # - name: Make test script executable
-      #   run: chmod +x ./scripts/end-to-end-tests.sh
-
-      # - name: Run tests
-      #   run: ./scripts/end-to-end-tests.sh
-
       - name: Make ci script executable
         run: chmod +x ./scripts/ci.sh
 
