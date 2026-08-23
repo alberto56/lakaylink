@@ -16,10 +16,15 @@ echo "Test update starter data"
 ./scripts/update-starter-data.sh
 echo "Test running environment"
 ./scripts/test-running-environment.sh
+
+echo "======= Before End-to-end tests ======="
+ls -la
 echo "End-to-end tests"
 ./scripts/end-to-end-tests.sh
+
 echo "Accessibility tests"
 ./scripts/a11y-tests.sh
+
 BACKUPID="$(./scripts/lib/data-unique-dirname.sh)"
 echo "Export test to $BACKUPID"
 ./scripts/create-data-backup.sh "$BACKUPID"
