@@ -19,7 +19,6 @@ echo "Test running environment"
 
 echo "======= Before End-to-end tests ======="
 ls -la  /home/runner/work/lakaylink/lakaylink/do-not-commit/
-ls -la  /home/runner/work/lakaylink/lakaylink/do-not-commit/screenshots/
 ls -la  /home/runner/work/lakaylink/lakaylink/do-not-commit/dom-captures/
 
 echo "End-to-end tests"
