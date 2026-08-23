@@ -19,7 +19,7 @@ it('Anonymous user should see Login by google button', async function() {
       console.log('go to the login page')
       await page.goto('http://webserver')
 
-      await testBase.screenshot(page, 'custom login page', await page.content());
+      await testBase.screenshot(page, 'custom-login-page', await page.content());
       await testBase.assertInSourceCode(page, 'Sign in With Google')
 
     }
