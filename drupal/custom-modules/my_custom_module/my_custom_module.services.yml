@@ -9,6 +9,7 @@ services:
     class: Drupal\my_custom_module\EventSubscriber\ForceGoogleLoginSubscriber
     arguments:
       - '@current_user'
+      - '@language_manager'
     tags:
       - { name: event_subscriber }
 
