@@ -86,7 +86,7 @@ foreach (\$users as \$userData) {
   ]);
 
   if (\$existing) {
-    print \$userData['name'] . ' already exists' . PHP_EOL;
+    print \$userData['name'] . ' already exists ' . PHP_EOL;
     continue;
   }
 
@@ -114,6 +114,12 @@ foreach (\$users as \$userData) {
   print \$userData['name'] . ' created' . PHP_EOL;
 }
 "
+
+echo 'change passwords'
+docker compose exec -T drupal /bin/bash -c 'drush upwd test_unverified '"$PASS"
+docker compose exec -T drupal /bin/bash -c 'drush upwd test_seller '"$PASS"
+docker compose exec -T drupal /bin/bash -c 'drush upwd test_buyer '"$PASS"
+
 
 echo 'Running our tests'
 docker run \
