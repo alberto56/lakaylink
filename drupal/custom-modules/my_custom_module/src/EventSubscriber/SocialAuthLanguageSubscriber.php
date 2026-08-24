@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace Drupal\my_custom_module\EventSubscriber;
 
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\social_auth\Event\BeforeRedirectEvent;
 use Drupal\social_auth\Event\LoginEvent;
 use Drupal\social_auth\Event\SocialAuthEvents;
+use Drupal\social_auth\SocialAuthDataHandler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\RequestStack;
-
 
 /**
- * @todo Add description for this subscriber.
+ * Preserves the Drupal language during Social Auth login.
  */
 final class SocialAuthLanguageSubscriber implements EventSubscriberInterface {
 
@@ -26,19 +23,26 @@ final class SocialAuthLanguageSubscriber implements EventSubscriberInterface {
   protected LanguageManagerInterface $languageManager;
 
   /**
-   * The request stack.
+   * The Social Auth data handler.
    */
-  protected RequestStack $requestStack;
+  protected SocialAuthDataHandler $dataHandler;
+
+  /**
+   * The logger.
+   */
+  protected $logger;
 
   /**
    * Constructs the subscriber.
    */
   public function __construct(
     LanguageManagerInterface $language_manager,
-    RequestStack $request_stack,
+    SocialAuthDataHandler $data_handler,
+    LoggerChannelFactoryInterface $logger_factory,
   ) {
     $this->languageManager = $language_manager;
-    $this->requestStack = $request_stack;
+    $this->dataHandler = $data_handler;
+    $this->logger = $logger_factory->get('my_custom_module');
   }
 
   /**
@@ -52,14 +56,21 @@ final class SocialAuthLanguageSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Runs immediately before redirecting the user to Google.
+   * Store the current language before redirecting to Google.
    */
   public function beforeRedirect(BeforeRedirectEvent $event): void {
     $language = $this->languageManager->getCurrentLanguage();
 
-    $event->getDataHandler()->set(
+    $this->dataHandler->set(
       'social_auth_language',
       $language->getId()
+    );
+
+    $this->logger->notice(
+      'Stored Social Auth language: @language',
+      [
+        '@language' => $language->getId(),
+      ]
     );
   }
 
@@ -67,16 +78,16 @@ final class SocialAuthLanguageSubscriber implements EventSubscriberInterface {
    * Runs after successful Social Auth login.
    */
   public function onLogin(LoginEvent $event): void {
-    $language_code = $event->getDataHandler()->get('social_auth_language');
+    $language_code = $this->dataHandler->get('social_auth_language');
 
     if (!$language_code) {
       return;
     }
 
-    // Store it for the next request.
-    $this->requestStack->getCurrentRequest()->getSession()->set(
-      'social_auth_language',
-      $language_code
+    // Debug for now.
+    $this->logger->notice(
+      'Social Auth login language: @language',
+      ['@language' => $language_code]
     );
   }
 

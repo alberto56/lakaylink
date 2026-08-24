@@ -86,6 +86,7 @@ services:
     class: Drupal\my_custom_module\EventSubscriber\SocialAuthLanguageSubscriber
     arguments:
       - '@language_manager'
-      - '@request_stack'
+      - '@social_auth.data_handler'
+      - '@logger.factory'
     tags:
       - { name: event_subscriber }
