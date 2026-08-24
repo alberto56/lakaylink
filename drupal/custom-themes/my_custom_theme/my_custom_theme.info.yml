@@ -38,3 +38,6 @@ libraries-override:
     css:
       component:
         css/components/table.css: false
+
+interface translation project: my_custom_theme
+interface translation server pattern: themes/custom/my_custom_theme/translations/%project.%language.po
