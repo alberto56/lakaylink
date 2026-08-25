@@ -2,6 +2,7 @@
 
 namespace Drupal\my_custom_module\EventSubscriber;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
@@ -29,19 +30,30 @@ class SellerAccessSubscriber implements EventSubscriberInterface {
   protected RouteMatchInterface $routeMatch;
 
   /**
+   * The entityTypeManager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
    * Constructs a SellerAccessSubscriber object.
    *
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The current user service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
    *   The route match service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entityTypeManager.
    */
   public function __construct(
     AccountProxyInterface $currentUser,
     RouteMatchInterface $routeMatch,
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->currentUser = $currentUser;
     $this->routeMatch = $routeMatch;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -60,9 +72,12 @@ class SellerAccessSubscriber implements EventSubscriberInterface {
    *   The request event.
    */
   public function onRequest(RequestEvent $event): void {
+    $user = $this->entityTypeManager
+      ->getStorage('user')
+      ->load($this->currentUser->id());
 
     // Apply restrictions only to seller users.
-    if (!$this->currentUser->hasRole('seller')) {
+    if (!$user->hasRole('seller')) {
       return;
     }
 

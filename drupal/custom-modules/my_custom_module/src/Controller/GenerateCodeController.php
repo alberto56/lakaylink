@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Handles AJAX generation of invitation codes for commerce stores.
  */
-class GenerateCodeController extends ControllerBase {
+final class GenerateCodeController extends ControllerBase {
 
   /**
    * Constructs a GenerateCodeController object.
@@ -35,7 +35,7 @@ class GenerateCodeController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): static {
     return new static(
-      $container->get('my_custom_module.invitation_code'),
+      $container->get('my_custom_module.invitation_code')
     );
   }
 
