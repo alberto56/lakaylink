@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * Provides the seller dashboard page and store listing.
  */
-class SellerDashboardController extends ControllerBase {
+final class SellerDashboardController extends ControllerBase {
 
   /**
    * The buyer store resolver service.
@@ -51,7 +51,7 @@ class SellerDashboardController extends ControllerBase {
    * @return static
    *   A new controller instance.
    */
-  public static function create(ContainerInterface $container): self {
+  public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('current_user'),
@@ -73,11 +73,18 @@ class SellerDashboardController extends ControllerBase {
    */
   public function dashboard(): array {
 
-    // Get current user account.
-    $account = $this->currentUser;
+    // Get current user.
+    $currentUser = $this->currentUser;
+    $user = $this->entityTypeManager()
+      ->getStorage('user')
+      ->load($currentUser->id());
+
+    if ($user === NULL) {
+      throw new AccessDeniedHttpException();
+    }
 
     // Allow only sellers and administrators.
-    if ($account->hasRole('seller') || $account->hasRole('administrator')) {
+    if ($user->hasRole('seller') || $user->hasRole('administrator')) {
 
       // Load commerce store storage.
       $store_storage = $this->entityTypeManager->getStorage('commerce_store');
@@ -85,11 +92,11 @@ class SellerDashboardController extends ControllerBase {
       $storeQuery = $store_storage->getQuery()->accessCheck(TRUE);
 
       // Restrict sellers to only their assigned stores.
-      if ($account->hasRole('seller')) {
+      if ($user->hasRole('seller')) {
 
         // Get stores assigned to the seller.
         $allowed_stores = $this->buyerStoreResolver
-          ->getAllowedStores($account);
+          ->getAllowedStores($currentUser);
 
         $store_ids = [];
 
@@ -134,7 +141,7 @@ class SellerDashboardController extends ControllerBase {
     }
 
     // Handle unverified users.
-    elseif ($account->hasRole('unverified')) {
+    elseif ($user->hasRole('unverified')) {
       return [
         '#markup' => new FormattableMarkup(
           '<div class="alert alert-warning" role="alert">@message</div>',

@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * Handles user login redirection based on assigned roles.
  */
-class UserLoginRedirectController extends ControllerBase {
+final class UserLoginRedirectController extends ControllerBase {
 
   /**
    * Constructs a UserLoginRedirectController object.
@@ -40,8 +40,8 @@ class UserLoginRedirectController extends ControllerBase {
    * @return static
    *   A new controller instance.
    */
-  public static function create(ContainerInterface $container): self {
-    return new self(
+  public static function create(ContainerInterface $container) {
+    return new static(
       $container->get('my_custom_module.buyer_store_resolver')
     );
   }
@@ -62,10 +62,13 @@ class UserLoginRedirectController extends ControllerBase {
    */
   public function landing(): RedirectResponse {
     // Get the currently logged-in user.
-    $user = $this->currentUser();
+    $currentUser = $this->currentUser();
+    $user = $this->entityTypeManager()
+      ->getStorage('user')
+      ->load($currentUser->id());
 
     // Redirect anonymous users to the custom login page.
-    if ($user->isAnonymous()) {
+    if ($currentUser->isAnonymous()) {
       return new RedirectResponse(
         Url::fromRoute('my_custom_module.custom_login')->toString()
       );
@@ -79,8 +82,8 @@ class UserLoginRedirectController extends ControllerBase {
     if (
       ($user->hasRole('unverified') && count($roles) === 1) ||
       (
-        $this->currentUser->hasRole('buyer') &&
-        $this->currentUser->hasRole('seller')
+        $user->hasRole('buyer') &&
+        $user->hasRole('seller')
       )
     ) {
       return new RedirectResponse(
@@ -89,14 +92,14 @@ class UserLoginRedirectController extends ControllerBase {
     }
 
     // Redirect sellers to the seller dashboard.
-    if ($this->currentUser->hasRole('seller')) {
+    if ($user->hasRole('seller')) {
       return new RedirectResponse(
         Url::fromRoute('my_custom_module.seller_dashboard')->toString()
       );
     }
 
     // Handle buyer-specific redirection.
-    if ($this->currentUser->hasRole('buyer')) {
+    if ($user->hasRole('buyer')) {
 
       // Retrieve all stores assigned to the buyer.
       $stores = $this->buyerStoreResolver

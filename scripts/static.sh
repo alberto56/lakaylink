@@ -13,6 +13,10 @@ echo ''
 # See https://github.com/dcycle/docker-phpstan-drupal.
 docker run --rm \
   -v "$(pwd)"/drupal/custom-modules:/var/www/html/modules/custom \
+  -v "$(pwd)"/drupal/custom-themes:/var/www/html/themes/custom \
   -v "$(pwd)"/scripts/lib/phpstan:/phpstan-drupal \
-  dcycle/phpstan-drupal:4 /var/www/html/modules/custom \
-  -c /phpstan-drupal/phpstan.neon
+  dcycle/phpstan-drupal:4 \
+  /var/www/html/modules/custom \
+  /var/www/html/themes/custom \
+  -c /phpstan-drupal/phpstan.neon \
+  --memory-limit=512M

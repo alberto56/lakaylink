@@ -16,14 +16,6 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 class StoreContextSubscriber implements EventSubscriberInterface {
 
   /**
-   * Constructs a new StoreContextSubscriber instance.
-   *
-   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-   *   The request stack service used to access the current request if needed.
-   */
-  public function __construct(private $requestStack) {}
-
-  /**
    * Reacts to the kernel request event.
    *
    * This method checks if the current request path matches the pattern:

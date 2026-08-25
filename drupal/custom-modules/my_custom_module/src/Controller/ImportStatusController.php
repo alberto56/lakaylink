@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Controller for displaying grocery product import status.
  */
-class ImportStatusController extends ControllerBase {
+final class ImportStatusController extends ControllerBase {
 
   /**
    * The Drupal date formatter service.
@@ -37,18 +37,18 @@ class ImportStatusController extends ControllerBase {
    *
    * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
    *   The date formatter service.
-   * @param \Drupal\my_custom_module\Service\GroceryImportService $groceryImportService
+   * @param \Drupal\my_custom_module\Service\GroceryImportService $grocery_import_service
    *   The grocery import service.
    */
   public function __construct(
     DateFormatterInterface $date_formatter,
-    GroceryImportService $groceryImportService,
+    GroceryImportService $grocery_import_service,
   ) {
     // Store the date formatter service for later use.
     $this->dateFormatter = $date_formatter;
 
     // Store the grocery import service for retrieving import information.
-    $this->groceryImportService = $groceryImportService;
+    $this->groceryImportService = $grocery_import_service;
   }
 
   /**
@@ -62,10 +62,7 @@ class ImportStatusController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): static {
     return new static(
-      // Inject Drupal's date formatter service.
       $container->get('date.formatter'),
-
-      // Inject the custom grocery import service.
       $container->get('my_custom_module.grocery_import'),
     );
   }
@@ -117,7 +114,7 @@ class ImportStatusController extends ControllerBase {
       ],
       [
         $this->t('Import command'),
-       'drush php:eval \'\\Drupal::service("my_custom_module.grocery_import")->import(' . $commerce_store->id() . ');\'',
+        'drush php:eval \'\\Drupal::service("my_custom_module.grocery_import")->import(' . $commerce_store->id() . ');\'',
       ],
     ];
 

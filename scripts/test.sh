@@ -15,6 +15,8 @@ echo "Javascript linting"
 ./scripts/lint-js.sh
 echo "Javascript unit tests"
 ./scripts/unit-js.sh
+echo "PHP header check"
+./scripts/check-php-headers.sh
 echo "Static analysis"
 ./scripts/static.sh
 echo ""
