@@ -28,7 +28,7 @@ it('buyer should see the store he has joined.', async function() {
 
     await testBase.screenshot(
       page,
-      'unverified-user-test-login',
+      'buyer-user-test-login',
       await page.content()
     );
 

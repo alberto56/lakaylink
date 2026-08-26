@@ -28,7 +28,7 @@ it('seller should see store allocate to them.', async function() {
 
     await testBase.screenshot(
       page,
-      'unverified-user-test-login',
+      'seller-user-test-login',
       await page.content()
     );
 
