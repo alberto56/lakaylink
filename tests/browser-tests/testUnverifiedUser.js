@@ -130,6 +130,12 @@ it('unverified user should see buyer verifucation form when he click on continue
     // Submit the login form.
     await page.click('input[type="submit"]');
 
+    // Wait for the page to finish loading.
+    await page.waitForFunction(
+      () => document.readyState === 'complete',
+      { timeout: 10000 }
+    );
+
     // Screenshot.
     await testBase.screenshot(
       page,
