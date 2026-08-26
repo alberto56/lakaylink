@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\my_custom_module\Form;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -12,22 +13,49 @@ use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a My custom module form.
+ * Provides a My custom module login form for test user.
  */
 final class CustomLoginForm extends FormBase {
 
+  /**
+   * The user authentication service.
+   *
+   * @var \Drupal\user\UserAuthInterface
+   */
   protected UserAuthInterface $userAuth;
 
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
   protected $entityTypeManager;
 
+  /**
+   * Constructs a CustomLoginForm object.
+   *
+   * @param \Drupal\user\UserAuthInterface $user_auth
+   *   The user authentication service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   */
   public function __construct(
     UserAuthInterface $user_auth,
-    $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     $this->userAuth = $user_auth;
     $this->entityTypeManager = $entity_type_manager;
   }
 
+  /**
+   * Creates an instance of the form.
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The service container.
+   *
+   * @return static
+   *   The form instance.
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('user.auth'),
@@ -83,7 +111,7 @@ final class CustomLoginForm extends FormBase {
     if (!$uid) {
       $form_state->setErrorByName(
         'name',
-        $this->t('Unrecognized username or password.')
+        'Unrecognized username or password.'
       );
       return;
     }
