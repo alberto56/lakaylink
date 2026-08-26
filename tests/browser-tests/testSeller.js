@@ -39,6 +39,12 @@ it('seller should see store allocate to them.', async function() {
     // Submit the login form.
     await page.click('input[type="submit"]');
 
+    // Wait for the page to finish loading.
+    await page.waitForFunction(
+      () => document.readyState === 'complete',
+      { timeout: 10000 }
+    );
+
     // Screenshot.
     await testBase.screenshot(
       page,
@@ -47,7 +53,6 @@ it('seller should see store allocate to them.', async function() {
     );
 
     // Get the complete page source.
-    const source = await page.content();
     await testBase.assertInSourceCode(
       page,
       '<h1 class="mb-4">My Stores</h1>'
