@@ -106,7 +106,7 @@ my_custom_module.import_status:
 my_custom_module.test_user_login:
   path: '/my-custom-module/test-user-login'
   defaults:
-    _title: 'Custom Login'
+    _title: 'Test user login'
     _form: 'Drupal\my_custom_module\Form\CustomLoginForm'
   requirements:
     _access: 'TRUE'

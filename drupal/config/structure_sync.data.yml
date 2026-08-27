@@ -87,7 +87,7 @@ blocks:
     fields:
       body:
         -
-          value: '<p><small class="text-dark">Call Us:</small> <a class="text-muted" href="#">(+012) 1234 567890</a></p>'
+          value: '<p><small class="text-dark">Call Us:</small> <a class="text-muted" href="tel:+0121234567890">(+012) 1234 567890</a></p>'
           summary: ''
           format: full_html
   -

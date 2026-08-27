@@ -1075,7 +1075,7 @@
 }
 
 #lang_dropdown_form_lang-dropdown-form > noscript {
-    color: #767676;
+  color: #767676;
 }
 
 .text-primary {
@@ -1087,5 +1087,18 @@
 }
 
 .copyright {
-  background: #af6400;
+  background-color: #af6400 !important;
+}
+
+.footer .footer-item a {
+  color: #fff !important;
+}
+
+.footer .footer-item a:hover,
+.footer .footer-item a:focus {
+  color: #fff !important;
+}
+
+.footer .footer-item a i {
+  color: #fff !important;
 }
