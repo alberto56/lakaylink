@@ -87,7 +87,7 @@ blocks:
     fields:
       body:
         -
-          value: '<p><small class="text-dark">Call Us:</small> <a class="text-muted" href="#!">(+012) 1234 567890</a></p>'
+          value: '<p><small class="text-dark">Call Us:</small> <a class="text-muted" href="#">(+012) 1234 567890</a></p>'
           summary: ''
           format: full_html
   -
@@ -100,7 +100,7 @@ blocks:
     fields:
       body:
         -
-          value: '<p><a class="text-muted me-2" href="#!">Help</a><small> / </small><a class="text-muted mx-2" href="#!">Support</a><small> / </small><a class="text-muted ms-2" href="#!">Contact</a></p>'
+          value: '<p><a class="text-muted me-2" href="#">Help</a><small> / </small><a class="text-muted mx-2" href="#">Support</a><small> / </small><a class="text-muted ms-2" href="#">Contact</a></p>'
           summary: ''
           format: full_html
 menus:
