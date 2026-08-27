@@ -104,7 +104,7 @@ my_custom_module.import_status:
         type: entity:commerce_store
 
 my_custom_module.test_user_login:
-  path: '/my-custom-module/test-user-login'
+  path: '/test-user-login'
   defaults:
     _title: 'Test user login'
     _form: 'Drupal\my_custom_module\Form\CustomLoginForm'

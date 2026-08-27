@@ -20,7 +20,7 @@ it('buyer should see the store he has joined.', async function() {
     const userPassword = process.env.DRUPALPASS;
 
     await page.goto(
-      'http://webserver/my-custom-module/test-user-login',
+      'http://webserver/test-user-login',
       {
         waitUntil: 'networkidle2'
       }
@@ -36,8 +36,12 @@ it('buyer should see the store he has joined.', async function() {
     await page.type('input[name="name"]', 'test_buyer');
     await page.type('input[name="pass"]', userPassword);
 
-    // Submit the login form.
-    await page.click('input[type="submit"]');
+    // Submit and wait until network is idle.
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'networkidle0' }),
+      page.click('input[type="submit"]'),
+    ]);
+
 
     // Wait for the page to finish loading.
     await page.waitForFunction(
@@ -91,7 +95,6 @@ it('buyer should see the store he has joined.', async function() {
       page,
       'Add to cart'
     );
-
 
   }
   catch (error) {

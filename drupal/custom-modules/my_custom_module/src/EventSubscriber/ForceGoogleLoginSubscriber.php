@@ -74,7 +74,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
       '/user/login/google',
       '/oauth',
       '/user/logout',
-      '/my-custom-module/test-user-login',
+      '/test-user-login',
     ];
 
     // Allow password reset login links.

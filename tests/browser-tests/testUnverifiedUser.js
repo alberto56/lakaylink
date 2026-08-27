@@ -23,7 +23,7 @@ it(
     const userPassword = process.env.DRUPALPASS;
 
     await page.goto(
-      'http://webserver/my-custom-module/test-user-login',
+      'http://webserver/test-user-login',
       {
         waitUntil: 'networkidle2'
       }
@@ -111,7 +111,7 @@ it('unverified user should see buyer verifucation form when he click on continue
     const userPassword = process.env.DRUPALPASS;
 
     await page.goto(
-      'http://webserver/my-custom-module/test-user-login',
+      'http://webserver/test-user-login',
       {
         waitUntil: 'networkidle2'
       }
