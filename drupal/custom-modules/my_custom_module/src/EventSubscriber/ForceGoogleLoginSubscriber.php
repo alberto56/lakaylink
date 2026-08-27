@@ -83,10 +83,8 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     }
 
     // Allow requests matching any configured path prefix.
-    foreach ($allowed_paths as $prefix) {
-      if (str_starts_with($path, $prefix)) {
-        return;
-      }
+    if (in_array($path, $allowed_paths, TRUE)) {
+      return;
     }
 
     // Redirect all other anonymous requests to the custom login page.
