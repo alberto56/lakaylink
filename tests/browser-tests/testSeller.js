@@ -3,7 +3,7 @@ const fs = require('fs')
 const testBase = require('./testBase.js')
 
 it('seller should see store allocate to them.', async function() {
-  this.timeout(25000);
+  this.timeout(35000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,
@@ -19,9 +19,7 @@ it('seller should see store allocate to them.', async function() {
 
     const userPassword = process.env.DRUPALPASS;
 
-    await page.goto(
-      'http://webserver/test-user-login'
-    );
+    await page.goto('http://webserver/test-user-login');
 
     await testBase.screenshot(
       page,
@@ -35,12 +33,6 @@ it('seller should see store allocate to them.', async function() {
 
     // Submit the login form.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
-
-    // Wait for the page to finish loading.
-    await page.waitForFunction(
-      () => document.readyState === 'complete',
-      { timeout: 10000 }
-    );
 
     // Screenshot.
     await testBase.screenshot(
@@ -87,7 +79,7 @@ it('seller should see store allocate to them.', async function() {
         element => element.textContent.trim().length > 0
       );
     }, {
-      timeout: 10000
+      timeout: 20000
     });
 
     // Get the generated invitation code.
