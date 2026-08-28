@@ -7,6 +7,7 @@ set -e
 
 USER=admin
 PASS=$(./scripts/uuid.sh)
+
 echo 'Updating password for admin so our testbot knows how to login'
 docker compose exec -T drupal /bin/bash -c 'drush upwd $(drush uinf --uid=1 --field=name) '"$PASS"
 
@@ -50,6 +51,74 @@ else {
 }
 "
 
+
+docker compose exec -T drupal drush php:eval "
+
+\$userStorage = \Drupal::entityTypeManager()->getStorage('user');
+
+\$users = [
+  [
+    'name' => 'test_unverified',
+    'mail' => 'test_unverified@example.com',
+    'password' => '$PASS',
+    'roles' => ['unverified'],
+  ],
+  [
+    'name' => 'test_seller',
+    'mail' => 'test_seller@example.com',
+    'password' => '$PASS',
+    'roles' => ['seller'],
+    'field_allowed_stores' => [1],
+  ],
+  [
+    'name' => 'test_buyer',
+    'mail' => 'test_buyer@example.com',
+    'password' => '$PASS',
+    'roles' => ['buyer'],
+    'field_allowed_stores' => [1],
+  ],
+];
+
+foreach (\$users as \$userData) {
+
+  \$existing = \$userStorage->loadByProperties([
+    'name' => \$userData['name'],
+  ]);
+
+  if (\$existing) {
+    print \$userData['name'] . ' already exists ' . PHP_EOL;
+    continue;
+  }
+
+  \$user = \Drupal\user\Entity\User::create([
+    'name' => \$userData['name'],
+    'mail' => \$userData['mail'],
+    'status' => 1,
+  ]);
+
+  \$user->setPassword(\$userData['password']);
+
+  foreach (\$userData['roles'] as \$role) {
+    \$user->addRole(\$role);
+  }
+
+  if (isset(\$userData['field_allowed_stores'])) {
+    \$user->set(
+      'field_allowed_stores',
+      \$userData['field_allowed_stores']
+    );
+  }
+
+  \$user->save();
+
+  print \$userData['name'] . ' created' . PHP_EOL;
+}
+"
+
+echo 'change passwords'
+docker compose exec -T drupal /bin/bash -c 'drush upwd test_unverified '"$PASS"
+docker compose exec -T drupal /bin/bash -c 'drush upwd test_seller '"$PASS"
+docker compose exec -T drupal /bin/bash -c 'drush upwd test_buyer '"$PASS"
 
 
 echo 'Running our tests'

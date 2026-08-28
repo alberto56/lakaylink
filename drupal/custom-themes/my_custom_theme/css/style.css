@@ -1069,3 +1069,36 @@
   text-decoration: none;
   transform: translateY(-2px);
 }
+
+#block-my-custom-theme-reachout > div > div > p > small {
+  color: #767676;
+}
+
+#lang_dropdown_form_lang-dropdown-form > noscript {
+  color: #767676;
+}
+
+.text-primary {
+  color: #db7e00 !important
+}
+
+.footer-item a {
+  color: #2a2a2a;
+}
+
+.copyright {
+  background-color: #af6400 !important;
+}
+
+.footer .footer-item a {
+  color: #fff !important;
+}
+
+.footer .footer-item a:hover,
+.footer .footer-item a:focus {
+  color: #fff !important;
+}
+
+.footer .footer-item a i {
+  color: #fff !important;
+}
