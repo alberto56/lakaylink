@@ -83,11 +83,10 @@ services:
     factory: ['@cache_factory', 'get']
     arguments: ['my_custom_module_image_validation']
 
-  my_custom_module.event_subscriber:
+  my_custom_module.social_auth_language_subscriber:
     class: Drupal\my_custom_module\EventSubscriber\SocialAuthLanguageSubscriber
     arguments:
       - '@language_manager'
-      - '@social_auth.data_handler'
       - '@logger.factory'
       - '@request_stack'
     tags:
