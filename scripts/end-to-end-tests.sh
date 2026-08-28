@@ -61,20 +61,20 @@ docker compose exec -T drupal drush php:eval "
     'name' => 'test_unverified',
     'mail' => 'test_unverified@example.com',
     'password' => '$PASS',
-    'roles' => ['authenticated', 'unverified'],
+    'roles' => ['unverified'],
   ],
   [
     'name' => 'test_seller',
     'mail' => 'test_seller@example.com',
     'password' => '$PASS',
-    'roles' => ['authenticated', 'seller'],
+    'roles' => ['seller'],
     'field_allowed_stores' => [1],
   ],
   [
     'name' => 'test_buyer',
     'mail' => 'test_buyer@example.com',
     'password' => '$PASS',
-    'roles' => ['authenticated', 'buyer'],
+    'roles' => ['buyer'],
     'field_allowed_stores' => [1],
   ],
 ];
