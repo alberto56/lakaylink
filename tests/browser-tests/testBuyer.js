@@ -20,10 +20,7 @@ it('buyer should see the store he has joined.', async function() {
     const userPassword = process.env.DRUPALPASS;
 
     await page.goto(
-      'http://webserver/test-user-login',
-      {
-        waitUntil: 'networkidle2'
-      }
+      'http://webserver/test-user-login'
     );
 
     await testBase.screenshot(
@@ -86,10 +83,7 @@ it('buyer should see the shop he has joined.', async function() {
     const userPassword = process.env.DRUPALPASS;
 
     await page.goto(
-      'http://webserver/test-user-login',
-      {
-        waitUntil: 'networkidle2'
-      }
+      'http://webserver/test-user-login'
     );
 
     await testBase.screenshot(
@@ -114,6 +108,7 @@ it('buyer should see the shop he has joined.', async function() {
     await page.goto(
       'http://webserver/store/1/shop',
     );
+
     // Wait for the page to finish loading.
     await page.waitForFunction(
       () => document.readyState === 'complete',
@@ -157,10 +152,13 @@ it('buyer should access verification form.', async function() {
     const userPassword = process.env.DRUPALPASS;
 
     await page.goto(
-      'http://webserver/test-user-login',
-      {
-        waitUntil: 'networkidle2'
-      }
+      'http://webserver/test-user-login'
+    );
+
+    // Wait for the page to finish loading.
+    await page.waitForFunction(
+      () => document.readyState === 'complete',
+      { timeout: 10000 }
     );
 
     await testBase.screenshot(
@@ -175,6 +173,12 @@ it('buyer should access verification form.', async function() {
 
     // Submit.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
+
+    // Wait for the page to finish loading.
+    await page.waitForFunction(
+      () => document.readyState === 'complete',
+      { timeout: 10000 }
+    );
 
     await testBase.screenshot(
       page,

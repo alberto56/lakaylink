@@ -67,10 +67,12 @@ it(
     );
 
     // Click "Continue as Seller".
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle2' }),
-      page.click('a[href="/home/seller"]')
-    ]);
+    await page.click('a[href="/home/seller"]');
+    // Wait for the page to finish loading.
+    await page.waitForFunction(
+      () => document.readyState === 'complete',
+      { timeout: 10000 }
+    );
 
     // Screenshot.
     await testBase.screenshot(
@@ -112,9 +114,12 @@ it('unverified user should see buyer verifucation form when he click on continue
 
     await page.goto(
       'http://webserver/test-user-login',
-      {
-        waitUntil: 'networkidle2'
-      }
+    );
+
+    // Wait for the page to finish loading.
+    await page.waitForFunction(
+      () => document.readyState === 'complete',
+      { timeout: 20000 }
     );
 
     await testBase.screenshot(
@@ -155,10 +160,13 @@ it('unverified user should see buyer verifucation form when he click on continue
     );
 
     // Click "Continue as Buyer".
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle2' }),
-      page.click('a[href="/buyer-login-redirect"]')
-    ]);
+    await page.click('a[href="/buyer-login-redirect"]');
+
+    // Wait for the page to finish loading.
+    await page.waitForFunction(
+      () => document.readyState === 'complete',
+      { timeout: 10000 }
+    );
 
     // Screenshot.
     await testBase.screenshot(
