@@ -126,3 +126,24 @@ msgstr "Nous vous fournirons un code de vérification."
 
 msgid "Choose how you want to continue ?"
 msgstr "Comment souhaitez-vous continuer ?"
+
+msgid "Seller Dashboard"
+msgstr "Tableau de bord du vendeur"
+
+msgid "Login"
+msgstr "Connexion"
+
+msgid "User Login Redirect"
+msgstr "Redirection de connexion utilisateur"
+
+msgid "Buyer Login Redirect"
+msgstr "Redirection de connexion acheteur"
+
+msgid "Buyer Verification"
+msgstr "Vérification de l'acheteur"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Import status"
+msgstr "Statut d'importation"
