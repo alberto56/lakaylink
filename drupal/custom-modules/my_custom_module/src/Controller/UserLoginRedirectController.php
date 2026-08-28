@@ -29,14 +29,14 @@ final class UserLoginRedirectController extends ControllerBase {
    *
    * @param \Drupal\my_custom_module\BuyerStoreResolverInterface $buyerStoreResolver
    *   The buyer store resolver service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   * @param \Drupal\Core\Language\LanguageManagerInterface $langManager
    *   The language manager.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   The request stack.
    */
   public function __construct(
     private readonly BuyerStoreResolverInterface $buyerStoreResolver,
-    private readonly LanguageManagerInterface $languageManager,
+    private readonly LanguageManagerInterface $langManager,
     private readonly RequestStack $requestStack,
   ) {}
 
@@ -191,7 +191,7 @@ final class UserLoginRedirectController extends ControllerBase {
       return NULL;
     }
 
-    return $this->languageManager->getLanguage($language_code);
+    return $this->langManager->getLanguage($language_code);
   }
 
   /**
