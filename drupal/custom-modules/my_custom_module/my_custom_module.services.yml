@@ -23,6 +23,7 @@ services:
     arguments:
       - '@current_user'
       - '@current_route_match'
+      - '@entity_type.manager'
     tags:
       - { name: event_subscriber }
 

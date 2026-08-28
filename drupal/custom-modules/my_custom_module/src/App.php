@@ -11,6 +11,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\commerce_store\Entity\Store;
+use Drupal\user\Entity\User;
 use Drupal\my_custom_module\traits\Environment;
 use Drupal\my_custom_module\traits\Singleton;
 
@@ -67,8 +68,8 @@ class App {
 
     // Match ALL add-to-cart forms (including dynamic ones like product_19)
     if (str_starts_with($form_id, 'commerce_order_item_add_to_cart_form_commerce_product')) {
-      $account = $this->getCurrentUser();
-      if ($account->isAnonymous()) {
+      $currentuser = $this->getCurrentUser();
+      if ($currentuser->isAnonymous()) {
         // Hide entire form.
         $form["actions"] = [];
         // Build destination (redirect back after login).
@@ -92,8 +93,11 @@ class App {
           '#weight' => 100,
         ];
       }
-      elseif (!$account->hasRole('buyer')) {
-        $form["#access"] = FALSE;
+      else {
+        $user = User::load($currentuser->id());
+        if ($user && !$user->hasRole('buyer')) {
+          $form["#access"] = FALSE;
+        }
       }
     }
   }

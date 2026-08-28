@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * Handles user login redirection based on assigned roles.
  */
-class UserLoginRedirectController extends ControllerBase {
+final class UserLoginRedirectController extends ControllerBase {
 
   /**
    * Constructs a UserLoginRedirectController object.
@@ -72,7 +72,10 @@ class UserLoginRedirectController extends ControllerBase {
    */
   public function landing(): RedirectResponse {
     // Get the currently logged-in user.
-    $user = $this->currentUser();
+    $currentUser = $this->currentUser();
+    $user = $this->entityTypeManager()
+      ->getStorage('user')
+      ->load($currentUser->id());
 
     // Get the language that was stored before Social Auth redirected
     // the user to Google.

@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   cron = {"time" = 100}
  * )
  */
-class StoreImportQueue extends QueueWorkerBase implements ContainerFactoryPluginInterface {
+final class StoreImportQueue extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   /**
    * The grocery import service.
