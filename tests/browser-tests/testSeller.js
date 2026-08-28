@@ -20,10 +20,7 @@ it('seller should see store allocate to them.', async function() {
     const userPassword = process.env.DRUPALPASS;
 
     await page.goto(
-      'http://webserver/test-user-login',
-      {
-        waitUntil: 'networkidle2'
-      }
+      'http://webserver/test-user-login'
     );
 
     await testBase.screenshot(
@@ -37,7 +34,7 @@ it('seller should see store allocate to them.', async function() {
     await page.type('input[name="pass"]', userPassword);
 
     // Submit the login form.
-    await page.click('input[type="submit"]');
+    await page.click('form.my-custom-module-custom-login input[type="submit"]');
 
     // Wait for the page to finish loading.
     await page.waitForFunction(
