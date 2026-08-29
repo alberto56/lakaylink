@@ -33,7 +33,24 @@ exports.assertInSourceCode = async function(page, text, filename="") {
   }
 }
 
+exports.assertInUrl = async function(page, expectedUrl) {
+  console.log('Making sure current URL is:');
+  console.log('====> ' + expectedUrl);
+
+  const currentUrl = page.url();
+
+  try {
+    expect(currentUrl).to.equal(expectedUrl);
+  }
+  catch (error) {
+    throw "ERROR - current URL '" + currentUrl +
+      "' does not contain '" + expectedUrl + "'";
+  }
+}
+
 exports.showError = async function (error, browser, page) {
+  console.log('Current URL:', page.url());
+
   // See https://www.asciiart.eu/computers/computers
   console.log('Exception alert')
   console.log('See the "exception" screenshot')

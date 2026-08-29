@@ -36,3 +36,23 @@ function my_custom_theme_preprocess_field(array &$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Adds a submit button to the language dropdown form to ensure
+ * the form can be submitted using the keyboard and meets WCAG
+ * accessibility requirements.
+ *
+ * The button is visually hidden because the language dropdown
+ * normally handles language switching automatically with JavaScript.
+ */
+function my_custom_theme_form_lang_dropdown_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['actions']['submit'] = [
+    '#type' => 'submit',
+    '#value' => t('Change language'),
+    '#attributes' => [
+      'class' => ['btn', 'btn-primary', 'visually-hidden'],
+    ],
+  ];
+}

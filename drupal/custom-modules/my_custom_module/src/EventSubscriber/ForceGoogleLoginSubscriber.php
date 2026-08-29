@@ -91,6 +91,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
       '/user/login/google',
       '/oauth',
       '/user/logout',
+      '/test-user-login',
     ];
 
     // Allow password reset login links.
@@ -102,13 +103,8 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     }
 
     // Allow requests matching any configured path prefix.
-    foreach ($allowed_paths as $allowed_path) {
-      if (
-        $path_without_language === $allowed_path ||
-        str_starts_with($path_without_language, $allowed_path . '/')
-      ) {
-        return;
-      }
+    if (in_array($path, $allowed_paths, TRUE)) {
+      return;
     }
 
     /*

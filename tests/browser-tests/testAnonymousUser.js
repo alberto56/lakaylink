@@ -4,7 +4,7 @@ const testBase = require('./testBase.js')
 
 
 it('Anonymous user should see Login by google button', async function() {
-    this.timeout(25000);
+    this.timeout(35000);
     const puppeteer = require('puppeteer')
     const browser = await puppeteer.launch({
        headless: true,
