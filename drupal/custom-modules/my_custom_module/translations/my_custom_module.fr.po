@@ -139,9 +139,6 @@ msgstr "Redirection de connexion utilisateur"
 msgid "Buyer Login Redirect"
 msgstr "Redirection de connexion acheteur"
 
-msgid "Buyer Verification"
-msgstr "Vérification de l'acheteur"
-
 msgid "Home"
 msgstr "Accueil"
 
