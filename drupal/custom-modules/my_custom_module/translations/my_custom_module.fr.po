@@ -1,0 +1,146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: my_custom_module\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Basic site settings"
+msgstr "Paramètres de base du site"
+
+msgid "Information about the environment."
+msgstr "Informations sur l’environnement."
+
+msgid "Placeholder"
+msgstr "Espace réservé"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Settings saved successfully."
+msgstr "Les paramètres ont été enregistrés avec succès."
+
+msgid "Verification code"
+msgstr "Code de vérification"
+
+msgid "Paste the verification code exactly as provided."
+msgstr "Collez le code de vérification exactement tel qu’il vous a été fourni."
+
+msgid "Verify Account"
+msgstr "Vérifier le compte"
+
+msgid "Invalid verification code."
+msgstr "Code de vérification invalide."
+
+msgid "Continue as Buyer"
+msgstr "Continuer en tant qu’acheteur"
+
+msgid "Continue as Seller"
+msgstr "Continuer en tant que vendeur"
+
+msgid "Ask administrator to associate you with at least one store."
+msgstr "Demandez à un administrateur de vous associer à au moins un magasin."
+
+msgid "Ask an administrator to provide seller access and associate you with at least one store."
+msgstr "Demandez à un administrateur de vous accorder l’accès vendeur et de vous associer à au moins un magasin."
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Unknown"
+msgstr "Inconnu"
+
+msgid "Started"
+msgstr "Commencé"
+
+msgid "Never"
+msgstr "Jamais"
+
+msgid "Finished"
+msgstr "Terminé"
+
+msgid "Products imported"
+msgstr "Produits importés"
+
+msgid "Failure reason"
+msgstr "Raison de l’échec"
+
+msgid "None"
+msgstr "Aucun"
+
+msgid "Source URL"
+msgstr "URL source"
+
+msgid "Not available"
+msgstr "Non disponible"
+
+msgid "Grocery Import Status"
+msgstr "Statut de l’importation des produits alimentaires"
+
+msgid "Field"
+msgstr "Champ"
+
+msgid "Value"
+msgstr "Valeur"
+
+msgid "Invalid or expired verification code."
+msgstr "Code de vérification invalide ou expiré."
+
+msgid "Unable to load account."
+msgstr "Impossible de charger le compte."
+
+msgid "No stores have been assigned to your account."
+msgstr "Aucun magasin n’a été attribué à votre compte."
+
+msgid "Your account has been verified."
+msgstr "Votre compte a été vérifié."
+
+msgid "My Stores"
+msgstr "Mes magasins"
+
+msgid "Generate Invitation Code"
+msgstr "Générer un code d’invitation"
+
+msgid "Send this code to the buyer by WhatsApp so they start buying on the store"
+msgstr "Envoyez ce code à l’acheteur par WhatsApp afin qu’il puisse commencer à acheter dans le magasin"
+
+msgid "You do not currently manage any stores."
+msgstr "Vous ne gérez actuellement aucun magasin."
+
+msgid "Sign in With Google"
+msgstr "Se connecter avec Google"
+
+msgid "Buyer Verification"
+msgstr "Vérification de l’acheteur"
+
+msgid "Contact us by WhatsApp at"
+msgstr "Contactez-nous par WhatsApp au"
+
+msgid "to confirm that your family is within our service area."
+msgstr "pour confirmer que votre famille se trouve dans notre zone de service."
+
+msgid "We will provide a verification code."
+msgstr "Nous vous fournirons un code de vérification."
+
+msgid "Choose how you want to continue ?"
+msgstr "Comment souhaitez-vous continuer ?"
+
+msgid "Seller Dashboard"
+msgstr "Tableau de bord du vendeur"
+
+msgid "Login"
+msgstr "Connexion"
+
+msgid "User Login Redirect"
+msgstr "Redirection de connexion utilisateur"
+
+msgid "Buyer Login Redirect"
+msgstr "Redirection de connexion acheteur"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Import status"
+msgstr "Statut d'importation"
