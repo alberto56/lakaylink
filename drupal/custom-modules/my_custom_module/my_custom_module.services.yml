@@ -32,7 +32,7 @@ services:
 
   my_custom_module.store_context_subscriber:
     class: Drupal\my_custom_module\EventSubscriber\StoreContextSubscriber
-    arguments: ['@request_stack']
+    arguments: ['@cache_tags.invalidator']
     tags:
       - { name: event_subscriber }
 
