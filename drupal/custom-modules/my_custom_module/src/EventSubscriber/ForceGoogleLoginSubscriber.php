@@ -103,7 +103,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     }
 
     // Allow requests matching any configured path prefix.
-    if (in_array($path, $allowed_paths, TRUE)) {
+    if (in_array($path_without_language, $allowed_paths, TRUE)) {
       return;
     }
 
