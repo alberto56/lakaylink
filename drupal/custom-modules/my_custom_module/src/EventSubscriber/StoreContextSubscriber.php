@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class StoreContextSubscriber implements EventSubscriberInterface {
 
- /**
+  /**
    * Constructs a StoreContextSubscriber object.
    *
    * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cacheTagsInvalidator
