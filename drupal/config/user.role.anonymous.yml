@@ -1,11 +1,16 @@
 uuid: 15850019-e9f1-47a1-b364-2935311683d2
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - commerce_product
 _core:
   default_config_hash: xLG41YbRo2NP-0SgRNTkMzLEuaeibanGXgUTbdIcIIg
 id: anonymous
 label: 'Anonymous user'
 weight: 0
 is_admin: false
-permissions: {  }
+permissions:
+  - 'view commerce_product'
+  - 'view commerce_product_attribute'
+  - 'view grocery_product commerce_product'
