@@ -13,7 +13,7 @@ entity_type: commerce_product_variation
 bundle: grocery_variation
 label: Image
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -30,9 +30,9 @@ settings:
   title_field: false
   title_field_required: false
   default_image:
-    uuid: ''
+    uuid: a197c3c6-ad5a-46bd-8826-d8e1fcd8430e
     alt: ''
     title: ''
-    width: null
-    height: null
+    width: 1254
+    height: 1254
 field_type: image
