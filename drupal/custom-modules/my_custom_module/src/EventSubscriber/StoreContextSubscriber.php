@@ -2,6 +2,7 @@
 
 namespace Drupal\my_custom_module\EventSubscriber;
 
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -14,6 +15,16 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  * and stores them in the user session for later use across requests.
  */
 class StoreContextSubscriber implements EventSubscriberInterface {
+
+  /**
+   * Constructs a StoreContextSubscriber object.
+   *
+   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cacheTagsInvalidator
+   *   The cache tags invalidator service.
+   */
+  public function __construct(
+    protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+  ) {}
 
   /**
    * Reacts to the kernel request event.
@@ -40,15 +51,18 @@ class StoreContextSubscriber implements EventSubscriberInterface {
 
     // Extract the path portion of the URL (e.g., /shop/store-name/123).
     $path = $request->getPathInfo();
-
     // Match shop URL pattern: /shop/{slug}/{id}.
-    if (preg_match('#^/shop/([a-z0-9\-]+)/(\d+)$#', $path, $matches)) {
-      $slug = $matches[1];
-      $id = $matches[2];
-
+    if (preg_match('#^/store/(\d+)(/.*)?$#', $path, $matches)) {
+      $slug = $matches[0];
+      $id = $matches[1];
       // Store extracted values in session for later use.
       $session->set('active_store_slug', $slug);
       $session->set('active_store_id', (int) $id);
+
+      // Invalidate main menu cache.
+      $this->cacheTagsInvalidator->invalidateTags([
+        'config:system.menu.main',
+      ]);
     }
   }
 
