@@ -89,6 +89,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     $allowed_paths = [
       '/custom-login',
       '/user/login/google',
+      '/user/login/google/callback',
       '/oauth',
       '/user/logout',
       '/test-user-login',
