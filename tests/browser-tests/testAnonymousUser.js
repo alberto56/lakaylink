@@ -76,8 +76,6 @@ it('Anonymous user should see Login by google button in french, onclick redirect
     await page.goto(BASE_URL + '/fr/custom-login');
 
     await testBase.screenshot(page, 'fr-custom-login-page', await page.content());
-    console.log(await page.content());
-
     await testBase.assertInSourceCode(page, 'Se connecter avec Google')
 
     await page.click('a[href="/fr/user/login/google"]');
