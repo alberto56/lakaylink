@@ -9,6 +9,7 @@ services:
     class: Drupal\my_custom_module\EventSubscriber\ForceGoogleLoginSubscriber
     arguments:
       - '@current_user'
+      - '@language_manager'
     tags:
       - { name: event_subscriber }
 
@@ -81,3 +82,12 @@ services:
     class: Drupal\Core\Cache\DatabaseBackend
     factory: ['@cache_factory', 'get']
     arguments: ['my_custom_module_image_validation']
+
+  my_custom_module.social_auth_language_subscriber:
+    class: Drupal\my_custom_module\EventSubscriber\SocialAuthLanguageSubscriber
+    arguments:
+      - '@language_manager'
+      - '@logger.factory'
+      - '@request_stack'
+    tags:
+      - { name: event_subscriber }

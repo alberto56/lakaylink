@@ -3,3 +3,6 @@ type: module
 description: Custom code for this site.
 core_version_requirement: ^10 || ^11
 php: '8.x'
+
+interface translation project: my_custom_module
+interface translation server pattern: modules/custom/my_custom_module/translations/my_custom_module.fr.po

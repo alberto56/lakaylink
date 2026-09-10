@@ -169,6 +169,7 @@ class App {
       'custom_login_page' => [
         'variables' => [
           'social_login_block' => NULL,
+          'google_login_url' => NULL,
         ],
         'template' => 'custom-login-page',
       ],

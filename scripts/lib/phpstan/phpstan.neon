@@ -9,5 +9,6 @@ parameters:
     - /phpstan-drupal/entity-interface-mock.php
     - /phpstan-drupal/product-interface-mock.php
     - /phpstan-drupal/product-variation-mock.php
+    - /phpstan-drupal/social_auth.mock.php
 includes:
   - /var/www/html/phpstan.neon
