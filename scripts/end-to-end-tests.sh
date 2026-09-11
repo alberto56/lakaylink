@@ -56,7 +56,7 @@ else {
 
 if (!\$existing) {
   \$product = \Drupal\commerce_product\Entity\Product::create([
-    'type' => 'grocery',
+    'type' => 'grocery_product',
     'title' => '$GROCERY_PRODUCT_TITLE',
     'stores' => [1],
     'status' => 1,
@@ -64,7 +64,7 @@ if (!\$existing) {
   \$product->save();
 
   \$variation = \Drupal\commerce_product\Entity\ProductVariation::create([
-    'type' => 'grocery',
+    'type' => 'grocery_variation',
     'sku' => 'TEST-SKU-00134',
     'title' => '$GROCERY_PRODUCT_TITLE Variation',
     'price' => [
@@ -160,6 +160,17 @@ docker compose exec -T drupal /bin/bash -c 'drush cim -y'
 docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view commerce_product'"
 docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view commerce_product_attribute'"
 docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view grocery_product commerce_product'"
+
+
+docker compose exec -T drupal drush php:eval '
+$permissions = \Drupal::service("user.permissions")->getPermissions();
+
+foreach ($permissions as $permission => $info) {
+  if (str_contains($permission, "grocery") || str_contains($permission, "commerce_product")) {
+    print $permission . PHP_EOL;
+  }
+}
+'
 
 
 docker compose exec -T drupal drush php:eval '
