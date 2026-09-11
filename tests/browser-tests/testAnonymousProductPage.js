@@ -49,7 +49,7 @@ it('Anonymous user should access products api', async function () {
     });
 
     const apiUrl =
-      'http://webserver/api/product/grocery';
+      'http://webserver/api/product/grocery?include=variations';
 
     const response = await page.goto(apiUrl);
 
