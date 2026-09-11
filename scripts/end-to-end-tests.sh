@@ -12,17 +12,18 @@ echo 'Updating password for admin so our testbot knows how to login'
 docker compose exec -T drupal /bin/bash -c 'drush upwd $(drush uinf --uid=1 --field=name) '"$PASS"
 
 
-PRODUCT_TITLE="Test Product"
+DEFAULT_PRODUCT_TITLE="Default Test Product3"
+GROCERY_PRODUCT_TITLE="Grocery Test Product3"
 
 docker compose exec -T drupal drush php:eval "
 \$storage = \Drupal::entityTypeManager()->getStorage('commerce_product');
 
-\$existing = \$storage->loadByProperties(['title' => '$PRODUCT_TITLE']);
+\$existing = \$storage->loadByProperties(['title' => '$DEFAULT_PRODUCT_TITLE']);
 
 if (!\$existing) {
   \$product = \Drupal\commerce_product\Entity\Product::create([
     'type' => 'grocery',
-    'title' => '$PRODUCT_TITLE',
+    'title' => '$DEFAULT_PRODUCT_TITLE',
     'stores' => [1],
     'status' => 1,
   ]);
@@ -30,8 +31,42 @@ if (!\$existing) {
 
   \$variation = \Drupal\commerce_product\Entity\ProductVariation::create([
     'type' => 'grocery',
-    'sku' => 'TEST-SKU-001',
-    'title' => '$PRODUCT_TITLE Variation',
+    'sku' => 'TEST-SKU-0013',
+    'title' => '$DEFAULT_PRODUCT_TITLE Variation',
+    'price' => [
+      'number' => '19.99',
+      'currency_code' => 'USD',
+    ],
+    'product_id' => \$product->id(),
+    'status' => 1,
+  ]);
+  \$variation->save();
+
+  \$product->addVariation(\$variation);
+  \$product->save();
+
+  print 'Product created';
+}
+else {
+  print 'Product already exists';
+}
+
+
+\$existing = \$storage->loadByProperties(['title' => '$GROCERY_PRODUCT_TITLE']);
+
+if (!\$existing) {
+  \$product = \Drupal\commerce_product\Entity\Product::create([
+    'type' => 'default',
+    'title' => '$GROCERY_PRODUCT_TITLE',
+    'stores' => [1],
+    'status' => 1,
+  ]);
+  \$product->save();
+
+  \$variation = \Drupal\commerce_product\Entity\ProductVariation::create([
+    'type' => 'default',
+    'sku' => 'TEST-SKU-00134',
+    'title' => '$GROCERY_PRODUCT_TITLE Variation',
     'price' => [
       'number' => '19.99',
       'currency_code' => 'USD',
