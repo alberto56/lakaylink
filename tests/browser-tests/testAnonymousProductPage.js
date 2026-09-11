@@ -63,11 +63,11 @@ it('Anonymous user should access products api', async function () {
     console.log(`Included entities: ${included.length}`);
     console.log(`Products: ${data}`);
 
-    // // Products should not be empty.
-    // testBase.assertNotEmpty(
-    //   data,
-    //   'Products API should return products'
-    // );
+    // Products should not be empty.
+    testBase.assertNotEmpty(
+      data,
+      'Products API should return products'
+    );
 
     // // Get grocery variations from included entities.
     // const variations = included.filter(

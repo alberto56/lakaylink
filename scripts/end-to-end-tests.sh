@@ -157,6 +157,10 @@ docker compose exec -T drupal /bin/bash -c 'drush upwd test_buyer '"$PASS"
 
 docker compose exec -T drupal /bin/bash -c 'drush cim -y'
 
+docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view commerce_product'"
+docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view commerce_product_attribute'"
+docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view grocery_product commerce_product'"
+
 echo 'Running our tests'
 docker run \
   -e DRUPALUSER=admin \
