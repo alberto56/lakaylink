@@ -59,29 +59,25 @@ it('Anonymous user should access products api', async function () {
 
     const { data = [], included = [] } = json;
 
-    console.log(`Products: ${data.length}`);
-    console.log(`Included entities: ${included.length}`);
-    console.log(`Products: ${data}`);
-
     // Products should not be empty.
     testBase.assertNotEmpty(
       data,
       'Products API should return products'
     );
 
-    // // Get grocery variations from included entities.
-    // const variations = included.filter(
-    //   item =>
-    //     item.type === 'commerce_product_variation--grocery_variation'
-    // );
+    // Get grocery variations from included entities.
+    const variations = included.filter(
+      item =>
+        item.type === 'commerce_product_variation--grocery_variation'
+    );
 
-    // console.log(`Variations: ${variations.length}`);
+    console.log(`Variations: ${variations.length}`);
 
-    // // Variations should not be empty.
-    // testBase.assertNotEmpty(
-    //   variations,
-    //   'Products API should return product variations'
-    // );
+    // Variations should not be empty.
+    testBase.assertNotEmpty(
+      variations,
+      'Products API should return product variations'
+    );
 
   } catch (error) {
     await testBase.showError(error, browser, page);
