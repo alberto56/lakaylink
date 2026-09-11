@@ -21,7 +21,7 @@ docker compose exec -T drupal drush php:eval "
 
 if (!\$existing) {
   \$product = \Drupal\commerce_product\Entity\Product::create([
-    'type' => 'default',
+    'type' => 'grocery',
     'title' => '$PRODUCT_TITLE',
     'stores' => [1],
     'status' => 1,
@@ -29,7 +29,7 @@ if (!\$existing) {
   \$product->save();
 
   \$variation = \Drupal\commerce_product\Entity\ProductVariation::create([
-    'type' => 'default',
+    'type' => 'grocery',
     'sku' => 'TEST-SKU-001',
     'title' => '$PRODUCT_TITLE Variation',
     'price' => [
