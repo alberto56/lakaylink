@@ -120,6 +120,7 @@ docker compose exec -T drupal /bin/bash -c 'drush upwd test_unverified '"$PASS"
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_seller '"$PASS"
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_buyer '"$PASS"
 
+docker compose exec -T drupal /bin/bash -c 'drush cim -y'
 
 echo 'Running our tests'
 docker run \
