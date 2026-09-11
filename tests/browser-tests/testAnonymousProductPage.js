@@ -56,7 +56,10 @@ it('Anonymous user should access products api', async function () {
     expect(response.status()).to.equal(200);
 
     const json = await response.json();
-    console.log(`json: ${json}`);
+
+    json.forEach((product) => {
+      console.log("Product: " + product);
+    });
 
     const { data = [], included = [] } = json;
 
