@@ -61,6 +61,7 @@ it('Anonymous user should access products api', async function () {
 
     console.log(`Products: ${data.length}`);
     console.log(`Included entities: ${included.length}`);
+    console.log(`Products: ${data}`);
 
     // Products should not be empty.
     testBase.assertNotEmpty(
