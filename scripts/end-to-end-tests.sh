@@ -161,6 +161,25 @@ docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view 
 docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view commerce_product_attribute'"
 docker compose exec -T drupal /bin/bash -c "drush role:perm:add anonymous 'view grocery_product commerce_product'"
 
+
+docker compose exec -T drupal drush php:eval '
+$storage = \Drupal::entityTypeManager()->getStorage("commerce_product");
+
+$products = $storage->loadByProperties([
+  "title" => "Default Test Product3",
+]);
+
+print "Products found: " . count($products) . PHP_EOL;
+
+foreach ($products as $product) {
+  print "ID: " . $product->id() . PHP_EOL;
+  print "Title: " . $product->label() . PHP_EOL;
+  print "Bundle: " . $product->bundle() . PHP_EOL;
+  print "Published: " . ($product->isPublished() ? "YES" : "NO") . PHP_EOL;
+}
+'
+
+
 echo 'Running our tests'
 docker run \
   -e DRUPALUSER=admin \
