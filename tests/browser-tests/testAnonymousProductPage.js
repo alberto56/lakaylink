@@ -57,10 +57,6 @@ it('Anonymous user should access products api', async function () {
 
     const json = await response.json();
 
-    console.log(json);
-    console.log(typeof json);
-    console.log(Array.isArray(json));
-
     const { data = [], included = [] } = json;
 
     console.log(`Products: ${data.length}`);
