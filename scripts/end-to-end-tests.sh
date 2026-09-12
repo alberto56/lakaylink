@@ -12,26 +12,26 @@ echo 'Updating password for admin so our testbot knows how to login'
 docker compose exec -T drupal /bin/bash -c 'drush upwd $(drush uinf --uid=1 --field=name) '"$PASS"
 
 
-PRODUCT_TITLE="Test Product"
+GROCERY_PRODUCT_TITLE="Grocery Test Product3"
 
 docker compose exec -T drupal drush php:eval "
 \$storage = \Drupal::entityTypeManager()->getStorage('commerce_product');
 
-\$existing = \$storage->loadByProperties(['title' => '$PRODUCT_TITLE']);
+\$existing = \$storage->loadByProperties(['title' => '$GROCERY_PRODUCT_TITLE']);
 
 if (!\$existing) {
   \$product = \Drupal\commerce_product\Entity\Product::create([
-    'type' => 'default',
-    'title' => '$PRODUCT_TITLE',
+    'type' => 'grocery_product',
+    'title' => '$GROCERY_PRODUCT_TITLE',
     'stores' => [1],
     'status' => 1,
   ]);
   \$product->save();
 
   \$variation = \Drupal\commerce_product\Entity\ProductVariation::create([
-    'type' => 'default',
-    'sku' => 'TEST-SKU-001',
-    'title' => '$PRODUCT_TITLE Variation',
+    'type' => 'grocery_variation',
+    'sku' => 'TEST-SKU-00134',
+    'title' => '$GROCERY_PRODUCT_TITLE Variation',
     'price' => [
       'number' => '19.99',
       'currency_code' => 'USD',
@@ -119,7 +119,6 @@ echo 'change passwords'
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_unverified '"$PASS"
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_seller '"$PASS"
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_buyer '"$PASS"
-
 
 echo 'Running our tests'
 docker run \

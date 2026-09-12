@@ -48,6 +48,10 @@ exports.assertInUrl = async function(page, expectedUrl) {
   }
 }
 
+exports.assertNotEmpty = function(value, message) {
+  expect(value).to.not.be.empty;
+};
+
 exports.showError = async function (error, browser, page) {
   console.log('Current URL:', page.url());
 
