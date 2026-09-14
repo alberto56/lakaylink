@@ -52,6 +52,23 @@ exports.assertNotEmpty = function(value, message) {
   expect(value).to.not.be.empty;
 };
 
+exports.assertStartWithUrl = async function(page, expectedUrl) {
+  console.log('Making sure current URL start with:');
+  console.log('====> ' + expectedUrl);
+
+  const currentUrl = page.url();
+
+  try {
+    expect(currentUrl).to.match(
+      expectedUrl
+    );
+  }
+  catch (error) {
+    throw "ERROR - current URL '" + currentUrl +
+      "' does not contain '" + expectedUrl + "'";
+  }
+}
+
 exports.showError = async function (error, browser, page) {
   console.log('Current URL:', page.url());
 

@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: my_custom_theme\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Cart"
+msgstr "Panier"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Subtotal"
+msgstr "Sous-total"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Price"
+msgstr "Prix"
+
+msgid "Quantity"
+msgstr "Quantité"
+
+msgid "Your shopping cart is empty"
+msgstr "Votre panier est vide"
+
+msgid "Looks like you haven't added any products to your cart yet."
+msgstr "Il semble que vous n’ayez encore ajouté aucun produit à votre panier."
+
+msgid "Continue Shopping"
+msgstr "Continuer vos achats"
+
+msgid "Go to Store Home Page"
+msgstr "Aller à la page d’accueil du magasin"
+
+msgid "Loading..."
+msgstr "Chargement..."
+
+msgid "Back to top"
+msgstr "Retour en haut"
+
+msgid "Page Not Found"
+msgstr "Page introuvable"
+
+msgid "We’re sorry, the page you are looking for does not exist."
+msgstr "Nous sommes désolés, la page que vous recherchez n’existe pas."
+
+msgid "Go Back To Home"
+msgstr "Retourner à l’accueil"
+
+msgid "Access Denied"
+msgstr "Accès refusé"
+
+msgid "You don’t have permission to access this page."
+msgstr "Vous n’avez pas la permission d’accéder à cette page."
+
+msgid "Skip to main content"
+msgstr "Passer au contenu principal"
+
+msgid "Pagination"
+msgstr "Pagination"
+
+msgid "Go to first page"
+msgstr "Aller à la première page"
+
+msgid "Go to previous page"
+msgstr "Aller à la page précédente"
+
+msgid "Go to next page"
+msgstr "Aller à la page suivante"
+
+msgid "Go to last page"
+msgstr "Aller à la dernière page"
+
+msgid "Previous page"
+msgstr "Page précédente"
+
+msgid "Next page"
+msgstr "Page suivante"
+
+msgid "My Dashboard"
+msgstr "Mon tableau de bord"
+
+msgid "Home"
+msgstr "Accueil"
