@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - commerce_product
+    - system
 _core:
   default_config_hash: xLG41YbRo2NP-0SgRNTkMzLEuaeibanGXgUTbdIcIIg
 id: anonymous
@@ -11,6 +12,7 @@ label: 'Anonymous user'
 weight: 0
 is_admin: false
 permissions:
+  - 'access content'
   - 'view commerce_product'
   - 'view commerce_product_attribute'
   - 'view grocery_product commerce_product'
