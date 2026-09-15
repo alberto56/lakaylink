@@ -48,6 +48,10 @@ exports.assertInUrl = async function(page, expectedUrl) {
   }
 }
 
+exports.assertNotEmpty = function(value, message) {
+  expect(value).to.not.be.empty;
+};
+
 exports.assertStartWithUrl = async function(page, expectedUrl) {
   console.log('Making sure current URL start with:');
   console.log('====> ' + expectedUrl);
