@@ -1,0 +1,9 @@
+label: 'Sélecteur de magasin'
+display:
+  default:
+    display_options:
+      empty:
+        area_1:
+          content:
+            value: '<p>No Stores are added. Or You are not allowed to see any stores.</p>'
+            format: basic_html
