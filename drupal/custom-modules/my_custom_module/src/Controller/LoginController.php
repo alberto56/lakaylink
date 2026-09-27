@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\my_custom_module\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 use Drupal\Core\Block\BlockManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -47,9 +48,13 @@ final class LoginController extends ControllerBase {
     // Build render array.
     $social_login_block = $plugin_block->build();
 
+    // Google Social Auth login endpoint.
+    $google_login_url = Url::fromUserInput('/user/login/google')->toString();
+
     return [
       '#theme' => 'custom_login_page',
       '#social_login_block' => $social_login_block,
+      '#google_login_url' => $google_login_url,
     ];
   }
 

@@ -30,13 +30,20 @@ class RouteSubscriber extends RouteSubscriberBase {
       $route->setRequirement('_access', 'FALSE');
     }
 
+    // Commerce Store canonical route: /store/2.
     if ($route = $collection->get('entity.commerce_store.canonical')) {
-
       $route->setRequirement(
         '_custom_access',
         '\Drupal\my_custom_module\Access\StoreAccess::access'
       );
+    }
 
+    // Shop View route: /store/2/shop.
+    if ($route = $collection->get('view.shop2.page_1')) {
+      $route->setRequirement(
+        '_custom_access',
+        '\Drupal\my_custom_module\Access\StoreAccess::shopAccess'
+      );
     }
 
   }

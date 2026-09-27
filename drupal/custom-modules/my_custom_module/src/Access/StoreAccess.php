@@ -6,6 +6,7 @@ namespace Drupal\my_custom_module\Access;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\commerce_store\Entity\StoreInterface;
 use Drupal\my_custom_module\BuyerStoreResolverInterface;
@@ -75,6 +76,53 @@ final class StoreAccess implements ContainerInjectionInterface {
     // Grant access only when the store is assigned to the user.
     return AccessResult::allowedIf(
       in_array($commerce_store->id(), $allowed, TRUE)
+    )->cachePerUser();
+  }
+
+  /**
+   * Checks access to the Shop View page.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The user account requesting access.
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+   *   The current route match.
+   *
+   * @return \Drupal\Core\Access\AccessResult
+   *   The access result.
+   */
+  public function shopAccess(
+    AccountInterface $account,
+    RouteMatchInterface $route_match,
+  ): AccessResult {
+
+    // Administrators bypass store assignment restrictions.
+    if (in_array('administrator', $account->getRoles(), TRUE)) {
+      return AccessResult::allowed();
+    }
+
+    // Get the store from /store/{store}/shop.
+    $store = $route_match->getParameter('store');
+
+    // If the route parameter is an entity.
+    if ($store instanceof StoreInterface) {
+      $store_id = $store->id();
+    }
+    else {
+      // If the route parameter is just the store ID.
+      $store_id = (string) $store;
+    }
+
+    // No valid store found.
+    if (!$store_id) {
+      return AccessResult::forbidden()->cachePerUser();
+    }
+
+    // Get stores assigned to the current user.
+    $allowed = $this->resolver->getAllowedStoreIds($account);
+
+    // Grant access only when the store is assigned to the user.
+    return AccessResult::allowedIf(
+      in_array($store_id, $allowed, TRUE)
     )->cachePerUser();
   }
 

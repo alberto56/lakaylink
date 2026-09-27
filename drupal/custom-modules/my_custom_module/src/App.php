@@ -169,6 +169,7 @@ class App {
       'custom_login_page' => [
         'variables' => [
           'social_login_block' => NULL,
+          'google_login_url' => NULL,
         ],
         'template' => 'custom-login-page',
       ],
@@ -214,7 +215,7 @@ class App {
 
       // Update the Home menu link.
       if ($item['title'] === 'Home') {
-        $item['url'] = Url::fromUserInput("/shop/$store_slug/$store_id");
+        $item['url'] = Url::fromUserInput("/store/$store_id");
       }
 
       // Update the Shop menu link.
