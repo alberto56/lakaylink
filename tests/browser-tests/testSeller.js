@@ -1,6 +1,7 @@
 const { expect } = require('chai')
 const fs = require('fs')
 const testBase = require('./testBase.js')
+const BASE_URL = 'http://webserver'
 
 it('seller should see store allocate to them.', async function() {
   this.timeout(35000);
@@ -19,7 +20,7 @@ it('seller should see store allocate to them.', async function() {
 
     const userPassword = process.env.DRUPALPASS;
 
-    await page.goto('http://webserver/test-user-login');
+    await page.goto(BASE_URL + '/test-user-login');
 
     await testBase.screenshot(
       page,
@@ -33,6 +34,8 @@ it('seller should see store allocate to them.', async function() {
 
     // Submit the login form.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
+
+    await new Promise(resolve => setTimeout(resolve, 20000));
 
     // Screenshot.
     await testBase.screenshot(

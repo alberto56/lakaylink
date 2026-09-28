@@ -1,6 +1,7 @@
 const { expect } = require('chai')
 const fs = require('fs')
 const testBase = require('./testBase.js')
+const BASE_URL = 'http://webserver'
 
 it('unverified user should see buyer verifucation form when he click on continue as buyer', async function() {
   this.timeout(35000);
@@ -19,7 +20,7 @@ it('unverified user should see buyer verifucation form when he click on continue
 
     const userPassword = process.env.DRUPALPASS;
 
-    await page.goto('http://webserver/test-user-login');
+    await page.goto(BASE_URL + '/test-user-login');
 
     await testBase.screenshot(
       page,
@@ -49,6 +50,26 @@ it('unverified user should see buyer verifucation form when he click on continue
 
     // Click "Continue as Buyer".
     await page.waitForSelector('a[href="/buyer-login-redirect"]');
+
+    const link = await page.$('a[href="/buyer-login-redirect"]');
+
+    if (link) {
+      console.log(await link.evaluate(el => ({
+        text: el.innerText,
+        href: el.href,
+        visible: !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)
+      })));
+    }
+
+    // await page.click('a[href="/home/seller"]');
+    await page.evaluate(() => {
+        const link = document.querySelector('a[href="/buyer-login-redirect"]');
+        link.click();
+      });
+
+    await new Promise(resolve => setTimeout(resolve, 20000));
+
+    await testBase.assertInUrl(page, BASE_URL + '/account/buyer-verification');
 
     // Screenshot.
     await testBase.screenshot(
