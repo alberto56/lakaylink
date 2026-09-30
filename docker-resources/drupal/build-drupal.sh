@@ -115,3 +115,4 @@ echo 'upload_max_filesize = 25M' >> /usr/local/etc/php/php.ini
 echo 'post_max_size = 25M' >> /usr/local/etc/php/php.ini
 
 /var/www/html/vendor/composer/composer/bin/composer update
+/var/www/html/vendor/composer/composer/bin/composer update "drupal/core-*" --with-all-dependencies
