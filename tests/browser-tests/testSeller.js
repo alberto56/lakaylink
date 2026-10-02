@@ -32,7 +32,7 @@ it('seller should see store allocate to them.', async function() {
 
     // Fill username and password.
     await page.type('input[name="name"]', 'test_seller');
-    await page.type('input[name="pass"]', userPassword);
+    await page.type('input[name="pass"]', 'test_seller');
 
     const test3 = await page.content()
     console.log(test3);
