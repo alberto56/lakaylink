@@ -44,6 +44,9 @@ it('seller should see store allocate to them.', async function() {
       await page.content()
     );
 
+    const test = await page.content()
+    console.log(test);
+
     // Get the complete page source.
     await testBase.assertInSourceCode(
       page,
