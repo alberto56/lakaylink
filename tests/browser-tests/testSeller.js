@@ -35,8 +35,6 @@ it('seller should see store allocate to them.', async function() {
     // Submit the login form.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
 
-    await new Promise(resolve => setTimeout(resolve, 20000));
-
     // Screenshot.
     await testBase.screenshot(
       page,
