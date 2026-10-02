@@ -27,19 +27,13 @@ it('seller should see store allocate to them.', async function() {
       'seller-user-test-login',
       await page.content()
     );
-    const test2 = await page.content()
-    console.log(test2);
 
     // Fill username and password.
     await page.type('input[name="name"]', 'test_seller');
-    await page.type('input[name="pass"]', 'test_seller');
-
-    const test3 = await page.content()
-    console.log(test3);
+    await page.type('input[name="pass"]', userPassword);
 
     // Submit the login form.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
-    await new Promise(resolve => setTimeout(resolve, 20000));
 
     // Screenshot.
     await testBase.screenshot(
@@ -47,9 +41,6 @@ it('seller should see store allocate to them.', async function() {
       'seller-stores-list-page',
       await page.content()
     );
-
-    const test = await page.content()
-    console.log(test);
 
     // Get the complete page source.
     await testBase.assertInSourceCode(
