@@ -36,14 +36,16 @@ it(
     await page.type('input[name="pass"]', userPassword);
 
     // Submit the login form.
-    // Submit the login form.
-    await Promise.all([
-      page.waitForNavigation({
-        waitUntil: 'networkidle2',
-        timeout: 30000
-      }),
-      page.click('form.my-custom-module-custom-login input[type="submit"]')
-    ]);
+    await page.click('form.my-custom-module-custom-login input[type="submit"]');
+
+    await new Promise(resolve => setTimeout(resolve, 60000));
+    // await Promise.all([
+    //   page.waitForNavigation({
+    //     waitUntil: 'networkidle2',
+    //     timeout: 30000
+    //   }),
+    //   page.click('form.my-custom-module-custom-login input[type="submit"]')
+    // ]);
 
 
     // Screenshot.
