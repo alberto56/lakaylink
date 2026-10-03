@@ -36,7 +36,15 @@ it(
     await page.type('input[name="pass"]', userPassword);
 
     // Submit the login form.
-    await page.click('form.my-custom-module-custom-login input[type="submit"]');
+    // Submit the login form.
+    await Promise.all([
+      page.waitForNavigation({
+        waitUntil: 'networkidle2',
+        timeout: 30000
+      }),
+      page.click('form.my-custom-module-custom-login input[type="submit"]')
+    ]);
+
 
     // Screenshot.
     await testBase.screenshot(
@@ -69,7 +77,7 @@ it(
         link.click();
       });
 
-    await new Promise(resolve => setTimeout(resolve, 30000));
+    await new Promise(resolve => setTimeout(resolve, 20000));
 
     await testBase.assertInUrl(page, BASE_URL + '/home/seller');
 
