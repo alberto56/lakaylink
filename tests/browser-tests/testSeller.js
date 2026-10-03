@@ -33,7 +33,13 @@ it('seller should see store allocate to them.', async function() {
     await page.type('input[name="pass"]', userPassword);
 
     // Submit the login form.
-    await page.click('form.my-custom-module-custom-login input[type="submit"]');
+    await Promise.all([
+      page.waitForNavigation({
+        waitUntil: 'networkidle2',
+        timeout: 20000
+      }),
+      page.click('form.my-custom-module-custom-login input[type="submit"]')
+    ]);
 
     // Screenshot.
     await testBase.screenshot(
