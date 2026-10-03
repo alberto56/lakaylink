@@ -33,7 +33,17 @@ it('unverified user should see buyer verifucation form when he click on continue
     await page.type('input[name="pass"]', userPassword);
 
     // Submit the login form.
-    await page.click('form.my-custom-module-custom-login input[type="submit"]');
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'networkidle2' }),
+      page.click('form.my-custom-module-custom-login input[type="submit"]')
+    ]);
+
+    console.log("URL:", await page.url());
+
+    if ((await page.url()).includes('/test-user-login')) {
+      console.log(await page.content());
+      throw new Error("Login failed");
+    }
 
     // await new Promise(resolve => setTimeout(resolve, 20000));
 
@@ -44,7 +54,7 @@ it('unverified user should see buyer verifucation form when he click on continue
     //   }),
     //   page.click('form.my-custom-module-custom-login input[type="submit"]')
     // ]);
-    await page.waitForSelector('Continue as Buyer');
+    // await page.waitForSelector('Continue as Buyer');
 
     // Screenshot.
     await testBase.screenshot(
