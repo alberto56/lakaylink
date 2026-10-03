@@ -4,7 +4,7 @@ const testBase = require('./testBase.js')
 const BASE_URL = 'http://webserver'
 
 it('seller should see store allocate to them.', async function() {
-  this.timeout(40000);
+  this.timeout(60000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,

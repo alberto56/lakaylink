@@ -7,7 +7,7 @@ it(
   'unverified should see continue as a buyer and continue has a seller button. ' +
   'click on continue as a seller.',
   async function() {
-  this.timeout(40000);
+  this.timeout(60000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,

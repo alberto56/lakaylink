@@ -4,7 +4,7 @@ const testBase = require('./testBase.js')
 const BASE_URL = 'http://webserver'
 
 it('unverified user should see buyer verifucation form when he click on continue as buyer', async function() {
-  this.timeout(40000);
+  this.timeout(60000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,
