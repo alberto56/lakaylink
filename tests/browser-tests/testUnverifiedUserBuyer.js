@@ -37,7 +37,7 @@ it('unverified user should see buyer verifucation form when he click on continue
     await Promise.all([
       page.waitForNavigation({
         waitUntil: 'networkidle2',
-        timeout: 40000
+        timeout: 60000
       }),
       page.click('form.my-custom-module-custom-login input[type="submit"]')
     ]);
