@@ -4,7 +4,7 @@ const testBase = require('./testBase.js')
 const BASE_URL = 'http://webserver'
 
 it('unverified user should see buyer verification form when he click on continue as buyer', async function() {
-  this.timeout(90000);
+  this.timeout(35000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,
@@ -53,18 +53,6 @@ it('unverified user should see buyer verification form when he click on continue
       throw new Error("Login failed");
     }
 
-    // await new Promise(resolve => setTimeout(resolve, 20000));
-
-    // await Promise.all([
-    //   page.waitForNavigation({
-    //     waitUntil: 'networkidle2',
-    //     timeout: 60000
-    //   }),
-    //   page.click('form.my-custom-module-custom-login input[type="submit"]')
-    // ]);
-    // await page.waitForSelector('Continue as Buyer');
-
-    // Screenshot.
     await testBase.screenshot(
       page,
       'unverified-login-redirect-after-buyer',
@@ -96,7 +84,6 @@ it('unverified user should see buyer verification form when he click on continue
       await page.content()
     );
 
-    // await page.click('a[href="/home/seller"]');
     await Promise.all([
       page.waitForNavigation({ waitUntil: 'networkidle2' }),
       page.click('a[href="/buyer-login-redirect"]')

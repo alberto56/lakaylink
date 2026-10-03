@@ -52,15 +52,6 @@ it('seller should see store allocate to them.', async function() {
       throw new Error("Login failed");
     }
 
-    // Submit the login form.
-    // await Promise.all([
-    //   page.waitForNavigation({
-    //     waitUntil: 'networkidle2',
-    //     timeout: 25000
-    //   }),
-    //   page.click('form.my-custom-module-custom-login input[type="submit"]')
-    // ]);
-
     // Screenshot.
     await testBase.screenshot(
       page,
