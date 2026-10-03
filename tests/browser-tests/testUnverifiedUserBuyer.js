@@ -3,7 +3,7 @@ const fs = require('fs')
 const testBase = require('./testBase.js')
 const BASE_URL = 'http://webserver'
 
-it('unverified user should see buyer verifucation form when he click on continue as buyer', async function() {
+it('unverified user should see buyer verification form when he click on continue as buyer', async function() {
   this.timeout(90000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
@@ -97,13 +97,15 @@ it('unverified user should see buyer verifucation form when he click on continue
     );
 
     // await page.click('a[href="/home/seller"]');
-    await page.evaluate(() => {
-        const link = document.querySelector('a[href="/buyer-login-redirect"]');
-        link.click();
-      });
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'networkidle2' }),
+      page.click('a[href="/buyer-login-redirect"]')
+    ]);
 
-    // await page.waitForSelector('Verification code');
-    await testBase.assertInUrl(page, BASE_URL + '/account/buyer-verification');
+    await testBase.assertInUrl(
+      page,
+      BASE_URL + '/account/buyer-verification'
+    );
 
     // Screenshot.
     await testBase.screenshot(
