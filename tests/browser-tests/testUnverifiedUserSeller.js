@@ -7,7 +7,7 @@ it(
   'unverified should see continue as a buyer and continue has a seller button. ' +
   'click on continue as a seller.',
   async function() {
-  this.timeout(100000);
+  this.timeout(40000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,
@@ -38,7 +38,7 @@ it(
     // Submit the login form.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
 
-    await new Promise(resolve => setTimeout(resolve, 60000));
+    // await new Promise(resolve => setTimeout(resolve, 60000));
     // await Promise.all([
     //   page.waitForNavigation({
     //     waitUntil: 'networkidle2',
@@ -47,6 +47,7 @@ it(
     //   page.click('form.my-custom-module-custom-login input[type="submit"]')
     // ]);
 
+    await page.waitForSelector('Continue as Seller');
 
     // Screenshot.
     await testBase.screenshot(
