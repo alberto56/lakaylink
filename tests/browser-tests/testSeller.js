@@ -41,12 +41,25 @@ it('seller should see store allocate to them.', async function() {
 
     // Submit the login form.
     await Promise.all([
-      page.waitForNavigation({
-        waitUntil: 'networkidle2',
-        timeout: 25000
-      }),
+      page.waitForNavigation({ waitUntil: 'networkidle2' }),
       page.click('form.my-custom-module-custom-login input[type="submit"]')
     ]);
+
+    console.log("URL:", await page.url());
+
+    if ((await page.url()).includes('/test-user-login')) {
+      console.log(await page.content());
+      throw new Error("Login failed");
+    }
+
+    // Submit the login form.
+    // await Promise.all([
+    //   page.waitForNavigation({
+    //     waitUntil: 'networkidle2',
+    //     timeout: 25000
+    //   }),
+    //   page.click('form.my-custom-module-custom-login input[type="submit"]')
+    // ]);
 
     // Screenshot.
     await testBase.screenshot(
