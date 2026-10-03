@@ -90,16 +90,20 @@ it('unverified user should see buyer verifucation form when he click on continue
       })));
     }
 
+    await testBase.screenshot(
+      page,
+      'unverified-user-test-login-buyer-identification',
+      await page.content()
+    );
+
     // await page.click('a[href="/home/seller"]');
     await page.evaluate(() => {
         const link = document.querySelector('a[href="/buyer-login-redirect"]');
         link.click();
       });
 
-    await page.waitForSelector('Verification code');
-
+    // await page.waitForSelector('Verification code');
     await testBase.assertInUrl(page, BASE_URL + '/account/buyer-verification');
-
 
     // Screenshot.
     await testBase.screenshot(
