@@ -32,6 +32,13 @@ it('seller should see store allocate to them.', async function() {
     await page.type('input[name="name"]', 'test_seller');
     await page.type('input[name="pass"]', userPassword);
 
+    // Screenshot.
+    await testBase.screenshot(
+      page,
+      'seller-user-test-login-before-submit',
+      await page.content()
+    );
+
     // Submit the login form.
     await Promise.all([
       page.waitForNavigation({
