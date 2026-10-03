@@ -32,13 +32,21 @@ it('unverified user should see buyer verifucation form when he click on continue
     await page.type('input[name="name"]', 'test_unverified');
     await page.type('input[name="pass"]', userPassword);
 
+
+    // Screenshot.
+    await testBase.screenshot(
+      page,
+      'unverified-user-test-login-buyer-before-submit',
+      await page.content()
+    );
+
     // Submit the login form.
     await Promise.all([
       page.waitForNavigation({ waitUntil: 'networkidle2' }),
       page.click('form.my-custom-module-custom-login input[type="submit"]')
     ]);
 
-    console.log("URL:", await page.url());
+    console.log("--- URL ---:", await page.url());
 
     if ((await page.url()).includes('/test-user-login')) {
       console.log(await page.content());
