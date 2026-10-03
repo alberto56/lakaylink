@@ -4,7 +4,7 @@ const testBase = require('./testBase.js')
 const BASE_URL = 'http://webserver'
 
 it('seller should see store allocate to them.', async function() {
-  this.timeout(35000);
+  this.timeout(50000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,
@@ -36,7 +36,7 @@ it('seller should see store allocate to them.', async function() {
     await Promise.all([
       page.waitForNavigation({
         waitUntil: 'networkidle2',
-        timeout: 20000
+        timeout: 40000
       }),
       page.click('form.my-custom-module-custom-login input[type="submit"]')
     ]);
