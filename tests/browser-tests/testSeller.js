@@ -4,7 +4,7 @@ const testBase = require('./testBase.js')
 const BASE_URL = 'http://webserver'
 
 it('seller should see store allocate to them.', async function() {
-  this.timeout(60000);
+  this.timeout(50000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({
      headless: true,
@@ -40,19 +40,13 @@ it('seller should see store allocate to them.', async function() {
     );
 
     // Submit the login form.
-    await page.click('form.my-custom-module-custom-login input[type="submit"]');
-
-    // await new Promise(resolve => setTimeout(resolve, 60000));
-
-    // await Promise.all([
-    //   page.waitForNavigation({
-    //     waitUntil: 'networkidle2',
-    //     timeout: 60000
-    //   }),
-    //   page.click('form.my-custom-module-custom-login input[type="submit"]')
-    // ]);
-
-    await page.waitForSelector('<h1 class="mb-4">My Stores</h1>');
+    await Promise.all([
+      page.waitForNavigation({
+        waitUntil: 'networkidle2',
+        timeout: 40000
+      }),
+      page.click('form.my-custom-module-custom-login input[type="submit"]')
+    ]);
 
     // Screenshot.
     await testBase.screenshot(
