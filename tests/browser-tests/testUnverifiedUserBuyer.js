@@ -35,7 +35,7 @@ it('unverified user should see buyer verifucation form when he click on continue
     // Submit the login form.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
 
-    await new Promise(resolve => setTimeout(resolve, 20000));
+    // await new Promise(resolve => setTimeout(resolve, 20000));
 
     // await Promise.all([
     //   page.waitForNavigation({
@@ -44,7 +44,7 @@ it('unverified user should see buyer verifucation form when he click on continue
     //   }),
     //   page.click('form.my-custom-module-custom-login input[type="submit"]')
     // ]);
-    // await page.waitForSelector('Continue as Buyer');
+    await page.waitForSelector('Continue as Buyer');
 
     // Screenshot.
     await testBase.screenshot(
