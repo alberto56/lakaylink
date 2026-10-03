@@ -12,6 +12,39 @@ echo 'Updating password for admin so our testbot knows how to login'
 docker compose exec -T drupal /bin/bash -c 'drush upwd $(drush uinf --uid=1 --field=name) '"$PASS"
 
 
+# Create the test store dynamically and capture its ID.
+CURRENCY_CODE="USD"
+
+# Create the test store dynamically and capture its ID.
+STORE_ID=$(
+  docker compose exec -T drupal drush php:eval '
+    $storage = \Drupal::entityTypeManager()->getStorage("commerce_store");
+
+    $stores = $storage->loadByProperties([
+      "name" => "Test Store",
+    ]);
+
+    if ($stores) {
+      $store = reset($stores);
+    }
+    else {
+      $store = \Drupal\commerce_store\Entity\Store::create([
+        "type" => "online",
+        "name" => "Test Store",
+        "mail" => "test-store@example.com",
+        "default_currency" => "'"$CURRENCY_CODE"'",
+        "timezone" => "UTC",
+      ]);
+      $store->save();
+    }
+
+    print $store->id();
+  ' | tr -d '\r\n'
+)
+
+echo "Using store ID: $STORE_ID"
+echo "Using currency: $CURRENCY_CODE"
+
 GROCERY_PRODUCT_TITLE="Grocery Test Product3"
 
 docker compose exec -T drupal drush php:eval "
@@ -23,7 +56,7 @@ if (!\$existing) {
   \$product = \Drupal\commerce_product\Entity\Product::create([
     'type' => 'grocery_product',
     'title' => '$GROCERY_PRODUCT_TITLE',
-    'stores' => [1],
+    'stores' => [$STORE_ID],
     'status' => 1,
   ]);
   \$product->save();
@@ -68,14 +101,14 @@ docker compose exec -T drupal drush php:eval "
     'mail' => 'test_seller@example.com',
     'password' => '$PASS',
     'roles' => ['seller'],
-    'field_allowed_stores' => [1],
+    'field_allowed_stores' => [$STORE_ID],
   ],
   [
     'name' => 'test_buyer',
     'mail' => 'test_buyer@example.com',
     'password' => '$PASS',
     'roles' => ['buyer'],
-    'field_allowed_stores' => [1],
+    'field_allowed_stores' => [$STORE_ID],
   ],
 ];
 

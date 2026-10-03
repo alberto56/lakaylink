@@ -1,6 +1,7 @@
 const { expect } = require('chai')
 const fs = require('fs')
 const testBase = require('./testBase.js')
+const BASE_URL = 'http://webserver'
 
 it('Anonymous user product page redirects to custom login', async function() {
   this.timeout(25000);
@@ -16,7 +17,7 @@ it('Anonymous user product page redirects to custom login', async function() {
     console.log('set viewport')
     await page.setViewport({ width: 1280, height: 800 })
     console.log('go to the login page')
-    await page.goto('http://webserver/test-product')
+    await page.goto(BASE_URL + '/test-product')
 
     await testBase.screenshot(page, 'custom login page', await page.content());
     await testBase.assertInSourceCode(page, 'Sign in With Google')
@@ -49,7 +50,7 @@ it('Anonymous user should access products api', async function () {
     });
 
     const apiUrl =
-      'http://webserver/api/product/grocery?include=variations';
+      BASE_URL + '/api/product/grocery?include=variations';
 
     const response = await page.goto(apiUrl);
 
