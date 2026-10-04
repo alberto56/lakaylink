@@ -1,6 +1,7 @@
 const { expect } = require('chai')
 const fs = require('fs')
 const testBase = require('./testBase.js')
+const BASE_URL = 'http://webserver'
 
 it('buyer should see the store he has joined.', async function() {
   this.timeout(35000);
@@ -19,7 +20,7 @@ it('buyer should see the store he has joined.', async function() {
 
     const userPassword = process.env.DRUPALPASS;
 
-    await page.goto('http://webserver/test-user-login');
+    await page.goto(BASE_URL + '/test-user-login');
 
     await testBase.screenshot(
       page,
@@ -34,6 +35,8 @@ it('buyer should see the store he has joined.', async function() {
     // Submit.
     await page.click('form.my-custom-module-custom-login input[type="submit"]');
 
+    await new Promise(resolve => setTimeout(resolve, 20000));
+
     await testBase.screenshot(
       page,
       'buyer-after-login-page',
@@ -47,7 +50,7 @@ it('buyer should see the store he has joined.', async function() {
       await page.content()
     );
 
-    testBase.assertInUrl(page, 'http://webserver/store/1');
+    testBase.assertInUrl(page, BASE_URL + '/store/1');
 
   }
   catch (error) {
