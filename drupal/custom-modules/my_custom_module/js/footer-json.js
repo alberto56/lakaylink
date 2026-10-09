@@ -4,7 +4,7 @@
     Drupal.behaviors.footerJson = {
       attach: function (context) {
         once('footer-json', 'body', context).forEach(function () {
-          const config = drupalSettings.footerJson;
+          var config = drupalSettings.footerJson;
 
           if (!config || !config.url) {
             console.warn('Footer JSON URL is not configured.');
@@ -16,53 +16,46 @@
       }
     };
 
-    async function loadFooterJson(url) {
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json'
-          },
-          credentials: 'omit'
+    function loadFooterJson(url) {
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        },
+        credentials: 'omit'
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error(
+              'Footer JSON request failed: ' + response.status
+            );
+          }
+
+          return response.json();
+        })
+        .then(function (data) {
+          renderFooterMenus(data);
+        })
+        .catch(function (error) {
+          console.error('Unable to load footer JSON:', error);
         });
-
-        if (!response.ok) {
-          throw new Error(
-            `Footer JSON request failed: ${response.status}`
-          );
-        }
-
-        const data = await response.json();
-
-        renderFooterMenus(data);
-
-      }
-      catch (error) {
-
-        console.error(
-          'Unable to load footer JSON:',
-          error
-        );
-
-      }
-
     }
 
     function renderFooterMenus(data) {
-      if (!data || typeof data !== 'object') {
+      if (!data || typeof data !== 'object' || Array.isArray(data)) {
         return;
       }
 
-      const language = getCurrentLanguage();
+      var language = getCurrentLanguage();
 
-      const menuNames = [
+      var menuNames = [
         'customer_service',
         'information',
         'extras'
       ];
 
       menuNames.forEach(function (menuName) {
-        const items = data[menuName];
+        var items = data[menuName];
 
         if (!Array.isArray(items)) {
           return;
@@ -73,13 +66,13 @@
     }
 
     function getCurrentLanguage() {
-      const htmlLanguage = document.documentElement.lang || 'en';
+      var htmlLanguage = document.documentElement.lang || 'en';
 
       return htmlLanguage.toLowerCase().split('-')[0];
     }
 
     function renderMenu(menuName, items, language) {
-      const menu = document.querySelector(
+      var menu = document.querySelector(
         '[data-footer-menu="' + menuName + '"]'
       );
 
@@ -91,7 +84,7 @@
       /*
        * Find the existing Drupal footer block.
        */
-      const footerItem = menu.querySelector('.footer-item');
+      var footerItem = menu.querySelector('.footer-item');
 
       if (!footerItem) {
         console.warn('Footer item container not found:', menuName);
@@ -101,22 +94,25 @@
       /*
        * Preserve the existing heading.
        */
-      const heading = footerItem.querySelector('h4');
+      var heading = footerItem.querySelector('h4');
 
+      /*
+       * Append links after the existing footer content.
+       */
       items.forEach(function (item) {
         if (!item || !item.path || !item.title) {
           return;
         }
 
-        const path = getLocalizedValue(item.path, language);
-        const title = getLocalizedValue(item.title, language);
+        var path = getLocalizedValue(item.path, language);
+        var title = getLocalizedValue(item.title, language);
 
         if (!path || !title) {
           return;
         }
 
-        const link = document.createElement('a');
-        const icon = document.createElement('i');
+        var link = document.createElement('a');
+        var icon = document.createElement('i');
 
         link.href = path;
         link.className = 'footer-json-link';
@@ -127,9 +123,6 @@
         link.appendChild(icon);
         link.appendChild(document.createTextNode(title));
 
-        /*
-        * Append new links after all existing menu links.
-        */
         footerItem.appendChild(link);
       });
     }
@@ -146,4 +139,4 @@
       return values[language] || values.en || '';
     }
 
-})(Drupal, drupalSettings, once);
+  })(Drupal, drupalSettings, once);
