@@ -110,3 +110,11 @@ my_custom_module.test_user_login:
     _form: 'Drupal\my_custom_module\Form\CustomLoginForm'
   requirements:
     _access: 'TRUE'
+
+my_custom_module.json_url:
+  path: '/admin/config/system/json-url'
+  defaults:
+    _title: 'Frontend Json url'
+    _form: 'Drupal\my_custom_module\Form\JsonUrlForm'
+  requirements:
+    _permission: 'administer site configuration'
