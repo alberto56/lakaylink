@@ -34,16 +34,9 @@ final class JsonUrlForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Frontend Footer Menu Json'),
       '#default_value' => $this->config('my_custom_module.settings')->get('frontend_footer_menu_json'),
-      '#required' => true,
+      '#required' => TRUE,
     ];
     return parent::buildForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-    parent::validateForm($form, $form_state);
   }
 
   /**
