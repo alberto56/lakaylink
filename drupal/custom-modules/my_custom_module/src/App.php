@@ -268,7 +268,7 @@ class App {
    * @param array $attachments
    *   An array that you can add attachments to.
    */
-  public function hookPageAttachments($attachments) {
+  public function hookPageAttachments(array &$attachments) {
     $config = \Drupal::config('my_custom_module.settings');
 
     $json_url = $config->get('frontend_footer_menu_json');
