@@ -4,3 +4,9 @@ my_custom_module.admin:
   parent: system.admin
   route_name: my_custom_module.settings
   weight: -100
+
+my_custom_module.json_url:
+  title: Json url
+  parent: system.admin_config_system
+  route_name: my_custom_module.json_url
+  weight: 10
