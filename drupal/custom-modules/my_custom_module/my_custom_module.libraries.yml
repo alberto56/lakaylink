@@ -22,3 +22,11 @@ invitation_code:
 
     # Ensures behaviors are attached only once.
     - core/once
+
+footer:
+  js:
+    js/footer-json.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once

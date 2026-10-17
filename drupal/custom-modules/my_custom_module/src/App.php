@@ -262,4 +262,26 @@ class App {
     $variables['related_nodes'] = $nodes;
   }
 
+  /**
+   * Add attachments (typically assets) to a page before it is rendered.
+   *
+   * @param array $attachments
+   *   An array that you can add attachments to.
+   */
+  public function hookPageAttachments(array &$attachments) {
+    $config = \Drupal::config('my_custom_module.settings');
+
+    $json_url = $config->get('frontend_footer_menu_json');
+
+    if (!$json_url) {
+      return;
+    }
+
+    $attachments['#attached']['drupalSettings']['footerJson'] = [
+      'url' => $json_url,
+    ];
+
+    $attachments['#attached']['library'][] = 'my_custom_module/footer';
+  }
+
 }

@@ -75,3 +75,10 @@ function my_custom_module_preprocess_menu__main(&$variables) {
 function my_custom_module_preprocess_commerce_store(array &$variables) {
   App::instance()->hookPreprocessCommerceStore($variables);
 }
+
+/**
+ * Implements hook_page_attachments().
+ */
+function my_custom_module_page_attachments(array &$attachments) {
+  App::instance()->hookPageAttachments($attachments);
+}
