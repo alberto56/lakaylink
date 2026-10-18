@@ -69,7 +69,7 @@ class ForceGoogleLoginSubscriber implements EventSubscriberInterface {
     $path = $request->getPathInfo();
 
     // Allow API endpoints to bypass authentication redirects.
-    if (str_starts_with($path, '/api/')) {
+    if (str_starts_with($path, '/api/') || str_starts_with($path, '/sites/default/files/')) {
       return;
     }
 
