@@ -76,7 +76,8 @@ rm -rf modules/contrib
   drupal/search_api_autocomplete \
   drupal/viewsreference \
   drupal/swiper_formatter \
-  drupal/masquerade
+  drupal/masquerade \
+  drupal/jsonapi_image_styles
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.
