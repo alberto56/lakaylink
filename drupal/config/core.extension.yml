@@ -13,6 +13,7 @@ module:
   commerce: 0
   commerce_cart: 0
   commerce_checkout: 0
+  commerce_exchanger: 0
   commerce_log: 0
   commerce_number_pattern: 0
   commerce_order: 0
@@ -42,6 +43,7 @@ module:
   history: 0
   image: 0
   inline_entity_form: 0
+  ip2country: 0
   jsonapi: 0
   jsonapi_defaults: 0
   jsonapi_extras: 0

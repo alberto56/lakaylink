@@ -67,6 +67,10 @@ $config['commerce_payment.commerce_payment_gateway.stripe']['configuration'] = [
   'webhook_signing_secret' =>  getenv('WEBHOOK_SIGNING_SECRET'),
 ];
 
+$config['commerce_exchanger.commerce_exchange_rates.currencylayer']['configuration'] = [
+  'api_key' => getenv('CURRENCY_LAYER_API_KEY'),
+];
+
 $config['simple_oauth.settings']['public_key'] = 'private://social-auth-oauth-keys/public.key';
 $config['simple_oauth.settings']['private_key'] = 'private://social-auth-oauth-keys/private.key';
 

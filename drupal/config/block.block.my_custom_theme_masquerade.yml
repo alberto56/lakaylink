@@ -1,0 +1,29 @@
+uuid: 990d306d-a9ca-4a4d-abab-6b58171400dc
+langcode: en
+status: true
+dependencies:
+  module:
+    - masquerade
+    - user
+  theme:
+    - my_custom_theme
+id: my_custom_theme_masquerade
+theme: my_custom_theme
+region: content
+weight: 0
+provider: null
+plugin: masquerade
+settings:
+  id: masquerade
+  label: Masquerade
+  label_display: visible
+  provider: masquerade
+  show_unmasquerade_link: false
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      administrator: administrator
