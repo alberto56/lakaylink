@@ -118,3 +118,14 @@ my_custom_module.json_url:
     _form: 'Drupal\my_custom_module\Form\JsonUrlForm'
   requirements:
     _permission: 'administer site configuration'
+
+my_custom_module.ip_currency_rate:
+  path: '/api/get-ip-to-currency-rate'
+  defaults:
+    _title: 'Ip to Currency rate'
+    _controller: '\Drupal\my_custom_module\Controller\IpCurrencyRateController::getCurrencyRate'
+  requirements:
+    _permission: 'access content'
+  # requirements:
+  #   _access: 'TRUE'
+  methods: [GET]
