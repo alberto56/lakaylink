@@ -126,6 +126,4 @@ my_custom_module.ip_currency_rate:
     _controller: '\Drupal\my_custom_module\Controller\IpCurrencyRateController::getCurrencyRate'
   requirements:
     _permission: 'access content'
-  # requirements:
-  #   _access: 'TRUE'
   methods: [GET]
