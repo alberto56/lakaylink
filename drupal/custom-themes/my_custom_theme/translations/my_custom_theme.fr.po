@@ -87,3 +87,6 @@ msgstr "Mon tableau de bord"
 
 msgid "Home"
 msgstr "Accueil"
+
+msgid "You will be charged in US dollars: @amount"
+msgstr "Vous serez facturé en dollars américains : @amount"
