@@ -34,8 +34,11 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * ex 2:- Indian ip address we should get USD
  *   /api/get-ip-to-currency-rate?SIMULATE-IP=176.31.84.249
- *   {"rates":{"usd-eur":0.89267},"date":"2026-10-25-18:55:29 UTC","client-currency":"EUR"}
- *
+ *   {
+ *     "rates": {"usd-eur":0.89267},
+ *     "date":"2026-10-25-18:55:29 UTC",
+ *     "client-currency":"EUR"
+ *   }
  */
 final class IpCurrencyRateController extends ControllerBase {
 
