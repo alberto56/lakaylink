@@ -6,25 +6,6 @@ declare(strict_types=1);
 namespace CommerceGuys\Addressing\Country;
 
 /**
- * Interface for the mock country repository.
- */
-// interface CountryRepositoryInterface {
-
-//   /**
-//    * Gets a country's currency code.
-//    *
-//    * @param string $country_code
-//    *   The ISO country code.
-//    *
-//    * @return string|null
-//    *   The currency code, or NULL if not found.
-//    */
-//   public function getCurrencyCode(string $country_code): ?string;
-
-// }
-
-
-/**
  * Mock country repository implementation.
  */
 class CountryRepository {
