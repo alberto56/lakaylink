@@ -77,9 +77,9 @@
               }
 
               // Process only text that consists of a USD price.
-              return priceRegex.test(node.nodeValue)
-                ? NodeFilter.FILTER_ACCEPT
-                : NodeFilter.FILTER_REJECT;
+              return priceRegex.test(node.nodeValue) ?
+                NodeFilter.FILTER_ACCEPT :
+                NodeFilter.FILTER_REJECT;
             }
           }
         );
