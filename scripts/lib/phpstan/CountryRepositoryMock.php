@@ -1,24 +1,42 @@
+
 <?php
 
 declare(strict_types=1);
 
-namespace Drupal\my_custom_module\Tests\Fixtures;
-
-use CommerceGuys\Addressing\Country\Country;
-use CommerceGuys\Addressing\Country\CountryRepository;
+namespace CommerceGuys\Addressing\Country;
 
 /**
- * Mock country repository for testing.
+ * Interface for the mock country repository.
  */
-class CountryRepositoryMock extends CountryRepository {
+// interface CountryRepositoryInterface {
+
+//   /**
+//    * Gets a country's currency code.
+//    *
+//    * @param string $country_code
+//    *   The ISO country code.
+//    *
+//    * @return string|null
+//    *   The currency code, or NULL if not found.
+//    */
+//   public function getCurrencyCode(string $country_code): ?string;
+
+// }
+
+
+/**
+ * Mock country repository implementation.
+ */
+class CountryRepository {
 
   /**
-   * Mock country data.
+   * Country-to-currency mappings.
    *
    * @var array<string, string>
    */
-  private array $countries = [
+  private array $currencies = [
     'FR' => 'EUR',
+    'DE' => 'EUR',
     'CA' => 'CAD',
     'IN' => 'INR',
     'US' => 'USD',
@@ -27,18 +45,8 @@ class CountryRepositoryMock extends CountryRepository {
   /**
    * {@inheritdoc}
    */
-  public function get(string $countryCode): Country {
-    $countryCode = strtoupper($countryCode);
-
-    if (!isset($this->countries[$countryCode])) {
-      throw new \InvalidArgumentException(
-        sprintf('Unknown country code: %s', $countryCode)
-      );
-    }
-
-    // Country creation depends on the installed Commerce Guys Addressing
-    // version. Use the real repository for constructing Country objects.
-    return parent::get($countryCode);
+  public function getCurrencyCode(string $country_code): ?string {
+    return $this->currencies[strtoupper($country_code)] ?? NULL;
   }
 
 }

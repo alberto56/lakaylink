@@ -1,63 +1,54 @@
+
 <?php
+
+declare(strict_types=1);
 
 namespace Drupal\ip2country;
 
+/**
+ * Interface for the mock IP-to-country lookup.
+ */
 interface Ip2CountryLookupInterface {
 
+  /**
+   * Gets the country code for an IP address.
+   *
+   * @param string|int|null $ip_address
+   *   The IP address to look up.
+   *
+   * @return string|false
+   *   The two-letter country code, or FALSE if not found.
+   */
   public function getCountry($ip_address = NULL): string|false;
 
 }
 
-// if (!class_exists(ProductVariation::class)) {
-//       class ProductVariation {
-//         /**
-//          * Creates a product variation.
-//          *
-//          * @param array<string, mixed> $values
-//          *
-//          * @return ProductVariationInterface
-//          */
-//         public static function create(array $values): ProductVariationInterface {
-//           return new class implements ProductVariationInterface {
-//             public function language(): \Drupal\Core\Language\LanguageInterface {
-//               throw new \LogicException('PHPStan mock.');
-//             }
-//           };
-//         }
-//       }
-// }
-
-
-
 /**
- * Mock implementation of Ip2CountryLookupInterface.
+ * Mock implementation of the IP-to-country lookup.
  */
-// class Ip2CountryLookupMock implements Ip2CountryLookupInterface {
+class Ip2CountryLookup implements Ip2CountryLookupInterface {
 
-//   /**
-//    * Mock IP-to-country mappings.
-//    *
-//    * @var array<string, string>
-//    */
-//   private array $countries = [
-//     '176.31.84.249' => 'FR',
-//     '152.57.129.130' => 'IN',
-//     '8.8.8.8' => 'US',
-//     '1.1.1.1' => 'AU',
-//     '24.48.0.1' => 'CA',
-//   ];
+  /**
+   * IP-to-country mappings.
+   *
+   * @var array<string, string>
+   */
+  private array $countries = [
+    '176.31.84.249' => 'FR',
+    '152.57.129.130' => 'IN',
+    '8.8.8.8' => 'US',
+    '24.48.0.1' => 'CA',
+  ];
 
-//   /**
-//    * {@inheritdoc}
-//    */
-//   public function getCountry($ip_address = NULL): string|false {
-//     if ($ip_address === NULL) {
-//       return FALSE;
-//     }
+  /**
+   * {@inheritdoc}
+   */
+  public function getCountry($ip_address = NULL): string|false {
+    if ($ip_address === NULL) {
+      return FALSE;
+    }
 
-//     $ip = (string) $ip_address;
+    return $this->countries[(string) $ip_address] ?? FALSE;
+  }
 
-//     return $this->countries[$ip] ?? FALSE;
-//   }
-
-// }
+}
