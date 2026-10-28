@@ -7,7 +7,6 @@ namespace Drupal\my_custom_module\Controller;
 use CommerceGuys\Addressing\Country\CountryRepository;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\ip2country\Ip2CountryLookupInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -47,14 +46,11 @@ final class IpCurrencyRateController extends ControllerBase {
    *
    * @param \Drupal\Core\Database\Connection $database_connection
    *   The database connection used to retrieve exchange rates.
-   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
-   *   The currently authenticated user.
    * @param \Drupal\ip2country\Ip2CountryLookupInterface $ip2countryLookup
    *   The IP-to-country lookup service.
    */
   public function __construct(
     private readonly Connection $database_connection,
-    private readonly AccountProxyInterface $current_user,
     private readonly Ip2CountryLookupInterface $ip2countryLookup,
   ) {}
 
@@ -64,7 +60,6 @@ final class IpCurrencyRateController extends ControllerBase {
   public static function create(ContainerInterface $container): self {
     return new self(
       $container->get('database'),
-      $container->get('current_user'),
       $container->get('ip2country.lookup'),
     );
   }
@@ -108,7 +103,6 @@ final class IpCurrencyRateController extends ControllerBase {
 
     if (
       $simulated_ip !== NULL &&
-      $this->current_user->hasPermission('administer site configuration') &&
       filter_var($simulated_ip, FILTER_VALIDATE_IP)
     ) {
       $ip = $simulated_ip;
