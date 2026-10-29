@@ -48,7 +48,7 @@ rm -rf modules/contrib
   drupal/email_registration \
   drupal/token \
   drupal/gin \
-  drupal/commerce:^3.3.13 \
+  drupal/commerce:^3 \
   drupal/metatag \
   drupal/pathauto \
   drupal/webform:^6 \
