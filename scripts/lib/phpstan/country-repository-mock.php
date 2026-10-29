@@ -10,19 +10,6 @@ namespace CommerceGuys\Addressing\Country;
 class CountryRepository {
 
   /**
-   * Country-to-currency mappings.
-   *
-   * @var array<string, string>
-   */
-  private array $currencies = [
-    'FR' => 'EUR',
-    'DE' => 'EUR',
-    'CA' => 'CAD',
-    'IN' => 'INR',
-    'US' => 'USD',
-  ];
-
-  /**
    * Mock country definitions.
    *
    * @var array<string, array<string, string>>
@@ -79,15 +66,7 @@ class CountryRepository {
     ]);
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getCurrencyCode(string $country_code): ?string {
-    return $this->currencies[strtoupper($country_code)] ?? NULL;
-  }
-
 }
-
 
 /**
  * Mock country repository implementation.
@@ -95,23 +74,20 @@ class CountryRepository {
 class Country {
 
   /**
-   * Country-to-currency mappings.
+   * Constructs the mock country.
    *
-   * @var array<string, string>
+   * @param string|null $currencyCode
+   *   The currency code to return.
    */
-  private array $currencies = [
-    'FR' => 'EUR',
-    'DE' => 'EUR',
-    'CA' => 'CAD',
-    'IN' => 'INR',
-    'US' => 'USD',
-  ];
+  public function __construct(
+    private readonly ?string $currencyCode = 'EUR',
+  ) {}
 
   /**
-   * {@inheritdoc}
+   * Gets the currency code.
    */
-  public function getCurrencyCode(string $country_code): ?string {
-    return $this->currencies[strtoupper($country_code)] ?? NULL;
+  public function getCurrencyCode(): ?string {
+    return $this->currencyCode;
   }
 
 }
