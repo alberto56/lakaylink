@@ -18,6 +18,8 @@ echo extension=/usr/lib/php84/modules/bcmath.so >> /usr/local/etc/php/php.ini
 
 composer self-update 2.9.5
 
+
+
 # See https://getcomposer.org/allow-plugins
 composer config --no-plugins allow-plugins.composer/installers true
 composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
@@ -76,7 +78,6 @@ rm -rf modules/contrib
   drupal/search_api_autocomplete \
   drupal/viewsreference \
   drupal/swiper_formatter \
-  drupal/masquerade \
   drupal/commerce_exchanger \
   drupal/ip2country
 
@@ -116,4 +117,4 @@ echo 'memory_limit = 512M' >> /usr/local/etc/php/php.ini
 echo 'upload_max_filesize = 25M' >> /usr/local/etc/php/php.ini
 echo 'post_max_size = 25M' >> /usr/local/etc/php/php.ini
 
-/var/www/html/vendor/composer/composer/bin/composer update
+/var/www/html/vendor/composer/composer/bin/composer update -W
