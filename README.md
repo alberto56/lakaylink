@@ -17,6 +17,7 @@ This is the backend site. The frontend site is at <https://github.com/alberto56/
 * Stripe integration
 * api setup
 * Import - export menu links, taxonomy terms, block content
+* country based price display.
 
 ---
 
@@ -31,6 +32,7 @@ Step 1: update .env files
     STRIPE_PUBLISHABLE_KEY=
     STRIPE_SECRET_KEY=
     WEBHOOK_SIGNING_SECRET=
+    CURRENCY_LAYER_API_KEY=
 
     refer
     - [refer step0, step1 and step2 to get client id and client secret](readme/social-auth-google-configuration.md)
@@ -41,6 +43,11 @@ Step 1: update .env files
       * openssl genrsa -out drupal/starter-data/private-files/social-auth-oauth-keys/private.key  2048
 
       * openssl rsa -in drupal/starter-data/private-files/social-auth-oauth-keys/private.key -pubout -out drupal/starter-data/private-files/social-auth-oauth-keys/public.key
+
+    - [refer stripe setup to get publishable key, secret key, webhook signing secret](readme/drupal-coomerce-stripe-connect.md)
+    ./scripts/deploy.sh
+
+    - [refer country based price display ](readme/country-based-price-display.md)
 
     ./scripts/deploy.sh
 
