@@ -1,4 +1,3 @@
-
 (function ($, Drupal, once) {
   'use strict';
 

@@ -1109,3 +1109,7 @@
   line-height: 1.4;
   margin-top: 3px;
 }
+
+.field--name-price .currency-usd-note {
+  font-size: 0.5em !important;
+}
