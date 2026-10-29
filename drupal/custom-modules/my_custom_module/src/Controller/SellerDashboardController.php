@@ -83,6 +83,14 @@ final class SellerDashboardController extends ControllerBase {
       throw new AccessDeniedHttpException();
     }
 
+    if ($user && !$user->hasRole('seller')) {
+      $user->addRole('seller');
+      if ($user->hasRole('unverified')) {
+        $user->removeRole('unverified');
+      }
+      $user->save();
+    }
+
     // Allow only sellers and administrators.
     if ($user->hasRole('seller') || $user->hasRole('administrator')) {
 

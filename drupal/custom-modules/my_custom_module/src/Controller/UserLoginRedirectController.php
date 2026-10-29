@@ -130,7 +130,7 @@ final class UserLoginRedirectController extends ControllerBase {
     // Buyers.
     if ($user->hasRole('buyer')) {
       // Get all stores assigned to the buyer.
-      $stores = $this->buyerStoreResolver->getAllowedStores($user);
+      $stores = $this->buyerStoreResolver->getAllPublishedStores();
 
       $count = count($stores);
 

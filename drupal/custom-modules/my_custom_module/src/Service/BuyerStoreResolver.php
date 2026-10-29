@@ -75,4 +75,16 @@ final class BuyerStoreResolver implements BuyerStoreResolverInterface {
     return $stores;
   }
 
+  public function getAllPublishedStores() : array {
+    $storage = $this->entityTypeManager
+      ->getStorage('commerce_store');
+
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('status', 1)
+      ->execute();
+
+    return $storage->loadMultiple($ids);
+  }
+
 }
