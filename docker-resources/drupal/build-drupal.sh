@@ -48,7 +48,7 @@ rm -rf modules/contrib
   drupal/email_registration \
   drupal/token \
   drupal/gin \
-  drupal/commerce:3 \
+  drupal/commerce:^3.3.13 \
   drupal/metatag \
   drupal/pathauto \
   drupal/webform:^6 \
@@ -78,7 +78,7 @@ rm -rf modules/contrib
   drupal/search_api_autocomplete \
   drupal/viewsreference \
   drupal/swiper_formatter \
-  drupal/commerce_exchanger \
+  drupal/commerce_exchanger:^2.0.3 \
   drupal/ip2country
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
@@ -117,4 +117,4 @@ echo 'memory_limit = 512M' >> /usr/local/etc/php/php.ini
 echo 'upload_max_filesize = 25M' >> /usr/local/etc/php/php.ini
 echo 'post_max_size = 25M' >> /usr/local/etc/php/php.ini
 
-/var/www/html/vendor/composer/composer/bin/composer update -W
+/var/www/html/vendor/composer/composer/bin/composer update
