@@ -25,7 +25,7 @@ class CustomCartBlock extends CartBlock {
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
     $build = parent::build();
 
     foreach ($this->cartProvider->getCarts() as $cart) {

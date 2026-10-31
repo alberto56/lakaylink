@@ -47,6 +47,7 @@ global-styling:
 
     # Theme JS
     js/main.js: {}
+    js/country-based-price.js: {}
 
   dependencies:
     - core/jquery

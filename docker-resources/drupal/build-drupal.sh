@@ -18,6 +18,8 @@ echo extension=/usr/lib/php84/modules/bcmath.so >> /usr/local/etc/php/php.ini
 
 composer self-update 2.9.5
 
+
+
 # See https://getcomposer.org/allow-plugins
 composer config --no-plugins allow-plugins.composer/installers true
 composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
@@ -46,7 +48,7 @@ rm -rf modules/contrib
   drupal/email_registration \
   drupal/token \
   drupal/gin \
-  drupal/commerce:3 \
+  drupal/commerce:^3 \
   drupal/metatag \
   drupal/pathauto \
   drupal/webform:^6 \
@@ -76,7 +78,8 @@ rm -rf modules/contrib
   drupal/search_api_autocomplete \
   drupal/viewsreference \
   drupal/swiper_formatter \
-  drupal/masquerade
+  drupal/commerce_exchanger:^2.0.3 \
+  drupal/ip2country
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.

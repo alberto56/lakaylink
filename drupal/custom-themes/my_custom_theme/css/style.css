@@ -1102,3 +1102,14 @@
 .footer .footer-item a i {
   color: #fff !important;
 }
+
+.currency-usd-note {
+  display: block;
+  font-size: 0.8em;
+  line-height: 1.4;
+  margin-top: 3px;
+}
+
+.field--name-price .currency-usd-note {
+  font-size: 0.5em !important;
+}

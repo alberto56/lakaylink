@@ -24,7 +24,7 @@
   <table class="table">
     <thead>
       <tr class="text-center">
-        <th scope="col" class="text-start">{{ 'Name'|t }}</th>
+        <th scope="col" colspan="2" class="text-start">{{ 'Name'|t }}</th>
         <th scope="col">{{ 'Price'|t }}</th>
         <th scope="col">{{ 'Quantity'|t }}</th>
         <th scope="col">{{ 'Total'|t }}</th>
@@ -37,10 +37,9 @@
         {% set variation = order_item.getPurchasedEntity %}
 
         <tr class="text-center">
-          <th scope="row" class="text-start py-4">
+          <td scope="row" colspan="2" class="text-start py-4">
             {{ order_item.label }}
-          </th>
-
+          </td>
           <td class="py-4">
             {{ variation.getPrice|commerce_price_format }}
           </td>
@@ -57,12 +56,12 @@
 
       {# Subtotal #}
       <tr>
-        <td colspan="2"></td>
+        <td colspan="3"></td>
         <td class="py-4">
-          <p class="mb-0 text-dark py-2">Subtotal</p>
+          <p class="mb-0 text-dark text-uppercase text-center py-2 ">{{ 'Subtotal'|t }}</p>
         </td>
         <td class="py-4">
-          <div class="py-2 text-center border-bottom border-top">
+          <div class="py-2 text-center">
             <p class="mb-0 text-dark">
               {{ totals.subtotal|commerce_price_format }}
             </p>
@@ -75,13 +74,13 @@
         <tr>
           <td colspan="2"></td>
           <td class="py-4">
-            <p class="mb-0 text-dark py-2">
+            <p class="mb-0 text-dark text-uppercase py-2">
               {{ adjustment.label }}
             </p>
           </td>
           <td class="py-4">
-            <div class="py-2 text-center border-bottom border-top">
-              <p class="mb-0 text-dark">
+            <div class="py-2 text-center ">
+              <p class="mb-0 text-dark ">
                 {{ adjustment.total|commerce_price_format }}
               </p>
             </div>
@@ -93,12 +92,12 @@
       <tr>
         <td colspan="3"></td>
         <td class="py-4">
-          <p class="mb-0 text-dark text-uppercase py-2">
-            Total
+          <p class="mb-0 text-dark text-uppercase text-center py-2">
+            {{ 'Total'|t }}
           </p>
         </td>
         <td class="py-4">
-          <div class="py-2 text-center border-bottom border-top">
+          <div class="py-2 text-center">
             <p class="mb-0 text-dark">
               {{ totals.total|commerce_price_format }}
             </p>
