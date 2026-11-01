@@ -75,6 +75,9 @@ final class BuyerStoreResolver implements BuyerStoreResolverInterface {
     return $stores;
   }
 
+  /**
+   * Get all published store.
+   */
   public function getAllPublishedStores() : array {
     $storage = $this->entityTypeManager
       ->getStorage('commerce_store');
