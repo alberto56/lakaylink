@@ -86,16 +86,6 @@ Step 1: update .env files
 
   Now seller has to logout and login to system again or simply refresh the page.
 
-  He will see the stores and generate code button respectively.
-
-  clik on generate code , you will get some thing like this.
-
-  1783501414/2/d67eae76e057b82ba7d6a2dfc07d84853faf924d3d8f6e20c7f910e848c9b698
-
-  *** code is not user specific any user with this code can now use it. ***
-
-  Expiration time 1 month. If required we can chage it at drupal/custom-modules/my_custom_module/src/Service/InvitationCodeGenerator.php in in generate method.
-
 
 ### 2. Buyer Role Permissions
 
@@ -104,29 +94,7 @@ Step 1: update .env files
   First he will be the unverified user hence he will see /home page, which display a list like Continue as buyer,
   Continue as seller in /home page.
 
-  If user clicks on buyer, If unverified user It will take him to buyer verification form
-  /account/buyer-verification.
-
-    buyer-verification page that says:
-
-    * Contact us by WhatsApp at 555-555-5555 to confirm that your family's location is covered by our service
-    * We will give you a confirmation code by whatsApp
-    * Enter that confirmation code here: (and there is a field)
-
-  - Buyer has to contact seller by whatsapp and get confirmation code.
-
-  - seller confirms that the buyer is eligible
-
-  - Paste confirmation code in verification text field and submit,
-    once the unverified user verification confirmed his role gets updated to buyer and
-    he will be allowed to access the store.
-
-    If buyer wants to access someother store then go to /account/buyer-verification  form
-    and add confirmation code of new store and submit.
-
-  - Next time when buyer logs in If he dont have access to any store then he will see 403 page,
-    if he has access to only one store then he will be redirected to that particular store page,
-    If he has access to multiple pages then he will see the store list in select-store page.
+  If user clicks on buyer, automatically unverified role removed and buyer role is added. Buyer can see all the stores.
 
   * Only users with **"buyer"** role can:
 
