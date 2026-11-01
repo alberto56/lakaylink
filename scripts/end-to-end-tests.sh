@@ -97,6 +97,12 @@ docker compose exec -T drupal drush php:eval "
     'roles' => ['unverified'],
   ],
   [
+    'name' => 'test_unverified_seller',
+    'mail' => 'test_unverified_seller@example.com',
+    'password' => '$PASS',
+    'roles' => ['unverified'],
+  ],
+  [
     'name' => 'test_seller',
     'mail' => 'test_seller@example.com',
     'password' => '$PASS',
@@ -150,6 +156,7 @@ foreach (\$users as \$userData) {
 
 echo 'change passwords'
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_unverified '"$PASS"
+docker compose exec -T drupal /bin/bash -c 'drush upwd test_unverified_seller '"$PASS"
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_seller '"$PASS"
 docker compose exec -T drupal /bin/bash -c 'drush upwd test_buyer '"$PASS"
 
