@@ -78,7 +78,6 @@ final class BuyerLoginRedirectController extends ControllerBase {
     }
 
     // Handle buyer-specific redirection logic.
-
     $stores = $this->buyerStoreResolver->getAllPublishedStores();
 
     $count = count($stores);
