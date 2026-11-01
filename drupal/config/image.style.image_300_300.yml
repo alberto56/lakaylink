@@ -1,0 +1,15 @@
+uuid: 38c2af0f-b91a-420b-a147-5451d24fdd79
+langcode: en
+status: true
+dependencies: {  }
+name: image_300_300
+label: 'image 300*300 '
+effects:
+  b66bff9c-16a4-45ef-a3a8-ca24e81ae464:
+    uuid: b66bff9c-16a4-45ef-a3a8-ca24e81ae464
+    id: image_scale
+    weight: 1
+    data:
+      width: 300
+      height: 300
+      upscale: false

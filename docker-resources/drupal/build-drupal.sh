@@ -78,6 +78,8 @@ rm -rf modules/contrib
   drupal/search_api_autocomplete \
   drupal/viewsreference \
   drupal/swiper_formatter \
+  drupal/masquerade \
+  drupal/jsonapi_image_styles \
   drupal/commerce_exchanger:^2.0.3 \
   drupal/ip2country
 
