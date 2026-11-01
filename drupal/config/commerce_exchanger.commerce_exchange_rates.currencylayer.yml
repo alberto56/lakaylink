@@ -1,0 +1,22 @@
+uuid: 4bcbe2c0-0fdd-46ad-819e-d7f2fd30da60
+langcode: en
+status: true
+dependencies: {  }
+id: currencylayer
+label: Currencylayer
+plugin: currencylayer
+configuration:
+  api_key: ''
+  auth:
+    username: ''
+    password: ''
+  cron: 1
+  use_cross_sync: false
+  base_currency: USD
+  demo_amount: 1
+  mode: live
+  enterprise: false
+  manual: false
+  refresh_once: false
+  transform_rates: false
+  historical_rates: false
