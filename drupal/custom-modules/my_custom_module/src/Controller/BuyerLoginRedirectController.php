@@ -69,7 +69,7 @@ final class BuyerLoginRedirectController extends ControllerBase {
       throw new AccessDeniedHttpException();
     }
 
-    if ($user && !$user->hasRole('buyer')) {
+    if (!$user->hasRole('buyer')) {
       $user->addRole('buyer');
       if ($user->hasRole('unverified')) {
         $user->removeRole('unverified');

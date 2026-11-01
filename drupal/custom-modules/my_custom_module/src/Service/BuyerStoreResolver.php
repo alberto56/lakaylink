@@ -76,9 +76,12 @@ final class BuyerStoreResolver implements BuyerStoreResolverInterface {
   }
 
   /**
-   * Get all published store.
+   * Get all published stores.
+   *
+   * @return \Drupal\commerce_store\Entity\StoreInterface[]
+   *   An array of published stores.
    */
-  public function getAllPublishedStores() : array {
+  public function getAllPublishedStores(): array {
     $storage = $this->entityTypeManager
       ->getStorage('commerce_store');
 
@@ -87,7 +90,10 @@ final class BuyerStoreResolver implements BuyerStoreResolverInterface {
       ->condition('status', 1)
       ->execute();
 
-    return $storage->loadMultiple($ids);
+    /** @var \Drupal\commerce_store\Entity\StoreInterface[] $stores */
+    $stores = $storage->loadMultiple($ids);
+
+    return $stores;
   }
 
 }
