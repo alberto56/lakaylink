@@ -12,11 +12,11 @@ selection_criteria:
   c2ff6eda-88d5-4edf-90e0-7aef19f6552c:
     id: 'entity_bundle:commerce_product'
     negate: false
-    uuid: c2ff6eda-88d5-4edf-90e0-7aef19f6552c
     context_mapping:
       commerce_product: commerce_product
     bundles:
       default: default
+    uuid: c2ff6eda-88d5-4edf-90e0-7aef19f6552c
 selection_logic: and
 weight: -5
 relationships: {  }

@@ -39,7 +39,7 @@
         }
         button.parent().parent().find('input').val(newVal);
     });
-    
+
    // Back to top button
    $(window).scroll(function () {
     if ($(this).scrollTop() > 300) {
@@ -53,26 +53,4 @@
         return false;
     });
 
-
-    // new Swiper(".header-carousel", {
-    //     loop: true,
-    //     speed: 2000,
-    
-    //     autoplay: {
-    //         delay: 4000,
-    //         disableOnInteraction: false,
-    //     },
-    
-    //     navigation: {
-    //         nextEl: ".swiper-button-next",
-    //         prevEl: ".swiper-button-prev",
-    //     },
-    
-    //     pagination: {
-    //         el: ".swiper-pagination",
-    //         clickable: true,
-    //     },
-    // });
-
-    
 })(jQuery);
