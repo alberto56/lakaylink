@@ -52,9 +52,9 @@ Step 1: update .env files
     - Setup a cron. Go to /admin/config/system/cron . copy cron url.  open cron tab ( $crontab -e). configure cron to run
       every minute.
 
-      ```
-        * * * * * curl -fsS  <replace your cron url here>  >/dev/null 2>&1
-      ```
+        ```
+          * * * * * curl -fsS  <replace your cron url here>  >/dev/null 2>&1
+        ```
 
 
     ./scripts/deploy.sh
