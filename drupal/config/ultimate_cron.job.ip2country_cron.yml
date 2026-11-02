@@ -1,0 +1,29 @@
+uuid: d83e4c7a-66e2-418b-a287-495d4df8c81f
+langcode: en
+status: true
+dependencies:
+  module:
+    - ip2country
+title: 'Default cron handler'
+id: ip2country_cron
+weight: 0
+module: ip2country
+callback: 'ip2country#cron'
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

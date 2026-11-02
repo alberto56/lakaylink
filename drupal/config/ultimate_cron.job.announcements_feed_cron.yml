@@ -1,0 +1,29 @@
+uuid: f458b406-f897-4561-aca2-45386d6a5851
+langcode: en
+status: true
+dependencies:
+  module:
+    - announcements_feed
+title: 'Default cron handler'
+id: announcements_feed_cron
+weight: 0
+module: announcements_feed
+callback: 'announcements_feed#cron'
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '*/15+@ * * * *'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000
