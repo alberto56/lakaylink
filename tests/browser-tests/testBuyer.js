@@ -3,7 +3,7 @@ const fs = require('fs')
 const testBase = require('./testBase.js')
 const BASE_URL = 'http://webserver'
 
-it('buyer should see the store he has joined.', async function() {
+it('buyer should see all the stores.', async function() {
   this.timeout(35000);
   const puppeteer = require('puppeteer')
   const browser = await puppeteer.launch({

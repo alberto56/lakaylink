@@ -32,7 +32,7 @@ it(
     );
 
     // Fill username and password.
-    await page.type('input[name="name"]', 'test_unverified');
+    await page.type('input[name="name"]', 'test_unverified_seller');
     await page.type('input[name="pass"]', userPassword);
 
     // Screenshot.
