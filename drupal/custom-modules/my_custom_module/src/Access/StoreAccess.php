@@ -66,7 +66,7 @@ final class StoreAccess implements ContainerInjectionInterface {
   ): AccessResult {
 
     // Administrators bypass store assignment restrictions.
-    if (in_array('administrator', $account->getRoles(), TRUE)) {
+    if (array_intersect(['administrator', 'buyer'], $account->getRoles())) {
       return AccessResult::allowed();
     }
 

@@ -36,4 +36,12 @@ interface BuyerStoreResolverInterface {
    */
   public function getAllowedStores(AccountInterface $account): array;
 
+  /**
+   * Gets All the Commerce store entities which are published.
+   *
+   * @return \Drupal\commerce_store\Entity\StoreInterface[]
+   *   An array of Commerce store entities keyed by store ID.
+   */
+  public function getAllPublishedStores(): array;
+
 }

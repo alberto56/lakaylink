@@ -69,48 +69,40 @@ final class BuyerLoginRedirectController extends ControllerBase {
       throw new AccessDeniedHttpException();
     }
 
-    // Handle buyer-specific redirection logic.
-    if ($user->hasRole('unverified')) {
-      // Redirect to the store selection page when multiple stores exist.
-      return new RedirectResponse(
-        Url::fromRoute('my_custom_module.buyer_verification')->toString()
-      );
+    if (!$user->hasRole('buyer')) {
+      $user->addRole('buyer');
+      if ($user->hasRole('unverified')) {
+        $user->removeRole('unverified');
+      }
+      $user->save();
     }
 
     // Handle buyer-specific redirection logic.
-    if ($user->hasRole('buyer')) {
+    $stores = $this->buyerStoreResolver->getAllPublishedStores();
 
-      $stores = $this->buyerStoreResolver
-        ->getAllowedStores($this->currentUser);
+    $count = count($stores);
 
-      $count = count($stores);
-
-      // Buyers must have at least one assigned store.
-      if ($count === 0) {
-        throw new AccessDeniedHttpException(
-          'No stores have been assigned to your account.'
-        );
-      }
-
-      // Redirect directly when only one store is available.
-      if ($count === 1) {
-        $store = reset($stores);
-
-        return new RedirectResponse(
-          $store->toUrl()->toString()
-        );
-      }
-
-      // Redirect to the store selection page when multiple stores exist.
-      return new RedirectResponse(
-        Url::fromRoute('view.store_selector.page_1')->toString()
+    // Buyers must have at least one assigned store.
+    if ($count === 0) {
+      throw new AccessDeniedHttpException(
+        'Thre is no Published Stores to access.'
       );
     }
 
-    // Everyone else gets 403.
-    throw new AccessDeniedHttpException(
-      'You do not have permission to access this page.'
+    // Redirect directly when only one store is available.
+    if ($count === 1) {
+      $store = reset($stores);
+
+      return new RedirectResponse(
+        $store->toUrl()->toString()
+      );
+    }
+
+    // Redirect to the store selection page when multiple stores exist.
+    return new RedirectResponse(
+      Url::fromRoute('view.store_selector.page_1')->toString()
     );
+
   }
 
 }

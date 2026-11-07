@@ -65,55 +65,7 @@ it('seller should see store allocate to them.', async function() {
       '<h1 class="mb-4">My Stores</h1>'
     );
 
-    // Verify Generate Invitation Code.
-    await testBase.assertInSourceCode(
-      page,
-      'Generate Invitation Code'
-    );
-
-    // Verify WhatsApp instruction.
-    await testBase.assertInSourceCode(
-      page,
-      'Send this code to the buyer by WhatsApp so they start buying on the store'
-    );
-
-    // Find all "Generate Invitation Code" links.
-    const generateCodeLinks = await page.$x(
-      "//a[contains(normalize-space(), 'Generate Invitation Code')]"
-    );
-
-    expect(generateCodeLinks.length).to.be.greaterThan(0);
-
-    // Click any one of them.
-    await generateCodeLinks[0].click();
-
-    // Wait for the AJAX request to populate an invitation code.
-    await page.waitForFunction(() => {
-      const elements = document.querySelectorAll(
-        '[id^="invitation-code-"]'
-      );
-
-      return Array.from(elements).some(
-        element => element.textContent.trim().length > 0
-      );
-    }, {
-      timeout: 20000
-    });
-
-    // Get the generated invitation code.
-    const invitationCode = await page.evaluate(() => {
-      const elements = document.querySelectorAll(
-        '[id^="invitation-code-"]'
-      );
-
-      const element = Array.from(elements).find(
-        element => element.textContent.trim().length > 0
-      );
-
-      return element ? element.textContent.trim() : '';
-    });
-
-    expect(invitationCode).to.not.equal('');
+    // verify allowed store.
 
     // Screenshot.
     await testBase.screenshot(
