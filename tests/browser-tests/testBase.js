@@ -52,6 +52,9 @@ exports.assertInUrls = async function(page, url1, url2) {
   const currentUrl = page.url();
 
   try {
+    console.log("current url");
+    console.log(currentUrl);
+
     expect(
       currentUrl.includes(url1) || currentUrl.includes(url2)
     ).to.equal(true);
