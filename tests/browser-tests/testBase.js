@@ -48,6 +48,22 @@ exports.assertInUrl = async function(page, expectedUrl) {
   }
 }
 
+exports.assertInUrls = async function(page, url1, url2) {
+  const currentUrl = page.url();
+
+  try {
+    expect(
+      currentUrl.includes(url1) || currentUrl.includes(url2)
+    ).to.equal(true);
+  }
+  catch (error) {
+    throw new Error(
+      "ERROR - current URL '" + currentUrl +
+      "' does not contain '/home' or '/store/1'"
+    );
+  }
+}
+
 exports.assertNotEmpty = function(value, message) {
   expect(value).to.not.be.empty;
 };
