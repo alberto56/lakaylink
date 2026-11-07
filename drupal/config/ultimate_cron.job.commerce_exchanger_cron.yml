@@ -1,0 +1,29 @@
+uuid: b553ddbf-e3b7-4ba2-b864-26633ecba857
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_exchanger
+title: 'Default cron handler'
+id: commerce_exchanger_cron
+weight: 0
+module: commerce_exchanger
+callback: 'commerce_exchanger#cron'
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * *'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

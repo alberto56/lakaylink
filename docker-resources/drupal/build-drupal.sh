@@ -81,7 +81,8 @@ rm -rf modules/contrib
   drupal/masquerade \
   drupal/jsonapi_image_styles \
   drupal/commerce_exchanger:^2.0.3 \
-  drupal/ip2country
+  drupal/ip2country \
+  drupal/ultimate_cron
 
 # If plugins are not allowed as per https://getcomposer.org/allow-plugins (see
 # above) then modules/contrib will not exist. Fail fast is such is the case.

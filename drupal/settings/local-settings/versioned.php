@@ -61,7 +61,7 @@ $config['social_auth_google.settings'] = [
   'restricted_domain' => ''
 ];
 
-$config['commerce_payment.commerce_payment_gateway.stripe']['configuration'] = [
+$config['commerce_payment.commerce_payment_gateway.stripe_prod']['configuration'] = [
   'publishable_key' => getenv('STRIPE_PUBLISHABLE_KEY'),
   'secret_key' => getenv('STRIPE_SECRET_KEY'),
   'webhook_signing_secret' =>  getenv('WEBHOOK_SIGNING_SECRET'),
