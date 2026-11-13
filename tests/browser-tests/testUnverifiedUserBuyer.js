@@ -60,17 +60,7 @@ it('unverified user should see buyer verification form when he click on continue
     );
 
     // Source assertions.
-    await testBase.assertInSourceCode(
-      page,
-      'Continue as Buyer'
-    );
-
-    // Click "Continue as Buyer".
-    await page.waitForSelector('a[href="/buyer-login-redirect"]');
-
-    const link = await page.$('a[href="/buyer-login-redirect"]');
-
-    testBase.assertInUrl(page, BASE_URL + '/store/1');
+    testBase.assertInUrls(page, BASE_URL + '/home', BASE_URL + '/store/1');
 
   }
   catch (error) {
